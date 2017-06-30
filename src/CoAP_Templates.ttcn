@@ -1,0 +1,104 @@
+/******************************************************************************
+* Copyright (c) 2017  Fraunhofer FOKUS
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*		Avdoot Chalke
+*		Sascha Kretzschmann
+*		Axel Rennoch
+******************************************************************************/
+
+module CoAP_Templates {
+
+import from CoAP_Types all;
+import from CoAP_Const all;
+import from IPL4asp_Types all;
+
+template ASP_RecvFrom t_data_receive (in octetstring p_msg) := 
+{
+  connId := ?,
+  remName := ?,
+  remPort := ?,
+  locName := ?,
+  locPort := ?,
+  proto := ?,
+  userData := ?,
+  msg := p_msg
+}
+
+template ASP_Send m_dataConnect(in integer p_id, in octetstring p_msg)  :=
+{
+  connId := p_id,
+  proto:= omit,
+  msg := p_msg
+}
+
+template CoAP_Types.Header mw_coapHeader(Header.version p_version := c_defaultHeaderVersion, Type p_msgType, template (present) Code p_code := ?, integer p_msgId := c_defaultHeaderMessageId) :=
+{
+  version := p_version,
+  msg_type := p_msgType,
+  code  :=  p_code,
+  message_id := p_msgId
+}
+
+template CoAP_Types.CoAP_ReqResp m_coapSimpleServerRequest(template (value) Header p_coapHeader, OCT0_8 p_token := c_defaultToken, template CoAP_Types.CoAP_OptionsList p_options := omit, template CoAP_ReqResp.payload p_payload := omit ) :=
+{
+  header := p_coapHeader,
+  token := p_token,
+  options := p_options,
+  payload := p_payload
+}
+
+template CoAP_Types.CoAP_ReqResp m_coapRequestWithPayload(template (value) Header p_coapHeader, OCT0_8 p_token := c_defaultToken, CoAP_OptionsList p_options, CoAP_ReqResp.payload p_payload) :=
+{
+  header := p_coapHeader,
+  token := p_token,
+  options := p_options,
+  payload := p_payload
+}
+
+template CoAP_Types.CoAP_ReqResp mw_coapServerRequestWithUriPath(template (present) Header p_coapHeader, CoAP_Options.uri_path p_uriPath) :=
+{
+  header := p_coapHeader,
+  token := c_defaultToken,
+  options := 
+  {
+    {
+      uri_path := p_uriPath
+    }
+  },
+  payload := omit
+}
+
+template CoAP_Types.CoAP_ReqResp mw_coapServerRequestWithTwoUriPaths(template (present) Header p_coapHeader, CoAP_Options.uri_path p_uriPath1, CoAP_Options.uri_path p_uriPath2) :=
+{
+  header := p_coapHeader,
+  token := c_defaultToken,
+  options := 
+  {
+    {
+      uri_path := p_uriPath1
+    },
+    {
+      uri_path := p_uriPath2
+    }
+  },
+  payload := omit
+}
+
+template CoAP_Types.CoAP_ReqResp mw_coapServerResponse(template (present) Header p_coapHeader, template (present) OCT0_8 p_token := c_defaultToken, template CoAP_OptionsList p_options := *, template CoAP_ReqResp.payload p_payload := *) :=
+{
+  header := p_coapHeader,
+  token := p_token,
+  options := p_options,
+  payload := p_payload 
+}
+
+template CoAP_Types.CoAP_Message m_coapMessageWrapper(template CoAP_Types.CoAP_ReqResp p_msg) := {
+  msg := p_msg
+}
+
+}

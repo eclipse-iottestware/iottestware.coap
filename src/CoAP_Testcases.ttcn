@@ -1,0 +1,157 @@
+/******************************************************************************
+* Copyright (c) 2017  Fraunhofer FOKUS
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*		Avdoot Chalke
+*		Sascha Kretzschmann
+*		Axel Rennoch
+******************************************************************************/
+module CoAP_Testcases 
+{
+
+import from CoAP_Functions all;
+import from CoAP_TestSystem all;
+
+testcase TC_COAP_SERVER_001() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_001();
+  unmap(self:p, system:p); 
+}
+
+testcase TC_COAP_SERVER_GET_001() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_GET_001();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SERVER_GET_002() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_GET_002();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SERVER_GET_003() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_GET_003();
+  unmap(self:p, system:p); 
+}
+
+
+/*
+testcase TC_COAP_SERVER_GET_004() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_GET_004();
+  unmap(self:p, system:p); 
+}
+*/
+
+
+testcase TC_COAP_SERVER_GET_005() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_GET_005();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SERVER_POST_001() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_POST_001();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SERVER_POST_002() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_POST_002();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SERVER_POST_003() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_POST_003();
+  unmap(self:p, system:p); 
+}
+
+
+/*
+testcase TC_COAP_SERVER_POST_004() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_POST_004();
+  unmap(self:p, system:p); 
+}
+*/
+
+
+testcase TC_COAP_SERVER_POST_005() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_POST_005();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SERVER_PUT_001() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_PUT_001();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SERVER_PUT_002() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_PUT_002();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SERVER_DELETE_001() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_DELETE_001();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SERVER_DELETE_002() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SERVER_DELETE_002();
+  unmap(self:p, system:p); 
+}
+
+control {
+  execute(TC_COAP_SERVER_001());
+  execute(TC_COAP_SERVER_GET_001());
+  execute(TC_COAP_SERVER_GET_002());
+  execute(TC_COAP_SERVER_GET_003());
+  execute(TC_COAP_SERVER_GET_005());
+  execute(TC_COAP_SERVER_POST_001());
+  execute(TC_COAP_SERVER_POST_002());
+  execute(TC_COAP_SERVER_POST_003());
+  execute(TC_COAP_SERVER_POST_005());
+  execute(TC_COAP_SERVER_PUT_001());
+  execute(TC_COAP_SERVER_PUT_002());
+  execute(TC_COAP_SERVER_DELETE_001());
+  execute(TC_COAP_SERVER_DELETE_002());
+
+} //endcontrol
+}

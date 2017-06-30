@@ -1,0 +1,201 @@
+/******************************************************************************
+* Copyright (c) 2017  Fraunhofer FOKUS
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*		Avdoot Chalke
+*		Sascha Kretzschmann
+*		Axel Rennoch
+******************************************************************************/
+
+module CoAP_Functions {
+import from CoAP_CustomTypes all;
+import from CoAP_Pixits all;
+import from CoAP_Const all;
+import from CoAP_Templates all;
+import from CoAP_TestSystem all;
+import from CoAP_Types all;
+import from IPL4asp_PortType all;
+import from IPL4asp_Types all;
+
+function f_message(CoAP_Message p_msg, template CoAP_Types.CoAP_ReqResp p_expected) runs on MTC_CT 
+{  
+  if(match(p_msg, m_coapMessageWrapper(p_expected)))
+  {
+    setverdict(pass);  
+  }
+  else 
+  {
+    setverdict(fail);
+  }
+}
+
+function f_connect(in charstring p_serverId) runs on MTC_CT
+{
+  var NamedHostPort v_serverAddress;
+  var charstring v_hostName;
+  var integer v_portNumber;
+
+  if(f_lookupAddress(p_serverId, v_serverAddress))
+  {
+    v_hostName := v_serverAddress.hostName;
+    v_portNumber := v_serverAddress.portNumber;
+  }
+  vc_result := f_IPL4_connect (p, v_hostName, v_portNumber, "",0,-1,{udp := {}});
+  vc_cid := vc_result.connId;
+  if (not(ispresent(vc_cid))) 
+  {
+    log ("Could not connect");
+    stop;
+  } 
+}
+
+function f_sendMessage(template CoAP_Types.CoAP_ReqResp p_request, charstring p_serverId := "localhost") runs on MTC_CT
+{ 
+  f_connect(p_serverId);
+  vc_msg := {msg := valueof(p_request)};
+  vc_encResult := f_CoAP_enc(vc_msg, vc_payload);
+  p.send(m_dataConnect(vc_cid, vc_payload));
+}
+
+function f_receiveMessage(template CoAP_Types.CoAP_ReqResp p_expected) runs on MTC_CT
+{      
+  alt 
+  {
+
+    [] p.receive (ASP_RecvFrom:?) -> value vc_ASP_RecvFrom               
+    {     
+      vc_decResult := f_CoAP_dec(vc_ASP_RecvFrom.msg,vc_msg);
+      if (vc_decResult==0)       
+      {                
+        f_message(vc_msg, p_expected);
+      }  
+    }
+  }
+}
+
+// this function is taken from the example given in https://www.eclipse.org/forums/index.php/t/1085007/
+function f_lookupAddress(in charstring p_id, out NamedHostPort v_addr)
+return boolean
+{
+
+  for (var integer i:=0; i<sizeof(TSP_ADDRESSES); i:=i+1)
+  {
+    if (TSP_ADDRESSES[i].id == p_id)
+    {
+      v_addr := TSP_ADDRESSES[i];
+      return true;
+    }
+  }
+  return false;
+}
+
+function f_TC_COAP_SERVER_001() runs on MTC_CT
+{
+  f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, EMPTY_MESSAGE, -), int2oct(0,0)));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, RESET, EMPTY_MESSAGE,-), c_emptyToken));
+}
+
+function f_TC_COAP_SERVER_GET_001() runs on MTC_CT
+{  
+  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "Simple_Resource"));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Content,-)))
+}
+
+function f_TC_COAP_SERVER_GET_002() runs on MTC_CT
+{
+  f_sendMessage(mw_coapServerRequestWithTwoUriPaths(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "Simple_Resource", "New_Resource"));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Content,-)));
+}
+
+
+function f_TC_COAP_SERVER_GET_003() runs on MTC_CT
+{
+  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -)	, "Calculator_Resource"));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_MethodNotAllowed,-)));
+} 
+
+function f_TC_COAP_SERVER_GET_004() runs on MTC_CT
+{
+
+}
+
+function f_TC_COAP_SERVER_GET_005() runs on MTC_CT
+{
+  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "Any_Resource"));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_NotFound,-)));
+}
+
+function f_TC_COAP_SERVER_POST_001() runs on MTC_CT
+{
+  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := c_thirdLevelResource}};
+
+  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Created,-), -, v_respLocationPath));
+}
+
+function f_TC_COAP_SERVER_POST_002() runs on MTC_CT
+{
+  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := c_thirdLevelResource}};
+
+  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Changed,-), -, v_respLocationPath));
+}
+
+function f_TC_COAP_SERVER_POST_003() runs on MTC_CT
+{
+  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}, {uri_path := c_secondLevelResource}, {uri_path := c_thirdLevelResource}};
+  var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := "New1a"}};
+
+  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New1a")));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Changed,-), -, v_respLocationPath));
+}
+
+function f_TC_COAP_SERVER_POST_005() runs on MTC_CT
+{
+  var CoAP_OptionsList v_reqUriList := {{uri_path := "Simple_Resource"}};
+
+  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("some Payload")));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_MethodNotAllowed, -)));
+}
+
+function f_TC_COAP_SERVER_PUT_001() runs on MTC_CT
+{
+  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var octetstring v_payload := char2oct("Stored!");
+
+  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Changed, -), -, -, v_payload));
+}
+
+function f_TC_COAP_SERVER_PUT_002() runs on MTC_CT
+{
+  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var octetstring v_payload := char2oct("Stored!");
+
+  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Changed, -), -, -, v_payload));
+}
+
+function f_TC_COAP_SERVER_DELETE_001() runs on MTC_CT
+{
+  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+
+  f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Deleted, -)));
+}
+
+function f_TC_COAP_SERVER_DELETE_002() runs on MTC_CT
+{
+  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+
+  f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
+  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Deleted, -)));
+}
+
+}
