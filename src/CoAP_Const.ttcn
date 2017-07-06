@@ -13,6 +13,8 @@
 
 module CoAP_Const {
 
+import from CoAP_CustomTypes all;
+
 const integer c_defaultHeaderVersion := 1;
 const integer c_defaultHeaderMessageId := 0;
 
@@ -21,5 +23,15 @@ const octetstring c_defaultToken := 'ABCDEF11'O;
 
 const charstring c_secondLevelResource := "New1";
 const charstring c_thirdLevelResource := "New2";
+
+const ProtocolParameters c_defaultProtocolParameters :=
+{
+  ackTimeout := 2.0,
+  ackRandomFactor := 1.5,
+  maxRetransmit := 4,
+  nStart := 1,
+  defaultLeisure := 5.0,
+  probingRate := 1
+}
 
 }

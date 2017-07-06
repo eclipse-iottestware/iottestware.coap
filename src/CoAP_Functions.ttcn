@@ -21,7 +21,7 @@ import from CoAP_Types all;
 import from IPL4asp_PortType all;
 import from IPL4asp_Types all;
 
-function f_message(CoAP_Message p_msg, template CoAP_Types.CoAP_ReqResp p_expected) runs on MTC_CT 
+function f_passVerdict(CoAP_Message p_msg, template CoAP_Types.CoAP_ReqResp p_expected) runs on MTC_CT 
 {  
   if(match(p_msg, m_coapMessageWrapper(p_expected)))
   {
@@ -62,17 +62,23 @@ function f_sendMessage(template CoAP_Types.CoAP_ReqResp p_request, charstring p_
 }
 
 function f_receiveMessage(template CoAP_Types.CoAP_ReqResp p_expected) runs on MTC_CT
-{      
+{
+  log("################",t_ackTimeout);
+  t_ackTimeout.start;   
   alt 
   {
-
     [] p.receive (ASP_RecvFrom:?) -> value vc_ASP_RecvFrom               
     {     
       vc_decResult := f_CoAP_dec(vc_ASP_RecvFrom.msg,vc_msg);
       if (vc_decResult==0)       
       {                
-        f_message(vc_msg, p_expected);
-      }  
+        f_passVerdict(vc_msg, p_expected);
+      }
+      t_ackTimeout.stop; 
+    }
+    [] t_ackTimeout.timeout
+    {
+      setverdict(inconc);
     }
   }
 }

@@ -15,6 +15,7 @@ module CoAP_TestSystem {
 import from IPL4asp_PortType all;
 import from IPL4asp_Types all;
 import from CoAP_Types all;
+import from CoAP_Const all;
 
 type component MTC_CT { 
 
@@ -24,6 +25,7 @@ type component MTC_CT {
   var integer vc_cid, vc_encResult, vc_decResult;
   var octetstring vc_payload;
   var ASP_RecvFrom vc_ASP_RecvFrom;
+  timer t_ackTimeout := c_defaultProtocolParameters.ackTimeout;
 }
 
 type component SystemComp

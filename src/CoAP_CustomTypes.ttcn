@@ -21,4 +21,14 @@ type record NamedHostPort
 
 type record of NamedHostPort AddressList;
 
+type record ProtocolParameters
+{
+  float ackTimeout,
+  float ackRandomFactor,
+  integer maxRetransmit,
+  integer nStart,
+  float defaultLeisure,
+  integer probingRate
+}
+
 }
