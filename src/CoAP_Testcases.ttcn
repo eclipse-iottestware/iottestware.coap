@@ -138,6 +138,34 @@ testcase TC_COAP_SERVER_DELETE_002() runs on MTC_CT
   unmap(self:p, system:p); 
 }
 
+testcase TC_COAP_SERVER_NON_001() runs on MTC_CT
+{
+  map(self:p, system:p);
+  f_TC_COAP_SERVER_NON_001();
+  unmap(self:p, system:p);
+}
+
+testcase TC_COAP_SERVER_NON_002() runs on MTC_CT
+{
+  map(self:p, system:p);
+  f_TC_COAP_SERVER_NON_002();
+  unmap(self:p, system:p);
+}
+
+testcase TC_COAP_SERVER_NON_003() runs on MTC_CT
+{
+  map(self:p, system:p);
+  f_TC_COAP_SERVER_NON_003();
+  unmap(self:p, system:p);
+}
+
+testcase TC_COAP_SERVER_NON_004() runs on MTC_CT
+{
+  map(self:p, system:p);
+  f_TC_COAP_SERVER_NON_004();
+  unmap(self:p, system:p);
+}
+
 control {
   execute(TC_COAP_SERVER_001());
   execute(TC_COAP_SERVER_GET_001());
@@ -152,6 +180,11 @@ control {
   execute(TC_COAP_SERVER_PUT_002());
   execute(TC_COAP_SERVER_DELETE_001());
   execute(TC_COAP_SERVER_DELETE_002());
+  
+  execute(TC_COAP_SERVER_NON_001());
+  execute(TC_COAP_SERVER_NON_002());
+  execute(TC_COAP_SERVER_NON_003());
+  execute(TC_COAP_SERVER_NON_004());
 
 } //endcontrol
 }

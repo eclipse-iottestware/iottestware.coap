@@ -17,8 +17,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 First you need to make sure that alle the prerequisites are met. Especially you should make sure that you installed the [Eclipse Titan Core](https://github.com/eclipse/titan.core) properly. This includes setting the environment variables for Titan.
 
-
-Afterwards you simply running the *install.sh* script. It will load all dependencies and build the project. It will also run all existing test cases (optional: make the script executable if not already done):
+Afterwards you simply run the *install.sh* script. It will load all dependencies and build the project. It will also run all existing test cases (optional: make the script executable if not already done):
 ```bash
 chmod +x install.sh
 ./install.sh

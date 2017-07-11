@@ -36,7 +36,7 @@ template ASP_Send m_dataConnect(in integer p_id, in octetstring p_msg)  :=
   msg := p_msg
 }
 
-template CoAP_Types.Header mw_coapHeader(Header.version p_version := c_defaultHeaderVersion, Type p_msgType, template (present) Code p_code := ?, integer p_msgId := c_defaultHeaderMessageId) :=
+template CoAP_Types.Header mw_coapHeader(Header.version p_version := c_defaultHeaderVersion, Type p_msgType, template (present) Code p_code := ?, template (present) integer p_msgId := c_defaultHeaderMessageId) :=
 {
   version := p_version,
   msg_type := p_msgType,
