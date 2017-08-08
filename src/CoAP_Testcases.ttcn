@@ -138,6 +138,84 @@ testcase TC_COAP_SERVER_DELETE_002() runs on MTC_CT
   unmap(self:p, system:p); 
 }
 
+testcase TC_COAP_SEPERATE_RESPONSE_GET_001() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SEPERATE_RESPONSE_GET_001();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SEPERATE_RESPONSE_GET_002() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SEPERATE_RESPONSE_GET_002();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SEPERATE_RESPONSE_GET_003() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SEPERATE_RESPONSE_GET_003();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SEPERATE_RESPONSE_POST_001() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SEPERATE_RESPONSE_POST_001();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SEPERATE_RESPONSE_POST_002() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SEPERATE_RESPONSE_POST_002();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SEPERATE_RESPONSE_POST_003() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SEPERATE_RESPONSE_POST_003();
+  unmap(self:p, system:p); 
+}
+
+testcase TC_COAP_SEPERATE_RESPONSE_PUT_001() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SEPERATE_RESPONSE_PUT_001();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SEPERATE_RESPONSE_PUT_002() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SEPERATE_RESPONSE_PUT_002();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SEPERATE_RESPONSE_DELETE_001() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SEPERATE_RESPONSE_DELETE_001();
+  unmap(self:p, system:p); 
+}
+
+
+testcase TC_COAP_SEPERATE_RESPONSE_DELETE_002() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_SEPERATE_RESPONSE_DELETE_002();
+  unmap(self:p, system:p); 
+}
+
 testcase TC_COAP_SERVER_NON_001() runs on MTC_CT
 {
   map(self:p, system:p);
@@ -181,10 +259,22 @@ control {
   execute(TC_COAP_SERVER_DELETE_001());
   execute(TC_COAP_SERVER_DELETE_002());
   
+  execute(TC_COAP_SEPERATE_RESPONSE_GET_001());
+  execute(TC_COAP_SEPERATE_RESPONSE_GET_002());
+  execute(TC_COAP_SEPERATE_RESPONSE_GET_003());
+  execute(TC_COAP_SEPERATE_RESPONSE_POST_001());
+  execute(TC_COAP_SEPERATE_RESPONSE_POST_002());
+  execute(TC_COAP_SEPERATE_RESPONSE_POST_003());
+  execute(TC_COAP_SEPERATE_RESPONSE_PUT_001());
+  execute(TC_COAP_SEPERATE_RESPONSE_PUT_002());
+  execute(TC_COAP_SEPERATE_RESPONSE_DELETE_001());
+  execute(TC_COAP_SEPERATE_RESPONSE_DELETE_002());
+  
   execute(TC_COAP_SERVER_NON_001());
   execute(TC_COAP_SERVER_NON_002());
   execute(TC_COAP_SERVER_NON_003());
   execute(TC_COAP_SERVER_NON_004());
 
+  
 } //endcontrol
 }
