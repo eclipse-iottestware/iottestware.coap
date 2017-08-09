@@ -240,7 +240,7 @@ function f_TC_COAP_SEPERATE_RESPONSE_GET_001() runs on MTC_CT
     f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "separate"));
     f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
     f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Content,-)));  
-    f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -), "separate"));        
+    f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));        
 }
 
 function f_TC_COAP_SEPERATE_RESPONSE_GET_002() runs on MTC_CT
@@ -248,7 +248,7 @@ function f_TC_COAP_SEPERATE_RESPONSE_GET_002() runs on MTC_CT
     f_sendMessage(mw_coapServerRequestWithTwoUriPaths(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "separate", "New_Resource")); 
     f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
     f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Content,-)));
-    f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -), "separate"));
+    f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
          
 }
 
@@ -258,7 +258,7 @@ function f_TC_COAP_SEPERATE_RESPONSE_GET_003() runs on MTC_CT
   f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "separate"));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_NotFound,-))); 
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -), "separate"));  
+  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));  
 }
 
 function f_TC_COAP_SEPERATE_RESPONSE_POST_001() runs on MTC_CT
@@ -269,7 +269,7 @@ function f_TC_COAP_SEPERATE_RESPONSE_POST_001() runs on MTC_CT
  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Created,-), -, v_respLocationPath)); 
- f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -), "separate"));
+ f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
       
 }
 
@@ -281,7 +281,7 @@ function f_TC_COAP_SEPERATE_RESPONSE_POST_002() runs on MTC_CT
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Changed,-), -, v_respLocationPath)) 
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -), "separate"));
+  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
        
 }
 
@@ -293,7 +293,7 @@ function f_TC_COAP_SEPERATE_RESPONSE_POST_003() runs on MTC_CT
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("some Payload")));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_MethodNotAllowed, -)))
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -), "separate"));
+  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
        
 }
 
@@ -305,7 +305,7 @@ function f_TC_COAP_SEPERATE_RESPONSE_PUT_001() runs on MTC_CT
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-))); 
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Changed, -), -, -, v_payload)) 
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -), "separate"));
+  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
        
 }
 
@@ -317,7 +317,7 @@ function f_TC_COAP_SEPERATE_RESPONSE_PUT_002() runs on MTC_CT
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Changed, -), -, -, v_payload)); 
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -), "separate"));
+  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
        
 }
 
@@ -328,7 +328,7 @@ function f_TC_COAP_SEPERATE_RESPONSE_DELETE_001() runs on MTC_CT
   f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-))); 
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Deleted, -)));
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -), "separate"));
+  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
        
 }
 
@@ -339,7 +339,7 @@ function f_TC_COAP_SEPERATE_RESPONSE_DELETE_002() runs on MTC_CT
   f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-))); 
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Deleted, -)))
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -), "separate"));
+  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
       
  }
 
