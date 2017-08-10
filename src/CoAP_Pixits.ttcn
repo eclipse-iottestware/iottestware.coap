@@ -15,9 +15,6 @@ module CoAP_Pixits {
 
 import from CoAP_CustomTypes all;
 
-modulepar
-{
-  AddressList TSP_ADDRESSES := {};
-}
+modulepar AddressList TSP_ADDRESSES := {};
 
 }
