@@ -23,6 +23,9 @@ const octetstring c_defaultToken := 'ABCDEF11'O;
 
 const charstring c_secondLevelResource := "New1";
 const charstring c_thirdLevelResource := "New2";
+const charstring c_defaultServer := "localhost";
+const charstring c_defaultResource := "Simple_Resource";
+const charstring c_defaultStorageResource := "Storage_Resource";
 
 const ProtocolParameters c_defaultProtocolParameters :=
 {

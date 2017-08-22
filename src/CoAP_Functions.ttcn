@@ -53,7 +53,7 @@ function f_connect(in charstring p_serverId) runs on MTC_CT
   } 
 }
 
-function f_sendMessage(template CoAP_Types.CoAP_ReqResp p_request, charstring p_serverId := "localhost") runs on MTC_CT
+function f_sendMessage(template CoAP_Types.CoAP_ReqResp p_request, charstring p_serverId := c_defaultServer) runs on MTC_CT
 { 
   f_connect(p_serverId);
   vc_msg := {msg := valueof(p_request)};
@@ -77,7 +77,7 @@ function f_receiveMessage(template CoAP_Types.CoAP_ReqResp p_expected) runs on M
     }
     [] t_ackTimeout.timeout
     {
-      setverdict(inconc);
+      setverdict(inconc, "Timer elapsed!");
     }
   }
 }
@@ -106,13 +106,13 @@ function f_TC_COAP_SERVER_001() runs on MTC_CT
 
 function f_TC_COAP_SERVER_GET_001() runs on MTC_CT
 {  
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "Simple_Resource"));
+  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), c_defaultResource));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Content,-)))
 }
 
 function f_TC_COAP_SERVER_GET_002() runs on MTC_CT
 {
-  f_sendMessage(mw_coapServerRequestWithTwoUriPaths(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "Simple_Resource", "New_Resource"));
+  f_sendMessage(mw_coapServerRequestWithTwoUriPaths(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), c_defaultResource, "New_Resource"));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Content,-)));
 }
 
@@ -136,7 +136,7 @@ function f_TC_COAP_SERVER_GET_005() runs on MTC_CT
 
 function f_TC_COAP_SERVER_POST_001() runs on MTC_CT
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
   var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := c_thirdLevelResource}};
 
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
@@ -145,7 +145,7 @@ function f_TC_COAP_SERVER_POST_001() runs on MTC_CT
 
 function f_TC_COAP_SERVER_POST_002() runs on MTC_CT
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
   var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := c_thirdLevelResource}};
 
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
@@ -154,7 +154,7 @@ function f_TC_COAP_SERVER_POST_002() runs on MTC_CT
 
 function f_TC_COAP_SERVER_POST_003() runs on MTC_CT
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}, {uri_path := c_secondLevelResource}, {uri_path := c_thirdLevelResource}};
+  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}, {uri_path := c_secondLevelResource}, {uri_path := c_thirdLevelResource}};
   var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := "New1a"}};
 
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New1a")));
@@ -163,7 +163,7 @@ function f_TC_COAP_SERVER_POST_003() runs on MTC_CT
 
 function f_TC_COAP_SERVER_POST_005() runs on MTC_CT
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "Simple_Resource"}};
+  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultResource}};
 
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("some Payload")));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_MethodNotAllowed, -)));
@@ -171,7 +171,7 @@ function f_TC_COAP_SERVER_POST_005() runs on MTC_CT
 
 function f_TC_COAP_SERVER_PUT_001() runs on MTC_CT
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
   var octetstring v_payload := char2oct("Stored!");
 
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
@@ -180,7 +180,7 @@ function f_TC_COAP_SERVER_PUT_001() runs on MTC_CT
 
 function f_TC_COAP_SERVER_PUT_002() runs on MTC_CT
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
   var octetstring v_payload := char2oct("Stored!");
 
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
@@ -189,7 +189,7 @@ function f_TC_COAP_SERVER_PUT_002() runs on MTC_CT
 
 function f_TC_COAP_SERVER_DELETE_001() runs on MTC_CT
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
 
   f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Deleted, -)));
@@ -197,7 +197,7 @@ function f_TC_COAP_SERVER_DELETE_001() runs on MTC_CT
 
 function f_TC_COAP_SERVER_DELETE_002() runs on MTC_CT
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
 
   f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Deleted, -)));
@@ -205,13 +205,13 @@ function f_TC_COAP_SERVER_DELETE_002() runs on MTC_CT
 
 function f_TC_COAP_SERVER_NON_001() runs on MTC_CT
 {
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, NON_CONFIRMABLE, METHOD_GET, -), "Simple_Resource"));
+  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, NON_CONFIRMABLE, METHOD_GET, -), c_defaultResource));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, NON_CONFIRMABLE, RESPONSE_CODE_Content, ?)));
 }
 
 function f_TC_COAP_SERVER_NON_002() runs on MTC_CT
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
   var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := c_thirdLevelResource}};
 
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, NON_CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
@@ -220,7 +220,7 @@ function f_TC_COAP_SERVER_NON_002() runs on MTC_CT
 
 function f_TC_COAP_SERVER_NON_003() runs on MTC_CT
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
   var octetstring v_payload := char2oct("Stored!");
   
   f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, NON_CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
@@ -229,7 +229,7 @@ function f_TC_COAP_SERVER_NON_003() runs on MTC_CT
 
 function f_TC_COAP_SERVER_NON_004() runs on MTC_CT
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "Storage_Resource"}};
+  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
   
   f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, NON_CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
   f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, NON_CONFIRMABLE, RESPONSE_CODE_Deleted, ?)));

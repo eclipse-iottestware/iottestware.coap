@@ -34,10 +34,6 @@ TODO
 
 TODO
 
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on how you can contribute.
-
 ## Versioning
 
 TODO
