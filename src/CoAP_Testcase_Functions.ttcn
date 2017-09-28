@@ -1,0 +1,334 @@
+module CoAP_Testcase_Functions {
+
+import from CoAP_Functions all;
+import from CoAP_Templates all;
+import from CoAP_Const all;
+import from CoAP_Types all;
+import from CoAP_TestSystem all;
+import from CoAP_CustomTypes all;
+
+function f_TC_COAP_SERVER_001() runs on MTC_CT
+{
+  f_sendMessage(m_coapPingMessage);
+  f_receiveMessage(m_coapEmptyMessage);
+}
+
+function f_TC_COAP_SERVER_GET_001() runs on MTC_CT
+{  
+  var CoapOptionList v_optionList :=
+  {
+  	{uri_path := c_defaultResource} 	
+  };
+  
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionList, vc_currentOptionNumber);
+
+  f_sendMessage(m_coapRequestMessageWithOptions(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_GET), v_uriPath));
+  f_receiveMessage(mw_coapAckResponseMessage(RESPONSE_CODE_Content));
+}
+
+function f_TC_COAP_SERVER_GET_002() runs on MTC_CT
+{
+  var CoapOptionList v_optionList :=
+  {
+  	{uri_path := c_defaultResource},
+  	{uri_path := c_newResource} 
+  };
+  
+  var template CoAP_OptionsExtList v_uriPaths := f_getOptionList(v_optionList, vc_currentOptionNumber);
+
+  f_sendMessage(m_coapRequestMessageWithOptions(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_GET), v_uriPaths));
+  f_receiveMessage(mw_coapAckResponseMessage(RESPONSE_CODE_Content));
+}
+
+
+function f_TC_COAP_SERVER_GET_003() runs on MTC_CT
+{
+  var CoapOptionList v_optionList :=
+  {
+  	{uri_path := "Calculator_Resource"}
+  };
+  
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionList, vc_currentOptionNumber);
+
+  f_sendMessage(m_coapRequestMessageWithOptions(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_GET), v_uriPath));
+  f_receiveMessage(mw_coapAckResponseMessage(RESPONSE_CODE_MethodNotAllowed));
+} 
+
+function f_TC_COAP_SERVER_GET_004() runs on MTC_CT
+{
+	//TODO
+}
+
+function f_TC_COAP_SERVER_GET_005() runs on MTC_CT
+{
+  var CoapOptionList v_optionList :=
+  {
+  	{uri_path := "Any_Resource"}
+  };
+  
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionList, vc_currentOptionNumber);
+
+  f_sendMessage(m_coapRequestMessageWithOptions(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_GET), v_uriPath));
+  f_receiveMessage(mw_coapAckResponseMessage(RESPONSE_CODE_NotFound));
+}
+
+function f_TC_COAP_SERVER_POST_001() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_defaultResource}
+  };
+  var CoapOptionList v_optionListLocationPaths :=
+  {
+  	{location_path := c_secondLevelResource},
+  	{location_path := c_thirdLevelResource}
+  };  
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+  vc_currentOptionNumber := c_defaultOptionNumber;
+  var template CoAP_OptionsExtList v_locationPaths := f_getOptionList(v_optionListLocationPaths, vc_currentOptionNumber);
+
+  var universal charstring c_resourceSeperator := "/";
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(c_secondLevelResource & c_resourceSeperator & c_thirdLevelResource)};
+
+  f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_POST), v_uriPath, v_payload));
+  f_receiveMessage(mw_coapResonseMessageWithOptions(RESPONSE_CODE_Created, v_locationPaths));
+}
+
+function f_TC_COAP_SERVER_POST_002() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_defaultResource}
+  };
+  var CoapOptionList v_optionListLocationPaths :=
+  {
+  	{location_path := c_secondLevelResource},
+  	{location_path := c_thirdLevelResource}
+  };  
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+  vc_currentOptionNumber := c_defaultOptionNumber;
+  var template CoAP_OptionsExtList v_locationPaths := f_getOptionList(v_optionListLocationPaths, vc_currentOptionNumber);
+  
+  var universal charstring c_resourceSeperator := "/";
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(c_secondLevelResource & c_resourceSeperator & c_thirdLevelResource)};
+
+  f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_POST), v_uriPath, v_payload));
+  f_receiveMessage(mw_coapResonseMessageWithOptions(RESPONSE_CODE_Changed, v_locationPaths));
+}
+
+function f_TC_COAP_SERVER_POST_003() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPaths :=
+  {
+  	{uri_path := c_defaultStorageResource},
+  	{uri_path := c_secondLevelResource},
+  	{uri_path := c_thirdLevelResource}
+  };
+  var CoapOptionList v_optionListLocationPaths :=
+  {
+  	{location_path := c_secondLevelResource},
+  	{location_path := "New1a"}
+  };  
+  var template CoAP_OptionsExtList v_uriPaths := f_getOptionList(v_optionListUriPaths, vc_currentOptionNumber);
+  vc_currentOptionNumber := c_defaultOptionNumber;
+  var template CoAP_OptionsExtList v_locationPaths := f_getOptionList(v_optionListLocationPaths, vc_currentOptionNumber);
+  
+  var universal charstring c_resourceSeperator := "/";
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(c_secondLevelResource & c_resourceSeperator & "New1a")};
+
+  f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_POST), v_uriPaths, v_payload));
+  f_receiveMessage(mw_coapResonseMessageWithOptions(RESPONSE_CODE_Changed, v_locationPaths));
+}
+
+function f_TC_COAP_SERVER_POST_005() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_defaultResource}
+  };
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+  
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := char2oct("some Payload")};
+
+  f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_POST), v_uriPath, v_payload));
+  f_receiveMessage(mw_coapAckResponseMessage(RESPONSE_CODE_MethodNotAllowed));
+}
+
+function f_TC_COAP_SERVER_PUT_001() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_defaultResource}
+  };
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := char2oct("Stored!")};
+
+  f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_PUT), v_uriPath, v_payload));
+  f_receiveMessage(mw_coapResonseMessageWithPayload(RESPONSE_CODE_Created, v_payload));
+}
+
+function f_TC_COAP_SERVER_PUT_002() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_defaultResource}
+  };
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := char2oct("Stored!")};
+
+  f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_PUT), v_uriPath, v_payload));
+  f_receiveMessage(mw_coapResonseMessageWithPayload(RESPONSE_CODE_Changed, v_payload));
+}
+
+function f_TC_COAP_SERVER_DELETE_001() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_defaultStorageResource}
+  };
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+
+  f_sendMessage(m_coapRequestMessageWithOptions(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_DELETE), v_uriPath));
+  f_receiveMessage(mw_coapAckResponseMessage(RESPONSE_CODE_Deleted));
+}
+
+function f_TC_COAP_SERVER_DELETE_002() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_defaultStorageResource}
+  };
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+
+  f_sendMessage(m_coapRequestMessageWithOptions(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_DELETE), v_uriPath));
+  f_receiveMessage(mw_coapAckResponseMessage(RESPONSE_CODE_Deleted));
+}
+
+function f_TC_COAP_SERVER_NON_001() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_defaultResource}
+  };
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+
+  f_sendMessage(m_coapRequestMessageWithOptions(m_coapHeaderWithTypeAndCode(NON_CONFIRMABLE, METHOD_GET), v_uriPath));
+  f_receiveMessage(mw_coapResponseMessageNon(RESPONSE_CODE_Content));
+}
+
+function f_TC_COAP_SERVER_NON_002() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_defaultResource}
+  };
+  var CoapOptionList v_optionListLocationPaths :=
+  {
+  	{location_path := c_secondLevelResource},
+  	{location_path := c_thirdLevelResource}
+  };  
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+  vc_currentOptionNumber := c_defaultOptionNumber;
+  var template CoAP_OptionsExtList v_locationPaths := f_getOptionList(v_optionListLocationPaths, vc_currentOptionNumber);
+  
+  var universal charstring c_resourceSeperator := "/";
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(c_secondLevelResource & c_resourceSeperator & c_thirdLevelResource)};
+
+  f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(NON_CONFIRMABLE, METHOD_POST), v_uriPath, v_payload));
+  f_receiveMessage(mw_coapResponseMessageNonWithOptions(RESPONSE_CODE_Created, v_locationPaths));
+}
+
+function f_TC_COAP_SERVER_NON_003() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_defaultStorageResource}
+  };
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+  
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := char2oct("Stored!")};
+
+  f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(NON_CONFIRMABLE, METHOD_PUT), v_uriPath, v_payload));
+  f_receiveMessage(mw_coapResponseMessageNonWithPayload(RESPONSE_CODE_Changed, v_payload));
+}
+
+function f_TC_COAP_SERVER_NON_004() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_defaultStorageResource}
+  };
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+  
+  f_sendMessage(m_coapRequestMessageWithOptions(m_coapHeaderWithTypeAndCode(NON_CONFIRMABLE, METHOD_DELETE), v_uriPath));
+  f_receiveMessage(mw_coapResponseMessageNon(RESPONSE_CODE_Deleted));
+}
+
+function f_TC_COAP_SEPARATE_RESPONSE_001() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_separateResource}
+  };
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+  
+  f_sendMessage(m_coapRequestMessageWithOptions(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_GET), v_uriPath));
+  f_receiveMessage(mw_coapAckResponseMessage(EMPTY_MESSAGE));
+  f_receiveMessage(mw_coapResponseMessageSeparate(RESPONSE_CODE_Content));
+  f_sendMessage(m_clientAckMessage); 
+}
+
+function f_TC_COAP_SEPARATE_RESPONSE_002() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_separateResource}
+  };
+  var CoapOptionList v_optionListLocationPaths :=
+  {
+  	{location_path := c_secondLevelResource},
+  	{location_path := c_thirdLevelResource}
+  };  
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+  vc_currentOptionNumber := c_defaultOptionNumber;
+  var template CoAP_OptionsExtList v_locationPaths := f_getOptionList(v_optionListLocationPaths, vc_currentOptionNumber);
+  
+  var universal charstring c_resourceSeperator := "/";
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(c_secondLevelResource & c_resourceSeperator & c_thirdLevelResource)};
+
+  f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_POST), v_uriPath, v_payload));
+  f_receiveMessage(mw_coapAckResponseMessage(EMPTY_MESSAGE));
+  f_receiveMessage(mw_coapResponseMessageSeparateWithOptions(RESPONSE_CODE_Created, v_locationPaths));
+  f_sendMessage(m_clientAckMessage);
+}
+
+function f_TC_COAP_SEPARATE_RESPONSE_003() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_separateResource}
+  };
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := char2oct("Stored!")};
+  
+  f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_PUT), v_uriPath, v_payload));
+  f_receiveMessage(mw_coapAckResponseMessage(EMPTY_MESSAGE));
+  f_receiveMessage(mw_coapResponseMessageSeparateWithPayload(RESPONSE_CODE_Changed, v_payload));
+  f_sendMessage(m_clientAckMessage);
+}
+
+function f_TC_COAP_SEPARATE_RESPONSE_004() runs on MTC_CT
+{
+  var CoapOptionList v_optionListUriPath :=
+  {
+  	{uri_path := c_separateResource}
+  };
+  var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
+
+  f_sendMessage(m_coapRequestMessageWithOptions(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_DELETE), v_uriPath));
+  f_receiveMessage(mw_coapAckResponseMessage(EMPTY_MESSAGE));
+  f_receiveMessage(mw_coapResponseMessageSeparate(RESPONSE_CODE_Content));
+  f_sendMessage(m_clientAckMessage);
+}
+
+}

@@ -28,6 +28,7 @@ PORTS_DIR=$PROJECT_DIR/ports
 IPL4ASP_DIR=$PORTS_DIR/IPL4asp
 COMMON_DIR=$PORTS_DIR/COMMON
 COMMON_COMPONENTS_DIR=$PORTS_DIR/Common_Components
+TCCUSEFULFUNCTIONS_DIR=$PORTS_DIR/TCCUsefulFunctions
 
 # Default protocol directory
 PROTOCOLS_DIR=$PROJECT_DIR/protocols
@@ -67,6 +68,15 @@ else
 	git clone http://git.eclipse.org/gitroot/titan/titan.ProtocolModules.CoAP.git $COAP_PROTOCOL_DIR
 fi
 
+# Get TCCUseful functions
+if [ -d "$TCCUSEFULFUNCTIONS_DIR" ]; then
+	echo $TCCUSEFULFUNCTIONS_DIR " aready exists"
+else 
+	git clone https://github.com/eclipse/titan.Libraries.TCCUsefulFunctions.git $TCCUSEFULFUNCTIONS_DIR
+fi
+
+
+
 # clean the bin folder 
 if [ -d "bin" ]; then
   rm ./bin/* 
@@ -74,7 +84,20 @@ else
   mkdir bin 
 fi
 
-cd bin
+### Begin workaround
+# This is a workaround as the IPL4asp modules can't find
+# the corresponding TCC modules.
+# The TCC modules will be linked directly into IPL4asp folder.
+
+cd $IPL4ASP_DIR/src
+ln -s $TCCUSEFULFUNCTIONS_DIR/src/TCCConversion_Functions.ttcn
+ln -s $TCCUSEFULFUNCTIONS_DIR/src/TCCConversion.cc
+ln -s $TCCUSEFULFUNCTIONS_DIR/src/TCCInterface_Functions.ttcn
+ln -s $TCCUSEFULFUNCTIONS_DIR/src/TCCInterface_ip.h
+ln -s $TCCUSEFULFUNCTIONS_DIR/src/TCCInterface.cc
+cd ../../../bin
+
+### End workaround
 
 ln -s $COMMON_DIR/src/General_Types.ttcn
 ln -s $IPL4ASP_DIR/src/IPL4asp_PortType.ttcn
@@ -82,11 +105,12 @@ ln -s $IPL4ASP_DIR/src/IPL4asp_PT.cc
 ln -s $IPL4ASP_DIR/src/IPL4asp_PT.hh
 ln -s $IPL4ASP_DIR/src/IPL4asp_Types.ttcn
 ln -s $COMMON_COMPONENTS_DIR/src/Socket_API_Definitions.ttcn
-ln -s $COAP_PROTOCOL_DIR/src/CoAP_EncDec.cc
-ln -s $COAP_PROTOCOL_DIR/src/CoAP_Types.ttcn
+ln -s $COAP_PROTOCOL_DIR/src/negative_testing/CoAP_EncDec.cc
+ln -s $COAP_PROTOCOL_DIR/src/negative_testing/CoAP_Types.ttcn
 ln -s $PROJECT_DIR/src/CoAP_Functions.ttcn
 ln -s $PROJECT_DIR/src/CoAP_Templates.ttcn
 ln -s $PROJECT_DIR/src/CoAP_Testcases.ttcn
+ln -s $PROJECT_DIR/src/CoAP_Testcase_Functions.ttcn
 ln -s $PROJECT_DIR/src/CoAP_TestSystem.ttcn
 ln -s $PROJECT_DIR/src/CoAP_Pixits.ttcn
 ln -s $PROJECT_DIR/src/CoAP_CustomTypes.ttcn

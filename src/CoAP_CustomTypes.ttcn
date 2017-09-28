@@ -11,6 +11,7 @@
 *		Axel Rennoch
 ******************************************************************************/
 module CoAP_CustomTypes {
+import from CoAP_Types all;
 
 type record NamedHostPort
 {
@@ -21,6 +22,9 @@ type record NamedHostPort
 
 type record of NamedHostPort AddressList;
 
+/*
+ * Represents the transmission paramters as defined in {@reference https://tools.ietf.org/html/rfc7252#section-4.8}.
+ */
 type record ProtocolParameters
 {
   float ackTimeout,
@@ -30,5 +34,19 @@ type record ProtocolParameters
   float defaultLeisure,
   integer probingRate
 }
+
+/*
+ * Simplified type for CoAP header
+ */
+type record CoAPHeader
+{
+  INT_BIT2_MSB          version,
+  Type                  msg_type,
+  INT_BIT4_MSB          tkl,
+  Code                  code,
+  INT_BIT16_MSB         message_id
+}
+
+type record of CoAP_Options CoapOptionList;
 
 }

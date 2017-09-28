@@ -14,20 +14,35 @@
 module CoAP_Const {
 
 import from CoAP_CustomTypes all;
+import from CoAP_Types all;
 
-const integer c_defaultHeaderVersion := 1;
-const integer c_defaultHeaderMessageId := 0;
+const INT_BIT2_MSB c_defaultHeaderVersion := 1;
+const INT_BIT16_MSB c_defaultHeaderMessageId := 12345;
 
-const octetstring c_emptyToken := ''O;
-const octetstring c_defaultToken := 'ABCDEF11'O;
+const OCT0_8 c_emptyToken := ''O;
+const OCT0_8 c_defaultToken := 'ABCDEF11'O;
 
-const charstring c_secondLevelResource := "New1";
-const charstring c_thirdLevelResource := "New2";
+const INT_BIT4_MSB c_emptyTokenLength := 0;
+const INT_BIT4_MSB c_defaultOptionNumber := 0; 
+
+const INT_BIT4_MSB c_locationPathOptionNumber := 11;
+const INT_BIT4_MSB c_uriPathOptionNumber := 11;
+
+const OCT1_MSB c_payloadMarker := 'FF'O;
+
+const UCHAR0_255 c_secondLevelResource := "New1";
+const UCHAR0_255 c_thirdLevelResource := "New2";
+const UCHAR0_255 c_newResource := "New_Resource";
+const UCHAR0_255 c_defaultResource := "Simple_Resource";
+const UCHAR0_255 c_defaultStorageResource := "Storage_Resource";
+const UCHAR0_255 c_separateResource := "separate";
+const UCHAR0_255 c_resourceSeperator := "/";
+
 const charstring c_defaultServer := "localhost";
 const charstring c_defaultRemoteServer := "remote";
-const charstring c_defaultResource := "Simple_Resource";
-const charstring c_defaultStorageResource := "Storage_Resource";
 
+const integer c_maxOptionLength := 13;
+ 
 const ProtocolParameters c_defaultProtocolParameters :=
 {
   ackTimeout := 2.0,
@@ -36,6 +51,15 @@ const ProtocolParameters c_defaultProtocolParameters :=
   nStart := 1,
   defaultLeisure := 5.0,
   probingRate := 1
+}
+
+const CoAPHeader c_coapBaseHeader :=
+{
+  version := c_defaultHeaderVersion, // must set to 1
+  msg_type := RESET,
+  tkl := c_emptyTokenLength,
+  code := EMPTY_MESSAGE,
+  message_id := c_defaultHeaderMessageId
 }
 
 }

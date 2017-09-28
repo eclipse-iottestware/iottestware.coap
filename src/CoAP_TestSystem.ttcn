@@ -25,6 +25,7 @@ type component MTC_CT {
   var integer vc_cid, vc_encResult, vc_decResult;
   var octetstring vc_payload;
   var ASP_RecvFrom vc_ASP_RecvFrom;
+  var INT_BIT4_MSB vc_currentOptionNumber := c_defaultOptionNumber;
   timer t_ackTimeout := c_defaultProtocolParameters.ackTimeout;
 }
 

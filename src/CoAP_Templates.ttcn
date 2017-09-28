@@ -14,10 +14,11 @@
 module CoAP_Templates {
 
 import from CoAP_Types all;
+import from CoAP_CustomTypes all;
 import from CoAP_Const all;
 import from IPL4asp_Types all;
 
-template ASP_RecvFrom t_data_receive (in octetstring p_msg) := 
+template ASP_RecvFrom m_dataReceive (octetstring p_msg) := 
 {
   connId := ?,
   remName := ?,
@@ -29,76 +30,172 @@ template ASP_RecvFrom t_data_receive (in octetstring p_msg) :=
   msg := p_msg
 }
 
-template ASP_Send m_dataConnect(in integer p_id, in octetstring p_msg)  :=
+template ASP_Send m_dataConnect(integer p_id, octetstring p_msg)  :=
 {
   connId := p_id,
   proto:= omit,
   msg := p_msg
 }
 
-template CoAP_Types.Header mw_coapHeader(Header.version p_version := c_defaultHeaderVersion, Type p_msgType, template (present) Code p_code := ?, template (present) integer p_msgId := c_defaultHeaderMessageId) :=
+group utilGroup
 {
-  version := p_version,
-  msg_type := p_msgType,
-  code  :=  p_code,
-  message_id := p_msgId
-}
-
-template CoAP_Types.CoAP_ReqResp m_coapSimpleServerRequest(template (value) Header p_coapHeader, OCT0_8 p_token := c_defaultToken, template CoAP_Types.CoAP_OptionsList p_options := omit, template CoAP_ReqResp.payload p_payload := omit ) :=
-{
-  header := p_coapHeader,
-  token := p_token,
-  options := p_options,
-  payload := p_payload
-}
-
-template CoAP_Types.CoAP_ReqResp m_coapRequestWithPayload(template (value) Header p_coapHeader, OCT0_8 p_token := c_defaultToken, CoAP_OptionsList p_options, CoAP_ReqResp.payload p_payload) :=
-{
-  header := p_coapHeader,
-  token := p_token,
-  options := p_options,
-  payload := p_payload
-}
-
-template CoAP_Types.CoAP_ReqResp mw_coapServerRequestWithUriPath(template (present) Header p_coapHeader, CoAP_Options.uri_path p_uriPath) :=
-{
-  header := p_coapHeader,
-  token := c_defaultToken,
-  options := 
+  template CoAP_Types.CoAP_Message m_coapMessageWrapper(template CoAP_Types.CoAP_ReqResp p_msg) :=
   {
-    {
-      uri_path := p_uriPath
-    }
-  },
-  payload := omit
-}
-
-template CoAP_Types.CoAP_ReqResp mw_coapServerRequestWithTwoUriPaths(template (present) Header p_coapHeader, CoAP_Options.uri_path p_uriPath1, CoAP_Options.uri_path p_uriPath2) :=
-{
-  header := p_coapHeader,
-  token := c_defaultToken,
-  options := 
+    msg := p_msg
+  }
+  
+  template CoAP_OptionsExt m_defaultOptionsExt(INT_BIT4_MSB p_optionDelta, INT_BIT4_MSB p_optionLength, INT_BIT8_OR_BIT16_MSB p_option_ext, template (value) CoAP_Options p_options) :=
   {
-    {
-      uri_path := p_uriPath1
-    },
-    {
-      uri_path := p_uriPath2
-    }
-  },
-  payload := omit
+    option_delta := p_optionDelta,
+    option_length := p_optionLength,
+    option_delta_ext := omit,
+    option_length_ext := p_option_ext,
+    option_value := p_options
+  }
 }
 
-template CoAP_Types.CoAP_ReqResp mw_coapServerResponse(template (present) Header p_coapHeader, template (present) OCT0_8 p_token := c_defaultToken, template CoAP_OptionsList p_options := *, template CoAP_ReqResp.payload p_payload := *) :=
+
+group headerGroup
 {
-  header := p_coapHeader,
-  token := p_token,
-  options := p_options,
-  payload := p_payload 
+  group requestHeaderGroup
+  {
+    template CoAPHeader m_coapBaseHeader :=
+    {
+      version := c_defaultHeaderVersion, // must set to 1
+      msg_type := RESET,
+      tkl := c_emptyTokenLength,
+      code := EMPTY_MESSAGE,
+      message_id := c_defaultHeaderMessageId
+    }
+
+    template CoAPHeader m_coapHeaderWithTypeAndCode(Type p_msgType, Code p_code)
+    modifies m_coapBaseHeader :=
+    {
+      msg_type := p_msgType,
+      code := p_code
+    }
+
+    template CoAPHeader m_coapHeaderWithMessageId(Type p_msgType, Code p_code, integer p_msgId)
+    modifies m_coapHeaderWithTypeAndCode :=
+    {
+      message_id := p_msgId
+    }
+  }
+
+  group responseHeaderGroup
+  {
+    // TODO
+  }
 }
 
-template CoAP_Types.CoAP_Message m_coapMessageWrapper(template CoAP_Types.CoAP_ReqResp p_msg) := {
-  msg := p_msg
-}
+group messageGroup
+{
+  group requestMessage
+  {
+    template CoAP_ReqResp m_coapEmptyMessage :=
+    {
+      version := c_defaultHeaderVersion, // must set to 1
+      msg_type := RESET,
+      tkl := c_emptyTokenLength,
+      code := EMPTY_MESSAGE,
+      message_id := c_defaultHeaderMessageId,
+      token := c_emptyToken,
+      options := omit,
+      payload := omit
+    }
 
+    template CoAP_ReqResp m_coapPingMessage
+    modifies m_coapEmptyMessage :=
+    {
+      msg_type := CONFIRMABLE
+    }
+    
+    template CoAP_ReqResp m_clientAckMessage
+    modifies m_coapEmptyMessage :=
+    {
+      msg_type := ACKNOWLEDGEMENT
+    }
+
+    template CoAP_ReqResp m_coapRequestMessageWithOptions(template (value) CoAPHeader p_header, template CoAP_OptionsExtList p_options)
+    modifies m_coapEmptyMessage :=
+    {
+      msg_type := p_header.msg_type,
+      code := p_header.code,
+      options := p_options,
+      payload := omit
+    }
+    
+    template CoAP_ReqResp m_coapBaseRequestMessage(template (value) CoAPHeader p_header, template CoAP_OptionsExtList p_options, Payload p_payload)
+    modifies m_coapRequestMessageWithOptions :=
+    {
+      payload := p_payload
+    }
+  }
+
+  group responseMessage
+  {
+    template CoAP_ReqResp mw_coapAckResponseMessage(Code p_code) :=
+    {
+      version := c_defaultHeaderVersion, // must set to 1
+      msg_type := ACKNOWLEDGEMENT,
+      tkl := ?,
+      code := p_code,
+      message_id := c_defaultHeaderMessageId,
+      token := ?,
+      options := *,
+      payload := *
+    }
+
+    template CoAP_ReqResp mw_coapResonseMessageWithOptions(Code p_code, template CoAP_OptionsExtList p_options)
+    modifies mw_coapAckResponseMessage :=
+    {
+      options := p_options
+    }
+
+    template CoAP_ReqResp mw_coapResonseMessageWithPayload(Code p_code, Payload p_payload)
+    modifies mw_coapAckResponseMessage :=
+    {
+      payload := p_payload
+    }
+
+    template CoAP_ReqResp mw_coapResponseMessageNon(Code p_code)
+    modifies mw_coapAckResponseMessage :=
+    {
+      msg_type := NON_CONFIRMABLE
+    }
+    
+    template CoAP_ReqResp mw_coapResponseMessageNonWithOptions(Code p_code, in template CoAP_OptionsExtList p_options)
+    modifies mw_coapResponseMessageNon :=
+    {
+      options := p_options
+    }
+    
+    template CoAP_ReqResp mw_coapResponseMessageNonWithPayload(Code p_code, Payload p_payload)
+    modifies mw_coapResponseMessageNon :=
+    {
+      payload := p_payload
+    }
+    
+    
+    
+    template CoAP_ReqResp mw_coapResponseMessageSeparate(Code p_code)
+    modifies mw_coapAckResponseMessage :=
+    {
+      msg_type := CONFIRMABLE,
+      code := p_code
+    }
+    
+    template CoAP_ReqResp mw_coapResponseMessageSeparateWithOptions(Code p_code, template CoAP_OptionsExtList p_options)
+    modifies mw_coapResponseMessageSeparate :=
+    {
+      options := p_options
+    }
+    
+    template CoAP_ReqResp mw_coapResponseMessageSeparateWithPayload(Code p_code, Payload p_payload)
+    modifies mw_coapResponseMessageSeparate :=
+    {
+      payload := p_payload
+    }
+  }
+}
 }

@@ -21,11 +21,14 @@ import from CoAP_Types all;
 import from IPL4asp_PortType all;
 import from IPL4asp_Types all;
 
-function f_passVerdict(CoAP_Message p_msg, template CoAP_Types.CoAP_ReqResp p_expected) runs on MTC_CT 
+/*
+ * Pass the verdict of a given CoAP message and the expected template.
+ */
+function f_passVerdict(CoAP_Message p_msg, template CoAP_ReqResp p_expected) runs on MTC_CT 
 {  
   if(match(p_msg, m_coapMessageWrapper(p_expected)))
   {
-    setverdict(pass);  
+    setverdict(pass);
   }
   else 
   {
@@ -53,7 +56,7 @@ function f_connect(in charstring p_serverId) runs on MTC_CT
   } 
 }
 
-function f_sendMessage(template CoAP_Types.CoAP_ReqResp p_request, charstring p_serverId := c_defaultServer) runs on MTC_CT
+function f_sendMessage(in template CoAP_ReqResp p_request, charstring p_serverId := c_defaultServer) runs on MTC_CT
 { 
   f_connect(p_serverId);
   vc_msg := {msg := valueof(p_request)};
@@ -61,7 +64,7 @@ function f_sendMessage(template CoAP_Types.CoAP_ReqResp p_request, charstring p_
   p.send(m_dataConnect(vc_cid, vc_payload));
 }
 
-function f_receiveMessage(template CoAP_Types.CoAP_ReqResp p_expected) runs on MTC_CT
+function f_receiveMessage(template CoAP_ReqResp p_expected) runs on MTC_CT
 {
   t_ackTimeout.start;   
   alt 
@@ -98,249 +101,100 @@ return boolean
   return false;
 }
 
-function f_TC_COAP_SERVER_001() runs on MTC_CT
+/*
+ * Calculates the option length and option length (extended) of the length of the given option value.
+ */
+function f_calcOptionLength(integer p_optionValueLength, out INT_BIT4_MSB p_optionLength, out INT_BIT8_OR_BIT16_MSB p_optionLengthExt)
 {
-  f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, EMPTY_MESSAGE, -), int2oct(0,0)));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, RESET, EMPTY_MESSAGE,-), c_emptyToken));
+  if(p_optionValueLength <= c_maxOptionLength)
+  {
+    p_optionLength := p_optionValueLength;
+    p_optionLengthExt.int_bit8 := 0;
+  }
+  else
+  {
+    var integer v_resultExt := p_optionValueLength - c_maxOptionLength;
+    p_optionLength := c_maxOptionLength;
+    if(v_resultExt <= 256)
+    {
+      p_optionLengthExt.int_bit8 := v_resultExt;
+    }
+    else
+    {
+      p_optionLengthExt.int_bit16 := v_resultExt;
+    }
+  }
 }
 
-function f_TC_COAP_SERVER_GET_001() runs on MTC_CT
-{  
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), c_defaultResource));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Content,-)))
-}
-
-function f_TC_COAP_SERVER_GET_002() runs on MTC_CT
+/*
+ * Calculates the option delta of the given option by its option number an the previous opton number.
+ * If it is the first option, the previous option number is 0 as specified in the RFC7252.
+ */
+function f_calculateOptionDelta(INT_BIT4_MSB p_optionNumber, inout INT_BIT4_MSB p_previousOptionNumber)
+return INT_BIT4_MSB
 {
-  f_sendMessage(mw_coapServerRequestWithTwoUriPaths(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), c_defaultResource, "New_Resource"));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Content,-)));
-}
-
-
-function f_TC_COAP_SERVER_GET_003() runs on MTC_CT
-{
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -)	, "Calculator_Resource"));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_MethodNotAllowed,-)));
-} 
-
-function f_TC_COAP_SERVER_GET_004() runs on MTC_CT
-{
-
-}
-
-function f_TC_COAP_SERVER_GET_005() runs on MTC_CT
-{
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "Any_Resource"));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_NotFound,-)));
-}
-
-function f_TC_COAP_SERVER_POST_001() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
-  var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := c_thirdLevelResource}};
-
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Created,-), -, v_respLocationPath));
-}
-
-function f_TC_COAP_SERVER_POST_002() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
-  var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := c_thirdLevelResource}};
-
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Changed,-), -, v_respLocationPath));
-}
-
-function f_TC_COAP_SERVER_POST_003() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}, {uri_path := c_secondLevelResource}, {uri_path := c_thirdLevelResource}};
-  var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := "New1a"}};
-
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New1a")));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Changed,-), -, v_respLocationPath));
-}
-
-function f_TC_COAP_SERVER_POST_005() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultResource}};
-
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("some Payload")));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_MethodNotAllowed, -)));
-}
-
-function f_TC_COAP_SERVER_PUT_001() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
-  var octetstring v_payload := char2oct("Stored!");
-
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Created, -), -, -, v_payload));
-}
-
-function f_TC_COAP_SERVER_PUT_002() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
-  var octetstring v_payload := char2oct("Stored!");
-
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Changed, -), -, -, v_payload));
-}
-
-function f_TC_COAP_SERVER_DELETE_001() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
-
-  f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Deleted, -)));
-}
-
-function f_TC_COAP_SERVER_DELETE_002() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
-
-  f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, RESPONSE_CODE_Deleted, -)));
-}
-
-function f_TC_COAP_SERVER_NON_001() runs on MTC_CT
-{
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, NON_CONFIRMABLE, METHOD_GET, -), c_defaultResource));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, NON_CONFIRMABLE, RESPONSE_CODE_Content, ?)));
-}
-
-function f_TC_COAP_SERVER_NON_002() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
-  var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := c_thirdLevelResource}};
-
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, NON_CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, NON_CONFIRMABLE, RESPONSE_CODE_Created, ?), -, v_respLocationPath));
-}
-
-function f_TC_COAP_SERVER_NON_003() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
-  var octetstring v_payload := char2oct("Stored!");
+  if(p_optionNumber == p_previousOptionNumber)
+  {
+    return 0;
+  }
+  var INT_BIT4_MSB v_result := p_optionNumber - p_previousOptionNumber;
+  p_previousOptionNumber := p_optionNumber;
   
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, NON_CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, NON_CONFIRMABLE, RESPONSE_CODE_Changed, ?), -, -, v_payload));
+  return v_result;
 }
 
-function f_TC_COAP_SERVER_NON_004() runs on MTC_CT
+/*
+ * Gets the correct format for each option that is included in the given option list.
+ * The function claculates the needed fields to send options as specified in {@reference https://tools.ietf.org/html/rfc7252#section-3.1}.
+ * It returns a set of options in the correct format.
+ * TODO: include calculation of field deltaExt
+ */
+function f_getOptionList(CoapOptionList p_optionList, inout INT_BIT4_MSB p_previousOptionNumber)
+return template CoAP_OptionsExtList
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := c_defaultStorageResource}};
+  var INT_BIT4_MSB v_optionDelta;
+  var INT_BIT4_MSB v_optionLength;
+  var INT_BIT4_MSB v_optionNumber;
+  var INT_BIT8_OR_BIT16_MSB v_optionLengthExt;
   
-  f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, NON_CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, NON_CONFIRMABLE, RESPONSE_CODE_Deleted, ?)));
-}
-
-function f_TC_COAP_SEPERATE_RESPONSE_GET_001() runs on MTC_CT
-{    
-    f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "separate"));
-    f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
-    f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Content,-)));  
-    f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));        
-}
-
-function f_TC_COAP_SEPERATE_RESPONSE_GET_002() runs on MTC_CT
-{     
-    f_sendMessage(mw_coapServerRequestWithTwoUriPaths(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "separate", "New_Resource")); 
-    f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
-    f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Content,-)));
-    f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
-         
-}
-
-
-function f_TC_COAP_SEPERATE_RESPONSE_GET_003() runs on MTC_CT
-{ 
-  f_sendMessage(mw_coapServerRequestWithUriPath(mw_coapHeader(-, CONFIRMABLE, METHOD_GET, -), "separate"));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_NotFound,-))); 
-  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));  
-}
-
-function f_TC_COAP_SEPERATE_RESPONSE_POST_001() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "separate"}};
-  var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := c_thirdLevelResource}};
+  var template CoAP_OptionsExt v_optionsExt;
+  var template CoAP_OptionsExtList v_result;
   
- f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
- f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
- f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Created,-), -, v_respLocationPath)); 
- f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
-      
+  for(var integer v_i := 0; v_i < lengthof(p_optionList); v_i:=v_i+1)
+  {
+    var CoAP_Options v_currentOption := p_optionList[v_i];
+    f_calcOptionLength(f_getPathQueryLength(v_currentOption, v_optionNumber), v_optionLength, v_optionLengthExt);
+    v_optionDelta := f_calculateOptionDelta(v_optionNumber, p_previousOptionNumber);
+  	v_optionsExt := m_defaultOptionsExt(v_optionDelta, v_optionLength, v_optionLengthExt, p_optionList[v_i]);
+  	v_result[v_i] := v_optionsExt;
+  }
+  return v_result;
 }
 
-function f_TC_COAP_SEPERATE_RESPONSE_POST_002() runs on MTC_CT
+/*
+ * This function is needed as different CoAP option may have different types.
+ * The length of the option is calculated based on its type.
+ * Furthermore it provides the option number that is needed to calculate the option delta.
+ * TODO: complete option list
+ */
+function f_getPathQueryLength(in CoAP_Options p_option, out INT_BIT4_MSB p_optionNumber)
+return integer
 {
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "separate"}};
-  var CoAP_OptionsList v_respLocationPath := {{location_path := c_secondLevelResource}, {location_path := c_thirdLevelResource}};
-
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("New1/New2")));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Changed,-), -, v_respLocationPath)); 
-  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
-       
+  select union (p_option)
+  {
+    case(location_path)
+    {
+      p_optionNumber := c_locationPathOptionNumber;
+      return lengthof(p_option.location_path);
+    }
+    case(uri_path)
+    {
+      p_optionNumber := c_uriPathOptionNumber;
+      return lengthof(p_option.uri_path);
+    }
+    case else {log("Error! Unhandled anytype variant in union."); return -1;}
+  }
 }
 
-
-function f_TC_COAP_SEPERATE_RESPONSE_POST_003() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "separate"}};
-
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_POST, -), -, v_reqUriList, char2oct("some Payload")));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_MethodNotAllowed, -)));
-  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
-       
-}
-
-function f_TC_COAP_SEPERATE_RESPONSE_PUT_001() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "separate"}};
-  var octetstring v_payload := char2oct("Stored!");
-
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-))); 
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Changed, -), -, -, v_payload)); 
-  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
-       
-}
-
-function f_TC_COAP_SEPERATE_RESPONSE_PUT_002() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "separate"}};
-  var octetstring v_payload := char2oct("Stored!");
-
-  f_sendMessage(m_coapRequestWithPayload(mw_coapHeader(-, CONFIRMABLE, METHOD_PUT, -), -, v_reqUriList, v_payload));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-)));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Changed, -), -, -, v_payload)); 
-  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
-       
-}
-
-function f_TC_COAP_SEPERATE_RESPONSE_DELETE_001() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "separate"}};
-
-  f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-))); 
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Deleted, -)));
-  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
-       
-}
-
-function f_TC_COAP_SEPERATE_RESPONSE_DELETE_002() runs on MTC_CT
-{
-  var CoAP_OptionsList v_reqUriList := {{uri_path := "separate"}};
-
-  f_sendMessage(m_coapSimpleServerRequest(mw_coapHeader(-, CONFIRMABLE, METHOD_DELETE, -), -, v_reqUriList));
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE,-))); 
-  f_receiveMessage(mw_coapServerResponse(mw_coapHeader(-, CONFIRMABLE, RESPONSE_CODE_Deleted, -)));
-  f_sendMessage(mw_coapServerResponse(mw_coapHeader(-, ACKNOWLEDGEMENT, EMPTY_MESSAGE, -)));
-      
- }
 }
 
