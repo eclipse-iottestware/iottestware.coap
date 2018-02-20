@@ -84,7 +84,7 @@ else
   mkdir bin 
 fi
 
-### Begin workaround
+### BEGIN workaround
 # This is a workaround as the IPL4asp modules can't find
 # the corresponding TCC modules.
 # The TCC modules will be linked directly into IPL4asp folder.
@@ -97,7 +97,15 @@ ln -s $TCCUSEFULFUNCTIONS_DIR/src/TCCInterface_ip.h
 ln -s $TCCUSEFULFUNCTIONS_DIR/src/TCCInterface.cc
 cd ../../../bin
 
-### End workaround
+### END workaround
+
+
+### BEGIN remove unnecessary files
+
+rm $COAP_PROTOCOL_DIR/src/CoAP_EncDec.cc
+rm $COAP_PROTOCOL_DIR/src/CoAP_Types.ttcn
+
+### END remove unnecessary files
 
 ln -s $COMMON_DIR/src/General_Types.ttcn
 ln -s $IPL4ASP_DIR/src/IPL4asp_PortType.ttcn
