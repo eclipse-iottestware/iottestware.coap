@@ -1,3 +1,16 @@
+/******************************************************************************
+* Copyright (c) 2018  Fraunhofer FOKUS
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*		Avdoot Chalke
+*		Sascha Hackel
+*		Alexander Kaiser
+******************************************************************************/
+
 module CoAP_Testcase_Functions {
 
 import from CoAP_Functions all;
@@ -6,6 +19,24 @@ import from CoAP_Const all;
 import from CoAP_Types all;
 import from CoAP_TestSystem all;
 import from CoAP_CustomTypes all;
+
+function f_TC_COAP_MessageFormat_Header_001() runs on MTC_CT
+{
+  f_sendMessage(m_coapEmptyMessage);
+  f_receiveMessage(m_coapEmptyMessage);
+}
+
+function f_TC_COAP_MessageFormat_Header_002() runs on MTC_CT
+{
+  f_sendMessage(m_coapInvalidHeaderVersion);
+  f_receiveMessage(omit);
+}
+
+function f_TC_COAP_MessageFormat_Header_003() runs on MTC_CT
+{
+  f_sendMessage(m_coapInvalidHeaderTokenLength);
+  f_receiveMessage(omit);
+}
 
 function f_TC_COAP_SERVER_001() runs on MTC_CT
 {

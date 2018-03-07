@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (c) 2017  Fraunhofer FOKUS
+* Copyright (c) 2018  Fraunhofer FOKUS
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -7,7 +7,7 @@
 *
 * Contributors:
 *		Avdoot Chalke
-*		Sascha Kretzschmann
+*		Sascha Hackel
 *		Axel Rennoch
 *		Alexander Kaiser
 ******************************************************************************/
@@ -20,6 +20,20 @@ testcase TC_COAP_SERVER_001() runs on MTC_CT
 {
   map(self:p, system:p); 
   f_TC_COAP_SERVER_001();
+  unmap(self:p, system:p); 
+}
+
+testcase TC_COAP_SERVER_HEADER_001() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_MessageFormat_Header_001();
+  unmap(self:p, system:p); 
+}
+
+testcase TC_COAP_SERVER_HEADER_002() runs on MTC_CT
+{
+  map(self:p, system:p); 
+  f_TC_COAP_MessageFormat_Header_002();
   unmap(self:p, system:p); 
 }
 
@@ -195,28 +209,30 @@ testcase TC_COAP_SERVER_NON_004() runs on MTC_CT
 
 control {
   execute(TC_COAP_SERVER_001());
-  execute(TC_COAP_SERVER_GET_001());
-  execute(TC_COAP_SERVER_GET_002());
-  execute(TC_COAP_SERVER_GET_003());
-  execute(TC_COAP_SERVER_GET_005());
-  execute(TC_COAP_SERVER_POST_001());
-  execute(TC_COAP_SERVER_POST_002());
-  execute(TC_COAP_SERVER_POST_003());
-  execute(TC_COAP_SERVER_POST_005());
-  execute(TC_COAP_SERVER_PUT_001());
-  execute(TC_COAP_SERVER_PUT_002());
-  execute(TC_COAP_SERVER_DELETE_001());
-  execute(TC_COAP_SERVER_DELETE_002());
-  
-  execute(TC_COAP_SEPERATE_RESPONSE_001());
-  execute(TC_COAP_SEPERATE_RESPONSE_002());
-  execute(TC_COAP_SEPERATE_RESPONSE_003());
-  execute(TC_COAP_SEPERATE_RESPONSE_004());
-  
-  execute(TC_COAP_SERVER_NON_001());
-  execute(TC_COAP_SERVER_NON_002());
-  execute(TC_COAP_SERVER_NON_003());
-  execute(TC_COAP_SERVER_NON_004());
+  execute(TC_COAP_SERVER_HEADER_001());
+  execute(TC_COAP_SERVER_HEADER_002());
+//  execute(TC_COAP_SERVER_GET_001());
+//  execute(TC_COAP_SERVER_GET_002());
+//  execute(TC_COAP_SERVER_GET_003());
+//  execute(TC_COAP_SERVER_GET_005());
+//  execute(TC_COAP_SERVER_POST_001());
+//  execute(TC_COAP_SERVER_POST_002());
+//  execute(TC_COAP_SERVER_POST_003());
+//  execute(TC_COAP_SERVER_POST_005());
+//  execute(TC_COAP_SERVER_PUT_001());
+//  execute(TC_COAP_SERVER_PUT_002());
+//  execute(TC_COAP_SERVER_DELETE_001());
+//  execute(TC_COAP_SERVER_DELETE_002());
+//  
+//  execute(TC_COAP_SEPERATE_RESPONSE_001());
+//  execute(TC_COAP_SEPERATE_RESPONSE_002());
+//  execute(TC_COAP_SEPERATE_RESPONSE_003());
+//  execute(TC_COAP_SEPERATE_RESPONSE_004());
+//  
+//  execute(TC_COAP_SERVER_NON_001());
+//  execute(TC_COAP_SERVER_NON_002());
+//  execute(TC_COAP_SERVER_NON_003());
+//  execute(TC_COAP_SERVER_NON_004());
 
   
 } //endcontrol
