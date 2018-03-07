@@ -23,7 +23,7 @@ import from CoAP_CustomTypes all;
 function f_TC_COAP_MessageFormat_Header_001() runs on MTC_CT
 {
   f_sendMessage(m_coapEmptyMessage);
-  f_receiveMessage(m_coapEmptyMessage);
+  f_receiveMessage(omit);
 }
 
 function f_TC_COAP_MessageFormat_Header_002() runs on MTC_CT

@@ -118,13 +118,13 @@ group messageGroup
     }
     
     template CoAP_ReqResp m_coapInvalidHeaderVersion
-    modifies m_coapEmptyMessage :=
+    modifies m_coapPingMessage :=
     {
       version := c_invalidHeaderVersion
     }
     
     template CoAP_ReqResp m_coapInvalidHeaderTokenLength
-    modifies m_coapEmptyMessage :=
+    modifies m_coapPingMessage :=
     {
       tkl := c_invalidTokenLength
     }
