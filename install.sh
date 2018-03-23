@@ -16,6 +16,9 @@
 ### VARIABLES ###
 #################
 
+# Config file
+CFG_FILE=CoAP_localhost.cfg
+
 # Default project directories
 PROJECT_DIR=$(pwd)
 SUT=CoAP-server.jar
@@ -123,7 +126,7 @@ ln -s $PROJECT_DIR/src/CoAP_TestSystem.ttcn
 ln -s $PROJECT_DIR/src/CoAP_Pixits.ttcn
 ln -s $PROJECT_DIR/src/CoAP_CustomTypes.ttcn
 ln -s $PROJECT_DIR/src/CoAP_Const.ttcn
-ln -s $PROJECT_DIR/cfg/CoAP.cfg
+ln -s $PROJECT_DIR/cfg/$CFG_FILE
 
 # Create a Makefile
 ttcn3_makefilegen -f -g -e CoAPTest *.ttcn *.hh *.cc
@@ -136,4 +139,4 @@ make compile
 make
 
 # Execute the test suite
-ttcn3_start CoAPTest CoAP.cfg
+ttcn3_start CoAPTest $CFG_FILE

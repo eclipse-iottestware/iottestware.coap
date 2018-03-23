@@ -15,7 +15,22 @@
 module CoAP_Pixits {
 
 import from CoAP_CustomTypes all;
+import from CoAP_Types all;
 
-modulepar AddressList TSP_ADDRESSES := {};
+modulepar charstring PX_SERVER_ID;
+modulepar charstring PX_SERVER_HOST;
+modulepar integer PX_SERVER_PORT;
+
+modulepar UCHAR0_255 PX_DEFAULT_RESOURCE;
+
+modulepar UCHAR0_255 PX_METHOD_NOT_ALLOWED_RESOURCE;
+modulepar UCHAR0_255 PX_NOT_FOUND_RESOURCE := "any";
+
+modulepar UCHAR0_255 PX_FIRST_LVL_RESOURCE;
+modulepar UCHAR0_255 PX_SECOND_LVL_RESOURCE;
+modulepar UCHAR0_255 PX_THIRD_LVL_RESOURCE;
+modulepar UCHAR0_255 PX_NEW_RESOURCE;
+modulepar UCHAR0_255 PX_STORAGE_RESOURCE;
+modulepar UCHAR0_255 PX_SEPARATE_RESOURCE;
 
 }

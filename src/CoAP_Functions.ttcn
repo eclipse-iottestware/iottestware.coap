@@ -37,18 +37,9 @@ function f_passVerdict(CoAP_Message p_msg, template CoAP_ReqResp p_expected) run
   }
 }
 
-function f_connect(in charstring p_serverId) runs on MTC_CT
+function f_connect() runs on MTC_CT
 {
-  var NamedHostPort v_serverAddress;
-  var charstring v_hostName;
-  var integer v_portNumber;
-
-  if(f_lookupAddress(p_serverId, v_serverAddress))
-  {
-    v_hostName := v_serverAddress.hostName;
-    v_portNumber := v_serverAddress.portNumber;
-  }
-  vc_result := f_IPL4_connect (p, v_hostName, v_portNumber, "",0,-1,{udp := {}});
+  vc_result := f_IPL4_connect (p, PX_SERVER_HOST, PX_SERVER_PORT, "",0,-1,{udp := {}});
   vc_cid := vc_result.connId;
   if (not(ispresent(vc_cid))) 
   {
@@ -57,9 +48,9 @@ function f_connect(in charstring p_serverId) runs on MTC_CT
   } 
 }
 
-function f_sendMessage(in template CoAP_ReqResp p_request, charstring p_serverId := c_defaultServer) runs on MTC_CT
+function f_sendMessage(in template CoAP_ReqResp p_request) runs on MTC_CT
 { 
-  f_connect(p_serverId);
+  f_connect();
   vc_msg := {msg := valueof(p_request)};
   vc_encResult := f_CoAP_enc(vc_msg, vc_payload);
   p.send(m_dataConnect(vc_cid, vc_payload));
@@ -90,22 +81,6 @@ function f_receiveMessage(template CoAP_ReqResp p_expected) runs on MTC_CT
   }
 }
 
-// this function is taken from the example given in https://www.eclipse.org/forums/index.php/t/1085007/
-function f_lookupAddress(in charstring p_id, out NamedHostPort v_addr)
-return boolean
-{
-
-  for (var integer i:=0; i<sizeof(TSP_ADDRESSES); i:=i+1)
-  {
-    if (TSP_ADDRESSES[i].id == p_id)
-    {
-      v_addr := TSP_ADDRESSES[i];
-      return true;
-    }
-  }
-  return false;
-}
-
 /*
  * Calculates the option length and option length (extended) of the length of the given option value.
  */
@@ -120,7 +95,7 @@ function f_calcOptionLength(integer p_optionValueLength, out INT_BIT4_MSB p_opti
   {
     var integer v_resultExt := p_optionValueLength - c_maxOptionLength;
     p_optionLength := c_maxOptionLength;
-    if(v_resultExt <= 256)
+    if(v_resultExt <= 255)
     {
       p_optionLengthExt.int_bit8 := v_resultExt;
     }

@@ -19,6 +19,7 @@ import from CoAP_Const all;
 import from CoAP_Types all;
 import from CoAP_TestSystem all;
 import from CoAP_CustomTypes all;
+import from CoAP_Pixits all;
 
 function f_TC_COAP_MessageFormat_Header_001() runs on MTC_CT
 {
@@ -48,7 +49,7 @@ function f_TC_COAP_SERVER_GET_001() runs on MTC_CT
 {  
   var CoapOptionList v_optionList :=
   {
-  	{uri_path := c_defaultResource} 	
+  	{uri_path := PX_DEFAULT_RESOURCE} 	
   };
   
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionList, vc_currentOptionNumber);
@@ -61,8 +62,8 @@ function f_TC_COAP_SERVER_GET_002() runs on MTC_CT
 {
   var CoapOptionList v_optionList :=
   {
-  	{uri_path := c_defaultResource},
-  	{uri_path := c_newResource} 
+  	{uri_path := PX_DEFAULT_RESOURCE},
+  	{uri_path := PX_NEW_RESOURCE} 
   };
   
   var template CoAP_OptionsExtList v_uriPaths := f_getOptionList(v_optionList, vc_currentOptionNumber);
@@ -76,7 +77,7 @@ function f_TC_COAP_SERVER_GET_003() runs on MTC_CT
 {
   var CoapOptionList v_optionList :=
   {
-  	{uri_path := "Calculator_Resource"}
+  	{uri_path := PX_METHOD_NOT_ALLOWED_RESOURCE}
   };
   
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionList, vc_currentOptionNumber);
@@ -94,7 +95,7 @@ function f_TC_COAP_SERVER_GET_005() runs on MTC_CT
 {
   var CoapOptionList v_optionList :=
   {
-  	{uri_path := "Any_Resource"}
+  	{uri_path := PX_NOT_FOUND_RESOURCE}
   };
   
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionList, vc_currentOptionNumber);
@@ -107,19 +108,18 @@ function f_TC_COAP_SERVER_POST_001() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_defaultResource}
+  	{uri_path := PX_DEFAULT_RESOURCE}
   };
   var CoapOptionList v_optionListLocationPaths :=
   {
-  	{location_path := c_secondLevelResource},
-  	{location_path := c_thirdLevelResource}
+  	{location_path := PX_SECOND_LVL_RESOURCE},
+  	{location_path := PX_THIRD_LVL_RESOURCE}
   };  
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
   vc_currentOptionNumber := c_defaultOptionNumber;
   var template CoAP_OptionsExtList v_locationPaths := f_getOptionList(v_optionListLocationPaths, vc_currentOptionNumber);
 
-  var universal charstring c_resourceSeperator := "/";
-  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(c_secondLevelResource & c_resourceSeperator & c_thirdLevelResource)};
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(PX_SECOND_LVL_RESOURCE & c_resourceSeperator & PX_THIRD_LVL_RESOURCE)};
 
   f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_POST), v_uriPath, v_payload));
   f_receiveMessage(mw_coapResonseMessageWithOptions(RESPONSE_CODE_Created, v_locationPaths));
@@ -129,19 +129,18 @@ function f_TC_COAP_SERVER_POST_002() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_defaultResource}
+  	{uri_path := PX_DEFAULT_RESOURCE}
   };
   var CoapOptionList v_optionListLocationPaths :=
   {
-  	{location_path := c_secondLevelResource},
-  	{location_path := c_thirdLevelResource}
+  	{location_path := PX_SECOND_LVL_RESOURCE},
+  	{location_path := PX_THIRD_LVL_RESOURCE}
   };  
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
   vc_currentOptionNumber := c_defaultOptionNumber;
   var template CoAP_OptionsExtList v_locationPaths := f_getOptionList(v_optionListLocationPaths, vc_currentOptionNumber);
   
-  var universal charstring c_resourceSeperator := "/";
-  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(c_secondLevelResource & c_resourceSeperator & c_thirdLevelResource)};
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(PX_SECOND_LVL_RESOURCE & c_resourceSeperator & PX_THIRD_LVL_RESOURCE)};
 
   f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_POST), v_uriPath, v_payload));
   f_receiveMessage(mw_coapResonseMessageWithOptions(RESPONSE_CODE_Changed, v_locationPaths));
@@ -151,21 +150,20 @@ function f_TC_COAP_SERVER_POST_003() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPaths :=
   {
-  	{uri_path := c_defaultStorageResource},
-  	{uri_path := c_secondLevelResource},
-  	{uri_path := c_thirdLevelResource}
+  	{uri_path := PX_STORAGE_RESOURCE},
+  	{uri_path := PX_SECOND_LVL_RESOURCE},
+  	{uri_path := PX_THIRD_LVL_RESOURCE}
   };
   var CoapOptionList v_optionListLocationPaths :=
   {
-  	{location_path := c_secondLevelResource},
-  	{location_path := "New1a"}
+  	{location_path := PX_SECOND_LVL_RESOURCE},
+  	{location_path := PX_NEW_RESOURCE}
   };  
   var template CoAP_OptionsExtList v_uriPaths := f_getOptionList(v_optionListUriPaths, vc_currentOptionNumber);
   vc_currentOptionNumber := c_defaultOptionNumber;
   var template CoAP_OptionsExtList v_locationPaths := f_getOptionList(v_optionListLocationPaths, vc_currentOptionNumber);
   
-  var universal charstring c_resourceSeperator := "/";
-  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(c_secondLevelResource & c_resourceSeperator & "New1a")};
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(PX_SECOND_LVL_RESOURCE & c_resourceSeperator & "New1a")};
 
   f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_POST), v_uriPaths, v_payload));
   f_receiveMessage(mw_coapResonseMessageWithOptions(RESPONSE_CODE_Changed, v_locationPaths));
@@ -175,7 +173,7 @@ function f_TC_COAP_SERVER_POST_005() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_defaultResource}
+  	{uri_path := PX_DEFAULT_RESOURCE}
   };
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
   
@@ -189,7 +187,7 @@ function f_TC_COAP_SERVER_PUT_001() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_defaultResource}
+  	{uri_path := PX_DEFAULT_RESOURCE}
   };
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
   var Payload v_payload := {payloadMarker := c_payloadMarker, payload := char2oct("Stored!")};
@@ -202,7 +200,7 @@ function f_TC_COAP_SERVER_PUT_002() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_defaultResource}
+  	{uri_path := PX_DEFAULT_RESOURCE}
   };
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
   var Payload v_payload := {payloadMarker := c_payloadMarker, payload := char2oct("Stored!")};
@@ -215,7 +213,7 @@ function f_TC_COAP_SERVER_DELETE_001() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_defaultStorageResource}
+  	{uri_path := PX_STORAGE_RESOURCE}
   };
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
 
@@ -227,7 +225,7 @@ function f_TC_COAP_SERVER_DELETE_002() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_defaultStorageResource}
+  	{uri_path := PX_STORAGE_RESOURCE}
   };
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
 
@@ -239,7 +237,7 @@ function f_TC_COAP_SERVER_NON_001() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_defaultResource}
+  	{uri_path := PX_DEFAULT_RESOURCE}
   };
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
 
@@ -251,19 +249,18 @@ function f_TC_COAP_SERVER_NON_002() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_defaultResource}
+  	{uri_path := PX_DEFAULT_RESOURCE}
   };
   var CoapOptionList v_optionListLocationPaths :=
   {
-  	{location_path := c_secondLevelResource},
-  	{location_path := c_thirdLevelResource}
+  	{location_path := PX_SECOND_LVL_RESOURCE},
+  	{location_path := PX_THIRD_LVL_RESOURCE}
   };  
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
   vc_currentOptionNumber := c_defaultOptionNumber;
   var template CoAP_OptionsExtList v_locationPaths := f_getOptionList(v_optionListLocationPaths, vc_currentOptionNumber);
   
-  var universal charstring c_resourceSeperator := "/";
-  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(c_secondLevelResource & c_resourceSeperator & c_thirdLevelResource)};
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(PX_SECOND_LVL_RESOURCE & c_resourceSeperator & PX_THIRD_LVL_RESOURCE)};
 
   f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(NON_CONFIRMABLE, METHOD_POST), v_uriPath, v_payload));
   f_receiveMessage(mw_coapResponseMessageNonWithOptions(RESPONSE_CODE_Created, v_locationPaths));
@@ -273,7 +270,7 @@ function f_TC_COAP_SERVER_NON_003() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_defaultStorageResource}
+  	{uri_path := PX_STORAGE_RESOURCE}
   };
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
   
@@ -287,7 +284,7 @@ function f_TC_COAP_SERVER_NON_004() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_defaultStorageResource}
+  	{uri_path := PX_STORAGE_RESOURCE}
   };
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
   
@@ -299,7 +296,7 @@ function f_TC_COAP_SEPARATE_RESPONSE_001() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_separateResource}
+  	{uri_path := PX_SEPARATE_RESOURCE}
   };
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
   
@@ -313,19 +310,18 @@ function f_TC_COAP_SEPARATE_RESPONSE_002() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_separateResource}
+  	{uri_path := PX_SEPARATE_RESOURCE}
   };
   var CoapOptionList v_optionListLocationPaths :=
   {
-  	{location_path := c_secondLevelResource},
-  	{location_path := c_thirdLevelResource}
+  	{location_path := PX_SECOND_LVL_RESOURCE},
+  	{location_path := PX_THIRD_LVL_RESOURCE}
   };  
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
   vc_currentOptionNumber := c_defaultOptionNumber;
   var template CoAP_OptionsExtList v_locationPaths := f_getOptionList(v_optionListLocationPaths, vc_currentOptionNumber);
   
-  var universal charstring c_resourceSeperator := "/";
-  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(c_secondLevelResource & c_resourceSeperator & c_thirdLevelResource)};
+  var Payload v_payload := {payloadMarker := c_payloadMarker, payload := unichar2oct(PX_SECOND_LVL_RESOURCE & c_resourceSeperator & PX_THIRD_LVL_RESOURCE)};
 
   f_sendMessage(m_coapBaseRequestMessage(m_coapHeaderWithTypeAndCode(CONFIRMABLE, METHOD_POST), v_uriPath, v_payload));
   f_receiveMessage(mw_coapAckResponseMessage(EMPTY_MESSAGE));
@@ -337,7 +333,7 @@ function f_TC_COAP_SEPARATE_RESPONSE_003() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_separateResource}
+  	{uri_path := PX_SEPARATE_RESOURCE}
   };
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
   var Payload v_payload := {payloadMarker := c_payloadMarker, payload := char2oct("Stored!")};
@@ -352,7 +348,7 @@ function f_TC_COAP_SEPARATE_RESPONSE_004() runs on MTC_CT
 {
   var CoapOptionList v_optionListUriPath :=
   {
-  	{uri_path := c_separateResource}
+  	{uri_path := PX_SEPARATE_RESOURCE}
   };
   var template CoAP_OptionsExtList v_uriPath := f_getOptionList(v_optionListUriPath, vc_currentOptionNumber);
 
