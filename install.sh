@@ -1,6 +1,6 @@
 #!/bin/sh
 ###############################################################################
-# Copyright (c) 2017  Fraunhofer FOKUS
+# Copyright (c) 2018  Fraunhofer FOKUS
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
 # which accompanies this distribution, and is available at
@@ -8,13 +8,16 @@
 #
 # Contributors:
 #		Avdoot Chalke
-#		Sascha Kretzschmann
+#		Sascha Hackel
 #		Axel Rennoch
 ###############################################################################
 
 #################
 ### VARIABLES ###
 #################
+
+# Config file
+CFG_FILE=CoAP_localhost.cfg
 
 # Default project directories
 PROJECT_DIR=$(pwd)
@@ -84,7 +87,7 @@ else
   mkdir bin 
 fi
 
-### Begin workaround
+### BEGIN workaround
 # This is a workaround as the IPL4asp modules can't find
 # the corresponding TCC modules.
 # The TCC modules will be linked directly into IPL4asp folder.
@@ -97,7 +100,15 @@ ln -s $TCCUSEFULFUNCTIONS_DIR/src/TCCInterface_ip.h
 ln -s $TCCUSEFULFUNCTIONS_DIR/src/TCCInterface.cc
 cd ../../../bin
 
-### End workaround
+### END workaround
+
+
+### BEGIN remove unnecessary files
+
+rm $COAP_PROTOCOL_DIR/src/CoAP_EncDec.cc
+rm $COAP_PROTOCOL_DIR/src/CoAP_Types.ttcn
+
+### END remove unnecessary files
 
 ln -s $COMMON_DIR/src/General_Types.ttcn
 ln -s $IPL4ASP_DIR/src/IPL4asp_PortType.ttcn
@@ -115,7 +126,7 @@ ln -s $PROJECT_DIR/src/CoAP_TestSystem.ttcn
 ln -s $PROJECT_DIR/src/CoAP_Pixits.ttcn
 ln -s $PROJECT_DIR/src/CoAP_CustomTypes.ttcn
 ln -s $PROJECT_DIR/src/CoAP_Const.ttcn
-ln -s $PROJECT_DIR/cfg/CoAP.cfg
+ln -s $PROJECT_DIR/cfg/$CFG_FILE
 
 # Create a Makefile
 ttcn3_makefilegen -f -g -e CoAPTest *.ttcn *.hh *.cc
@@ -128,4 +139,4 @@ make compile
 make
 
 # Execute the test suite
-ttcn3_start CoAPTest CoAP.cfg
+ttcn3_start CoAPTest $CFG_FILE

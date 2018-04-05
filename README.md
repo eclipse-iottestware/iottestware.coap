@@ -40,7 +40,7 @@ TODO
 
 ## Authors
 
-* **Sascha Kretzschmann** - *Initial work* - [Fraunhofer FOKUS](https://www.fokus.fraunhofer.de/)
+* **Sascha Hackel** - *Initial work* - [Fraunhofer FOKUS](https://www.fokus.fraunhofer.de/)
 * **Axel Rennoch** - *Initial work* - [Fraunhofer FOKUS](https://www.fokus.fraunhofer.de/)
 * **Avdoot Chalke** - *Initial work* - [Fraunhofer FOKUS](https://www.fokus.fraunhofer.de/)
 
