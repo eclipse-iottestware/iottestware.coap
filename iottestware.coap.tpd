@@ -9,8 +9,8 @@
 -->
   <ProjectName>iottestware.coap</ProjectName>
   <ReferencedProjects>
-    <ReferencedProject name="CoAP_CNL113829" projectLocationURI="../../../Titan/ProtocolModules/CoAP/CoAP_CNL113829.tpd"/>
-    <ReferencedProject name="IPL4asp_CNL113531" projectLocationURI="../../../Titan/TestPorts/IPL4asp/IPL4asp_CNL113531.tpd"/>
+    <ReferencedProject name="CoAP_CNL113829" projectLocationURI="../../ProtocolModules/CoAP/CoAP_CNL113829.tpd"/>
+    <ReferencedProject name="IPL4asp_CNL113531" projectLocationURI="../../TestPorts/IPL4asp/IPL4asp_CNL113531.tpd"/>
   </ReferencedProjects>
   <Folders>
     <FolderResource projectRelativePath="cfg" relativeURI="cfg"/>
@@ -27,6 +27,12 @@
         <LocalBuildSettings>
           <workingDirectory>bin</workingDirectory>
         </LocalBuildSettings>
+		<ConfigurationRequirements>
+          <configurationRequirement>
+            <projectName>CoAP_CNL113829</projectName>
+            <requiredConfiguration>negative_testing</requiredConfiguration>
+         </configurationRequirement>
+       </ConfigurationRequirements>
       </ProjectProperties>
       <FolderProperties>
         <FolderResource>
