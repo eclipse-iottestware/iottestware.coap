@@ -1767,7 +1767,7 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				msg_option indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				code indicating value 0.01,content_format indicating value content_formats_id,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
 				option_delta indicating value 3, /*URI-Host */
@@ -2206,6 +2206,8 @@ Package mts_tst_coap_server_tps {
 		    } 
 	    }
 	    
+	    
+	    
 //	Test Purpose {
 //		TP Id TP_CoAP_Server_Options_MaxAge_002 /* Sect. 5.10.5. */
 //		
@@ -2538,6 +2540,394 @@ Package mts_tst_coap_server_tps {
 			   }
 		    } 
 	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_EmptyMessage /* Sect. 4.1 (CoAP-1135)*/
+		
+		/* Summary */
+ 		Test objective 
+ 			"Any bytes of data present after Message ID field in an Empty message, it must be processed as a message format error"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 4.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-4.1"
+ 			
+ 		PICS Selection PIC_Server
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+			 the client entity sends the message containing
+			   version indicating value 1,
+               msg_type indicating value 0, //Confirmable
+               token_length indicating value 0,
+               code indicating value 0.00, //Empty Message
+               msg_id corresponding to MSG_ID1,
+               payload indicating value 116 145 167 061 057 116 145 167 062;
+               
+			    }
+			then {
+      			the client entity receives the message containing 
+      			code indicating value "message format error";
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_HTTPUri_001 /* Sect. 10.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"If the proxy is unable to service a request with an HTTP
+                                URI, a 5.05 (Proxying Not Supported) response is returned"  
+ 		
+ 		Reference 
+ 			"RFC7252#section10.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-10.1"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a response
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				proxy_uri corresponding to HTTP_URI;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 5.05;        
+				}
+		    } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Server_HTTPUri_002 /* Sect. 10.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"If the proxy is unable to service a request within a reasonable time frame, a 5.04 (Gateway Timeout) response is returned"  
+ 		
+ 		Reference 
+ 			"RFC7252#section10.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-10.1"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a response
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				proxy_uri corresponding to HTTP_URI;
+				and the client entity times_out
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 5.04;        
+				}
+		    } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Server_HTTPUri_003 /* Sect. 10.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"If the result can be obtained but is not understood, a 5.02 (Bad Gateway) response is returned"  
+ 		
+ 		Reference 
+ 			"RFC7252#section10.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-10.1"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a response
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				proxy_uri corresponding to HTTP_URI;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 5.02;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_HTTPUri_004 /* Sect. 10.1.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The GET method requests the proxy to return a representation of the HTTP resource identified by the request URI.
+             Upon success, 2.05 should be returned"  
+ 		
+ 		Reference 
+ 			"RFC7252#section10.1.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-10.1.1"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a response
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				content_format indicating value content_formats_id,
+				proxy_uri corresponding to HTTP_URI;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_HTTPUri_005 /* Sect. 10.1.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"A client can influence the processing of a GET request to the proxy by including Accept and ETAG"  
+ 		
+ 		Reference 
+ 			"RFC7252#section10.1.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-10.1.1"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a response
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				accept indicating value content_formats_id,
+				etag indicating value content_formats_id,
+				proxy_uri corresponding to HTTP_URI;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.03;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_HTTPUri_006 /* Sect. 10.1.2 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The PUT method requests the proxy to create the HTTP resource identified by the request URI"  
+ 		
+ 		Reference 
+ 			"RFC7252#section10.1.2", 
+ 			"https://tools.ietf.org/html/rfc7252#section-10.1.2"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a response
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.03,
+				proxy_uri corresponding to HTTP_URI;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.01;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_HTTPUri_007 /* Sect. 10.1.2 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The PUT method requests the proxy to update the HTTP resource identified by the request URI"  
+ 		
+ 		Reference 
+ 			"RFC7252#section10.1.2", 
+ 			"https://tools.ietf.org/html/rfc7252#section-10.1.2"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a response
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.03,
+				proxy_uri corresponding to HTTP_URI;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.04;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_HTTPUri_008 /* Sect. 10.1.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The DELETE method requests the proxy to delete the HTTP resource identified by the request URI"  
+ 		
+ 		Reference 
+ 			"RFC7252#section10.1.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-10.1.3"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a response
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.04,
+				proxy_uri corresponding to HTTP_URI;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.02;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_HTTPUri_009 /* Sect. 10.1.4 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The POST method requests the proxy to create a resource on the origin server"  
+ 		
+ 		Reference 
+ 			"RFC7252#section10.1.4", 
+ 			"https://tools.ietf.org/html/rfc7252#section-10.1.4"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a response
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.02,
+				proxy_uri corresponding to HTTP_URI;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.01;        
+				}
+		    } 
+	    }
+
+        Test Purpose {
+		TP Id TP_CoAP_Server_HTTPUri_010 /* Sect. 10.1.4 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The POST method requests the proxy to change a resource on the origin server"  
+ 		
+ 		Reference 
+ 			"RFC7252#section10.1.4", 
+ 			"https://tools.ietf.org/html/rfc7252#section-10.1.4"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a response
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.02,
+				proxy_uri corresponding to HTTP_URI;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.04;        
+				}
+		    } 
+	    }	    
 	    
 /*TODO: mehrer If_Match / If_None_Match */
 		 

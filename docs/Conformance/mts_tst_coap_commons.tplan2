@@ -57,6 +57,7 @@ Package mts_tst_coap_commons {
 		STRING DEFAULT_PORT;
 		STRING PROXY_URI;
 		STRING URI_HOST;
+		STRING HTTP_URI;
 		
 		STRING DEFAULT_RESOURCE_CONTENT; //content of the default resource
 		
