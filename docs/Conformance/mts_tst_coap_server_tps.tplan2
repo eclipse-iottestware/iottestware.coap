@@ -1180,7 +1180,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT; /*default eg. 5683 */
@@ -1218,7 +1218,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
@@ -1259,7 +1259,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
@@ -2597,8 +2597,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				proxy_uri corresponding to HTTP_URI;
 			    }
 			then {
@@ -2632,8 +2635,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				proxy_uri corresponding to HTTP_URI;
 				and the client entity times_out
 			    }
@@ -2668,8 +2674,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				proxy_uri corresponding to HTTP_URI;
 			    }
 			then {
@@ -2704,8 +2713,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				proxy_uri corresponding to HTTP_URI;
 			    }
@@ -2740,8 +2752,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				accept indicating value content_formats_id,
 				etag indicating value content_formats_id,
 				proxy_uri corresponding to HTTP_URI;
@@ -2777,8 +2792,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.03,
+				msg_id corresponding to MSG_ID1,
 				proxy_uri corresponding to HTTP_URI;
 			    }
 			then {
@@ -2812,8 +2830,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.03,
+				msg_id corresponding to MSG_ID1,
 				proxy_uri corresponding to HTTP_URI;
 			    }
 			then {
@@ -2847,8 +2868,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.04,
+				msg_id corresponding to MSG_ID1,
 				proxy_uri corresponding to HTTP_URI;
 			    }
 			then {
@@ -2882,8 +2906,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.02,
+				msg_id corresponding to MSG_ID1,
 				proxy_uri corresponding to HTTP_URI;
 			    }
 			then {
@@ -2917,8 +2944,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.02,
+				msg_id corresponding to MSG_ID1,
 				proxy_uri corresponding to HTTP_URI;
 			    }
 			then {
@@ -2953,8 +2983,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				text_plain indicating value text_plain;
 			    }
@@ -2990,8 +3023,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				link_format indicating value link_format;
 			    }
@@ -3027,8 +3063,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				xml indicating value xml;
 			    }
@@ -3064,8 +3103,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				octet_stream indicating value octet_stream;
 			    }
@@ -3101,8 +3143,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				exi indicating value exi;
 			    }
@@ -3139,8 +3184,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				json indicating value json;
 			    }
@@ -3176,8 +3224,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				json indicating value json;
 			    }
@@ -3213,8 +3264,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				json indicating value json,
 				content_format indicating value content_formats_id,
@@ -3252,8 +3306,11 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				json indicating value json,
 				content_format indicating value content_formats_id,
@@ -3291,12 +3348,53 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
 				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				link_format indicating value link_format,
 				content_format indicating value content_formats_id,
 				octet_stream indicating value octet_stream;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Service_Discovery /* Sect. 7.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"A client has to learn about the endpoint used by a server"  
+ 		
+ 		Reference 
+ 			"RFC7252#section7.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-7.1"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a response
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1;
 			    }
 			    
 			then {
