@@ -2927,7 +2927,385 @@ Package mts_tst_coap_server_tps {
 				code indicating value 2.04;        
 				}
 		    } 
-	    }	    
+	    }	  
+	    
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_ContentFormat_text/plain /* Sect. 12.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"Content-Format Registry"  
+ 		
+ 		Reference 
+ 			"RFC7252#section12.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-12.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a response
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				content_format indicating value content_formats_id,
+				text_plain indicating value text_plain;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }	
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Server_ContentFormat_application/linkformat /* Sect. 12.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"Content-Format Registry"  
+ 		
+ 		Reference 
+ 			"RFC7252#section12.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-12.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a response
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				content_format indicating value content_formats_id,
+				link_format indicating value link_format;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }	
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Server_ContentFormat_application/xml /* Sect. 12.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"Content-Format Registry"  
+ 		
+ 		Reference 
+ 			"RFC7252#section12.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-12.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a response
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				content_format indicating value content_formats_id,
+				xml indicating value xml;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
+	      
+	      Test Purpose {
+		TP Id TP_CoAP_Server_ContentFormat_application/octet_stream /* Sect. 12.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"Content-Format Registry"  
+ 		
+ 		Reference 
+ 			"RFC7252#section12.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-12.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a response
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				content_format indicating value content_formats_id,
+				octet_stream indicating value octet_stream;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
+	    
+	      Test Purpose {
+		TP Id TP_CoAP_Server_ContentFormat_application/exi /* Sect. 12.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"Content-Format Registry"  
+ 		
+ 		Reference 
+ 			"RFC7252#section12.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-12.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a response
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				content_format indicating value content_formats_id,
+				exi indicating value exi;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
+	    
+	    
+	      Test Purpose {
+		TP Id TP_CoAP_Server_ContentFormat_application/json /* Sect. 12.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"Content-Format Registry"  
+ 		
+ 		Reference 
+ 			"RFC7252#section12.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-12.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a response
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				content_format indicating value content_formats_id,
+				json indicating value json;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Server_ContentFormat_application/json /* Sect. 12.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"Content-Format Registry"  
+ 		
+ 		Reference 
+ 			"RFC7252#section12.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-12.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a response
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				content_format indicating value content_formats_id,
+				json indicating value json;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_ContentFormat_application/json_text/plain /* Sect. 12.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"Content-Format Registry"  
+ 		
+ 		Reference 
+ 			"RFC7252#section12.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-12.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a response
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				content_format indicating value content_formats_id,
+				json indicating value json,
+				content_format indicating value content_formats_id,
+				text_plain indicating value text_plain;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_ContentFormat_application/json_application/xml /* Sect. 12.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"Content-Format Registry"  
+ 		
+ 		Reference 
+ 			"RFC7252#section12.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-12.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a response
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				content_format indicating value content_formats_id,
+				json indicating value json,
+				content_format indicating value content_formats_id,
+				xml indicating value xml;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
+	      
+	        Test Purpose {
+		TP Id TP_CoAP_Server_ContentFormat_application/json_application/xml /* Sect. 12.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"Content-Format Registry"  
+ 		
+ 		Reference 
+ 			"RFC7252#section12.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-12.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a response
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_option indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				content_format indicating value content_formats_id,
+				link_format indicating value link_format,
+				content_format indicating value content_formats_id,
+				octet_stream indicating value octet_stream;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
 	    
 /*TODO: mehrer If_Match / If_None_Match */
 		 
