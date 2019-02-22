@@ -1414,7 +1414,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
@@ -1463,7 +1463,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				proxy_uri corresponding to PROXY_URI;
 			    }
@@ -1499,7 +1499,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				proxy_uri corresponding to PROXY_URI,
 				uri_host corresponding to URI_HOST;
@@ -1536,7 +1536,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				content_format indicating value content_formats_id,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
@@ -1575,7 +1575,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
 			    }
@@ -1611,7 +1611,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				content_format indicating value content_formats_id,
 				accept indicating value content_formats_id;
@@ -1651,7 +1651,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				content_format indicating value content_formats_id,
 				accept indicating value content_formats_id;
@@ -1687,7 +1687,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT; /*default eg. 5683 */
@@ -1725,7 +1725,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
@@ -1766,7 +1766,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,content_format indicating value content_formats_id,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
@@ -1921,7 +1921,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
@@ -1970,7 +1970,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				proxy_uri corresponding to PROXY_URI;
 			    }
@@ -2006,7 +2006,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				proxy_uri corresponding to PROXY_URI,
 				uri_host corresponding to URI_HOST;
@@ -2043,7 +2043,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				content_format indicating value content_formats_id,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
@@ -2082,7 +2082,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
 			    }
@@ -2118,7 +2118,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				content_format indicating value content_formats_id,
 				accept indicating value content_formats_id;
@@ -2158,7 +2158,7 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_option indicating value 0, /* CONfirmable */
+				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				content_format indicating value content_formats_id,
 				accept indicating value content_formats_id;
@@ -3271,14 +3271,13 @@ Package mts_tst_coap_server_tps {
 				msg_id corresponding to MSG_ID1,
 				content_format indicating value content_formats_id,
 				json indicating value json,
-				content_format indicating value content_formats_id,
 				text_plain indicating value text_plain;
 			    }
 			    
 			then {
 				the IUT entity sends the message containing 
 				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				code indicating value 4.02;        
 				}
 		    } 
 	    }
@@ -3320,7 +3319,7 @@ Package mts_tst_coap_server_tps {
 			then {
 				the IUT entity sends the message containing 
 				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				code indicating value 4.02;        
 				}
 		    } 
 	    }
@@ -3341,7 +3340,7 @@ Package mts_tst_coap_server_tps {
 //        Initial conditions
 //        with 
 //        {
-//        	the IUT entity must provide a response
+//        	the IUT entity must provide a content_format indicating value link_format, octet_stream
 //        }
         
  		Expected behaviour
@@ -3362,7 +3361,7 @@ Package mts_tst_coap_server_tps {
 			then {
 				the IUT entity sends the message containing 
 				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				code indicating value 4.02;        
 				}
 		    } 
 	    }
@@ -3402,6 +3401,466 @@ Package mts_tst_coap_server_tps {
 				msg_type indicating value 2, /* ACknowledgement */ 
 				code indicating value 2.05;        
 				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Critical_Options_01 /* Sect. 5.4.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"A Request with unrecognized options of class critical that occur in a Confirmable request must cause the return of 4.02"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.1"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a option indicating value If-Match
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
+				if_match indicating value if_match;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Critical_Options_02 /* Sect. 5.4.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"A Request with unrecognized options of class critical that occur in a Confirmable request must cause the return of 4.02"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.1"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a option indicating value If-Match
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
+				if_none_match indicating value if_none_match;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Critical_Options_03 /* Sect. 5.4.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"A Request with unrecognized options of class critical that occur in a Confirmable request must cause the return of 4.02"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.1"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a option indicating value If-Match
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.03,
+				msg_id corresponding to MSG_ID1,
+				accept indicating value content_format;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;        
+				}
+		    } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Server_Critical_Options_04 /* Sect. 5.4.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"A Request with unrecognized options of class critical that occur in a Confirmable request must cause the return of 4.02"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.1"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a option indicating value Uri-Host
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.04,
+				msg_id corresponding to MSG_ID1,
+				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
+				port corresponding to DEFAULT_PORT; /*default eg. 5683 */
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Critical_Options_05 /* Sect. 5.4.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"A Request with unrecognized options of class critical that occur in a Confirmable request must cause the return of 4.02"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.1"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a option indicating value Uri-Host
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.003,
+				msg_id corresponding to MSG_ID1,
+				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
+				port corresponding to DEFAULT_PORT; /*default eg. 5683 */
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Critical_Options_06 /* Sect. 5.4.5 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"An option that is not repeatable MUST NOT be included more than once in a message"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.5", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.5"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a content-format
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.01,
+				msg_id corresponding to MSG_ID1,
+				content_format indicating value content_formats_id,
+				link_format indicating value link_format,
+				content_format indicating value content_formats_id,
+				octet_stream indicating value octet_stream;
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;        
+				}
+		    } 
+	    }
+	       
+	      Test Purpose {
+		TP Id TP_CoAP_Server_Critical_Options_07 /* Sect. 5.4.5 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"An option that is not repeatable MUST NOT be included more than once in a message"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.5", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.5"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a content-format
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_type indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
+				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
+				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
+				port corresponding to DEFAULT_PORT; /*default eg. 5683 */
+			    }			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;        
+				}
+		    } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Server_Critical_Options_08 /* Sect. 5.4.5 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"An option that is not repeatable MUST NOT be included more than once in a message"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.5", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.5"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a content-format
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.03,
+				ifNoneMatch indicating value integer,
+				ifNoneMatch indicating value integer;
+			    }			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;        
+				}
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Critical_Options_09 /* Sect. 5.4.5 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"An option that is not repeatable MUST NOT be included more than once in a message"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.5", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.5"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a content-format indicating value 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_type indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				accept indicating value content_formats_id,
+				accept indicating value content_formats_id;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;             
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_Token_Length /* Sect. 3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			" Token Length 9-15 bytes are reserved, MUST NOT be sent, and MUST be processed as a message format error."  
+ 		
+ 		Reference 
+ 			"RFC7252#section 3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a content-format indicating value 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the client entity sends the message containing
+				version indicating value 1,
+                msg_type indicating value 0, //Confirmable
+                token_length indicating value 0,
+                code indicating value 0.00, //Empty Message
+                msg_id corresponding to MSG_ID1;
+			    }
+			then {
+				the client entity receives the message containing 
+				status indicating value "message format error";            
+			   }
+		    }
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_Payload_Marker /* Sect. 3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The presence of a Payload marker followed by a zero-length payload MUST be processed as a message format error"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the Client entity must provide a payload indicating value zero-length 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the client entity sends the message containing
+				header indicating value header,
+				msg_type indicating value 0, /* CONfirmable */
+                token_length indicating value 0,
+                host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
+				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
+                option_delta indicating value 15,
+                payload indicating value 0;
+			    }
+			then {
+				the client entity receives the message containing 
+				status indicating value "message format error";            
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_Option_Length /* Sect. 3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"If the Option Length field is set to 15, it MUST be processed as a message format error"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the Client entity must provide a payload indicating value zero-length 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the client entity sends a message containing 
+				msg_type indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
+				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
+				option_delta indicating value 3, /*URI-Host */
+				option_length indicating value 15;             
+			    }
+			then {
+				the client entity receives the message containing 
+				status indicating value "message format error";            
+			   }
 		    } 
 	    }
 	    
@@ -3503,7 +3962,7 @@ Package mts_tst_coap_server_tps {
 //		ensure that {
 //			when {
 //				the IUT entity receives a message containing 
-//				msg_option indicating value 0, /* CONfirmable */
+//				msg_type indicating value 0, /* CONfirmable */
 //				code indicating value 0.02,
 //				size2 indicating value integer;
 //			    }

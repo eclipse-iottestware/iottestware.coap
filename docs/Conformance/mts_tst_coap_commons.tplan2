@@ -13,6 +13,7 @@ Package mts_tst_coap_commons {
 	Domain {
 		pics:
 		- PIC_Server
+		- PIC_Client
 		;
 		entities:
 		- IUT
