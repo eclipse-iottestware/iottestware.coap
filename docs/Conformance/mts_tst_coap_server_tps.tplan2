@@ -1538,7 +1538,7 @@ Package mts_tst_coap_server_tps {
 				the IUT entity receives a message containing 
 				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
-				content_format indicating value content_formats_id,
+				content_format_options indicating value content_formats_id,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
 			    }
 			then {
@@ -1613,8 +1613,8 @@ Package mts_tst_coap_server_tps {
 				the IUT entity receives a message containing 
 				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
-				content_format indicating value content_formats_id,
-				accept indicating value content_formats_id;
+				content_format_options indicating value content_formats_id,
+				accept_options indicating value content_formats_id;
 			    }
 			then {
 				the IUT entity sends the message containing 
@@ -1653,8 +1653,8 @@ Package mts_tst_coap_server_tps {
 				the IUT entity receives a message containing 
 				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
-				content_format indicating value content_formats_id,
-				accept indicating value content_formats_id;
+				content_format_options indicating value content_formats_id,
+				accept_options indicating value content_formats_id;
 			    }
 			then {
 				the IUT entity sends the message containing 
@@ -2045,7 +2045,7 @@ Package mts_tst_coap_server_tps {
 				the IUT entity receives a message containing 
 				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
-				content_format indicating value content_formats_id,
+				content_format_options indicating value content_formats_id,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
 			    }
 			then {
@@ -2120,8 +2120,8 @@ Package mts_tst_coap_server_tps {
 				the IUT entity receives a message containing 
 				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
-				content_format indicating value content_formats_id,
-				accept indicating value content_formats_id;
+				content_format_options indicating value content_formats_id,
+				accept_options indicating value content_formats_id;
 			    }
 			then {
 				the IUT entity sends the message containing 
@@ -2160,8 +2160,8 @@ Package mts_tst_coap_server_tps {
 				the IUT entity receives a message containing 
 				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
-				content_format indicating value content_formats_id,
-				accept indicating value content_formats_id;
+				content_format_options indicating value content_formats_id,
+				accept_options indicating value content_formats_id;
 			    }
 			then {
 				the IUT entity sends the message containing 
@@ -2718,8 +2718,8 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
-				proxy_uri corresponding to HTTP_URI;
+				content_format_options indicating value content_formats_id,
+				proxy_uri_options corresponding to HTTP_URI;
 			    }
 			then {
 				the IUT entity sends the message containing 
@@ -2757,9 +2757,9 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				accept indicating value content_formats_id,
-				etag indicating value content_formats_id,
-				proxy_uri corresponding to HTTP_URI;
+				accept_options indicating value content_formats_id,
+				etag_options indicating value content_formats_id,
+				proxy_uri_options corresponding to HTTP_URI;
 			    }
 			then {
 				the IUT entity sends the message containing 
@@ -2988,8 +2988,8 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
-				text_plain indicating value text_plain;
+				content_format_options indicating value content_formats_id,
+				text_plain_options indicating value text_plain;
 			    }
 			    
 			then {
@@ -3028,8 +3028,8 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
-				link_format indicating value link_format;
+				content_format_options indicating value content_formats_id,
+				link_format_options indicating value link_format;
 			    }
 			    
 			then {
@@ -3068,7 +3068,7 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
+				content_format_options indicating value content_formats_id,
 				xml indicating value xml;
 			    }
 			    
@@ -3108,7 +3108,7 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
+				content_format_options indicating value content_formats_id,
 				octet_stream indicating value octet_stream;
 			    }
 			    
@@ -3148,7 +3148,7 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
+				content_format_options indicating value content_formats_id,
 				exi indicating value exi;
 			    }
 			    
@@ -3189,7 +3189,7 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
+				content_format_options indicating value content_formats_id,
 				json indicating value json;
 			    }
 			    
@@ -3229,7 +3229,7 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
+				content_format_options_options indicating value content_formats_id,
 				json indicating value json;
 			    }
 			    
@@ -3269,7 +3269,7 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
+				content_format_options_options_options indicating value content_formats_id,
 				json indicating value json,
 				text_plain indicating value text_plain;
 			    }
@@ -3310,9 +3310,9 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
+				content_format_options indicating value content_formats_id,
 				json indicating value json,
-				content_format indicating value content_formats_id,
+				content_format_options indicating value content_formats_id,
 				xml indicating value xml;
 			    }
 			    
@@ -3352,9 +3352,9 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
-				link_format indicating value link_format,
-				content_format indicating value content_formats_id,
+				content_format_options indicating value content_formats_id,
+				link_format_options indicating value link_format,
+				content_format_options indicating value content_formats_id,
 				octet_stream indicating value octet_stream;
 			    }
 			    
@@ -3432,7 +3432,7 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				if_match indicating value if_match;
+				if_match_options indicating value if_match;
 			    }
 			    
 			then {
@@ -3471,7 +3471,7 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				if_none_match indicating value if_none_match;
+				if_none_match_option indicating value if_none_match;
 			    }
 			    
 			then {
@@ -3510,7 +3510,7 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.03,
 				msg_id corresponding to MSG_ID1,
-				accept indicating value content_format;
+				accept_option indicating value content_format;
 			    }
 			    
 			then {
@@ -3629,9 +3629,9 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format indicating value content_formats_id,
-				link_format indicating value link_format,
-				content_format indicating value content_formats_id,
+				content_format_option indicating value content_formats_id,
+				link_format_option indicating value link_format,
+				content_format_option indicating value content_formats_id,
 				octet_stream indicating value octet_stream;
 			    }
 			    
@@ -3706,8 +3706,8 @@ Package mts_tst_coap_server_tps {
 				the IUT entity receives the message containing 
 				msg_type indicating value 0, /* CONfirmable */ 
 				code indicating value 0.03,
-				ifNoneMatch indicating value integer,
-				ifNoneMatch indicating value integer;
+				ifNoneMatch_options indicating value integer,
+				ifNoneMatch_options indicating value integer;
 			    }			    
 			then {
 				the IUT entity sends the message containing 
@@ -3742,8 +3742,8 @@ Package mts_tst_coap_server_tps {
 				the IUT entity receives a message containing 
 				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
-				accept indicating value content_formats_id,
-				accept indicating value content_formats_id;
+				accept_options indicating value content_formats_id,
+				accept_options indicating value content_formats_id;
 			    }
 			then {
 				the IUT entity sends the message containing 
@@ -3751,42 +3751,6 @@ Package mts_tst_coap_server_tps {
 				code indicating value 4.02;             
 			   }
 		    } 
-	    }
-	    
-	    Test Purpose {
-		TP Id TP_CoAP_Client_Token_Length /* Sect. 3 */
-		
-		/* Summary */
- 		Test objective 
- 			" Token Length 9-15 bytes are reserved, MUST NOT be sent, and MUST be processed as a message format error."  
- 		
- 		Reference 
- 			"RFC7252#section 3", 
- 			"https://tools.ietf.org/html/rfc7252#section-3"
- 			
- 		PICS Selection PIC_Client
-
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a content-format indicating value 
-//        }
-        
- 		Expected behaviour
-		ensure that {
-			when {
-				the client entity sends the message containing
-				version indicating value 1,
-                msg_type indicating value 0, //Confirmable
-                token_length indicating value 0,
-                code indicating value 0.00, //Empty Message
-                msg_id corresponding to MSG_ID1;
-			    }
-			then {
-				the client entity receives the message containing 
-				status indicating value "message format error";            
-			   }
-		    }
 	    }
 	    
 	    Test Purpose {
@@ -3862,6 +3826,146 @@ Package mts_tst_coap_server_tps {
 				status indicating value "message format error";            
 			   }
 		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_Token_Length /* Sect. 3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			" Token Length 9-15 bytes are reserved MUST NOT be sent, and MUST be processed as a message format error."  
+ 		
+ 		Reference 
+ 			"RFC7252#section 3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a content-format indicating value 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the client entity sends the message containing
+				version indicating value 1,
+                msg_type indicating value 0, //Confirmable
+                token_length indicating value 0,
+                code indicating value 0.00, //Empty Message
+                msg_id corresponding to MSG_ID1;
+			    }
+			then {
+				the client entity receives the message containing 
+				status indicating value "message format error";            
+			   }
+		    }
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_Token_Length /* Sect. 4.2 */
+		
+		/* Summary */
+ 		Test objective 
+ 			" Token Length 9-15 bytes are reserved MUST NOT be sent, and MUST be processed as a message format error."  
+ 		
+ 		Reference 
+ 			"RFC7252#section 3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a content-format indicating value 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the client entity sends the message containing
+				version indicating value 1,
+                msg_type indicating value 0, //Confirmable
+                token_length indicating value 0,
+                code indicating value 0.00, //Empty Message
+                msg_id corresponding to MSG_ID1;
+			    }
+			then {
+				the client entity receives the message containing 
+				status indicating value "message format error";            
+			   }
+		    }
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Non_Confirmable /* Sect. 4.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"A Non-Confirmable Message Must not be Empty"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 4.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-4.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a content-format indicating value 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the client entity sends the message containing
+				version indicating value 1,
+                msg_type indicating value 1, //Non-Confirmable
+                token_length indicating value 0,
+                code indicating value 0.00; //Empty Message
+			    }
+			then {
+				the IUT entity rejects the message            
+			   }
+		    }
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Ack_Request /* Sect. 4.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"An Acknowledgement is sent as request, The IUT must reject the message"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 4.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-4.3"
+ 			
+ 		PICS Selection PIC_Server
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a content-format indicating value 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the client entity sends the message containing
+				version indicating value 1,
+                msg_type indicating value 2, //Acknowledgement
+                token_length indicating value 0,
+                code indicating value 1; //Empty Message
+			    }
+			then {
+				the IUT entity rejects the message            
+			   }
+		    }
 	    }
 	    
 /*TODO: mehrer If_Match / If_None_Match */
