@@ -27,6 +27,12 @@ Package mts_tst_coap_commons {
 		- implement
 		- times_out
 		- rejects
+		- respond 
+		- retransmit
+		- ACK_TIMEOUT
+		- wait
+		- process
+		- informed
 		;
 		event templates :
 		- provideResource { the IUT entity provide a resource containing name indicating value DEFAULT_RESOURCE;}	

@@ -3968,6 +3968,222 @@ Package mts_tst_coap_server_tps {
 		    }
 	    }
 	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_NON_CON /* Sect. 5.2.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The Client MUST be able to receive Confirmable response in reply to a Non-confirmable request"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 5.2.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.2.3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity sends Confirmable_Response to Non-Confirmable_Request
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_type indicating value 1, /* NON-CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.01,
+				payload indicating value 116 145 167 061 057 116 145 167 062;
+			    }
+			then {
+				the IUT entity sends the message containing 
+                 msg_type indicating value 0;         
+			   }
+		    }
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_NON_CON /* Sect. 5.2.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The Client MUST be able to receive Non-Confirmable response in reply to a confirmable request"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 5.2.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.2.3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity sends Non-Confirmable_Response to Confirmable_Request
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_type indicating value 0,
+				token_length indicating value 0,
+				code indicating value 0.01,
+				payload indicating value 116 145 167 061 057 116 145 167 062;
+			    }
+			then {
+				the IUT entity sends the message containing 
+                 msg_type indicating value 1;         
+			   }
+		    }
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_Separate_Response /* Sect. 2.2 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The Client MUST be able to send an Acknowledgment in a Separate Response"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 2.2", 
+ 			"https://tools.ietf.org/html/rfc7252#section-2.2"
+ 			
+ 		PICS Selection PIC_Client
+
+        Initial conditions
+      with 
+      {
+         the IUT entity must provide a resource named separate
+      }
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a message containing 
+            msg_type indicating value 0, /* CONfirmable */
+            code indicating value 0.01,
+            uri_path corresponding to SEPARATE_RESOURCE;
+            and the IUT entity is not able to respond  
+         }
+         then {
+            the IUT entity first sends an empty message and
+            the IUT entity sends the second message containing 
+            msg_type indicating value 0.00, /* Confirmable */ 
+            code indicating value 2.01;
+            and 
+            the client entity sends an empty message containing 
+            msg_type indicating value 2.00, /* Acknowledgement */ 
+            code indicating value 0.00;
+         }
+      } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Client_Ack_Timeout /* Sect. 4.8 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The Client MUST be able to retransmits after acknowledgement is not received"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 4.8", 
+ 			"https://tools.ietf.org/html/rfc7252#section-4.8"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//      with 
+//      {
+//         the IUT entity must provide a resource named separate
+//      }
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a message containing 
+            msg_type indicating value 0, /* CONfirmable */
+            code indicating value 0.01,
+            payload indicating value 116 145 167 061 057 116 145 167 062;
+            and after ACK_TIMEOUT 
+         }
+         then {
+            the client entity must retransmit the same message
+         }
+      } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_MAX_RETRANSMIT  /* Sect. 4.2 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The Client MUST be able to retransmits only upto MAX_RETRANSMIT if acknowledgement is not received"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 4.2", 
+ 			"https://tools.ietf.org/html/rfc7252#section-4.2"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//      with 
+//      {
+//         the IUT entity must provide a resource named separate
+//      }
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a message containing 
+            msg_type indicating value 0, /* CONfirmable */
+            code indicating value 0.01,
+            payload indicating value 116 145 167 061 057 116 145 167 062;
+            and after ACK_TIMEOUT 
+            and the client entity retransmit the same message until reaches MAX_RETRANSMIT 
+            and doesnot receives the response_message
+         }
+         then {
+             the client entity process a failure
+         }
+      } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_NoResponse  /* Sect. 2.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The Server MUST reply with a reset message if it is not at all able to process a CON message"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 4.2", 
+ 			"https://tools.ietf.org/html/rfc7252#section-4.2"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+      with 
+      {
+         the IUT entity doesnot respond
+      }
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a message containing 
+            msg_type indicating value 0, /* CONfirmable */
+            code indicating value 0.01,
+            payload indicating value 116 145 167 061 057 116 145 167 062;
+            and the IUT entity doesnot provide a suitable acknowledgment response
+         }
+         then {
+             the IUT entity sends the message containing 
+		     msg_type indicating value 3; /* Reset Message */
+         }
+      } 
+	    }
+	    
 /*TODO: mehrer If_Match / If_None_Match */
 		 
 //		Test Purpose {
