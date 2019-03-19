@@ -1,6 +1,6 @@
 # Eclipse CoAP test suite
 
-A conformance test suite for the IoT protocol CoAP written in TTCN-3. You may find initial test purposes in https://github.com/eclipse/iottestware/tree/master/docs/CoAP/Conformance. The work is related to the ETSI standardization project https://portal.etsi.org/webapp/WorkProgram/Report_WorkItem.asp?WKI_ID=54400.
+A conformance test suite for the IoT protocol CoAP written in TTCN-3. You may find initial test purposes in https://github.com/eclipse/iottestware.coap/tree/master/docs/Conformance. The work is related to the ETSI standardization project https://portal.etsi.org/webapp/WorkProgram/Report_WorkItem.asp?WKI_ID=54400.
 
 ## Getting Started
 
