@@ -2557,7 +2557,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-			 the client entity sends the message containing
+			 the IUT entity receives the message containing
 			   version indicating value 1,
                msg_type indicating value 0, //Confirmable
                token_length indicating value 0,
@@ -2567,7 +2567,7 @@ Package mts_tst_coap_server_tps {
                
 			    }
 			then {
-      			the client entity receives the message containing 
+      			the IUT entity sends the message containing 
       			code indicating value "message format error";
 			   }
 		    } 
@@ -2965,7 +2965,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"Content-Format Registry"  
+ 			"The IUT is responding with 2.05 code on receiving message containing text/plain of content_format_options"  
  		
  		Reference 
  			"RFC7252#section12.3", 
@@ -2973,11 +2973,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a response
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a content_format_options named text_plain_content_format
+        }
         
  		Expected behaviour
 		ensure that {
@@ -2988,8 +2988,8 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format_options indicating value content_formats_id,
-				text_plain_options indicating value text_plain;
+				content_format_options indicating value content_format_options_id,
+				text_plain_content_format indicating value text_plain_content_format_id;
 			    }
 			    
 			then {
@@ -3005,7 +3005,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"Content-Format Registry"  
+ 			"The IUT is responding to a message containing link-format of content_format_options correctly"  
  		
  		Reference 
  			"RFC7252#section12.3", 
@@ -3013,11 +3013,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a response
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a content_format_options named link_format_content_format
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3028,8 +3028,8 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format_options indicating value content_formats_id,
-				link_format_options indicating value link_format;
+				content_format_options indicating value content_format_options_id,
+				link_format_content_format indicating value link_format_content_format_id;
 			    }
 			    
 			then {
@@ -3045,7 +3045,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"Content-Format Registry"  
+ 			"The IUT is processing to a xml_content_format message correctly"  
  		
  		Reference 
  			"RFC7252#section12.3", 
@@ -3053,11 +3053,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a response
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a content_format_options named xml_content_format
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3068,8 +3068,8 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format_options indicating value content_formats_id,
-				xml indicating value xml;
+				content_format_options indicating value content_format_options_id,
+				xml_content_format indicating value xml_content_format_id;
 			    }
 			    
 			then {
@@ -3081,11 +3081,11 @@ Package mts_tst_coap_server_tps {
 	    }
 	      
 	      Test Purpose {
-		TP Id TP_CoAP_Server_ContentFormat_application/octet_stream /* Sect. 12.3 */
+		TP Id TP_CoAP_Server_ContentFormat_application/octetstream /* Sect. 12.3 */
 		
 		/* Summary */
  		Test objective 
- 			"Content-Format Registry"  
+ 			"The IUT is responding with 2.05 code on receiving message containing content_format_options named octetstream"  
  		
  		Reference 
  			"RFC7252#section12.3", 
@@ -3093,11 +3093,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a response
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a content_format_options named octetstream_content_format
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3108,8 +3108,8 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format_options indicating value content_formats_id,
-				octet_stream indicating value octet_stream;
+				content_format_options indicating value content_format_options_id,
+				octetstream_content_format indicating value octetstream_content_format_id;
 			    }
 			    
 			then {
@@ -3125,7 +3125,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"Content-Format Registry"  
+ 			"The IUT is processing to a message containing content_format_options named xml_content_format correctly"  
  		
  		Reference 
  			"RFC7252#section12.3", 
@@ -3133,11 +3133,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a response
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a content_format_options named exi_content_format
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3148,8 +3148,8 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format_options indicating value content_formats_id,
-				exi indicating value exi;
+				content_format_options indicating value content_format_options_id,
+				exi_content_format indicating value exi_content_format_id;
 			    }
 			    
 			then {
@@ -3166,7 +3166,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"Content-Format Registry"  
+ 			"The IUT is processing to a content_format_options correctly"  
  		
  		Reference 
  			"RFC7252#section12.3", 
@@ -3174,11 +3174,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a response
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a content_format_options named json_content_format
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3189,8 +3189,8 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format_options indicating value content_formats_id,
-				json indicating value json;
+				content_format_options indicating value content_format_options_id,
+				json_content_format indicating value json_content_format_id;
 			    }
 			    
 			then {
@@ -3201,24 +3201,24 @@ Package mts_tst_coap_server_tps {
 		    } 
 	    }
 	    
-	     Test Purpose {
-		TP Id TP_CoAP_Server_ContentFormat_application/json /* Sect. 12.3 */
+	      Test Purpose {
+		TP Id TP_CoAP_Server_ContentFormat_application/json /* Sect. 5.9.2.10 */
 		
 		/* Summary */
  		Test objective 
- 			"Content-Format Registry"  
+ 			"The IUT is responding with 4.15 code to a message containg content_format_options"  
  		
  		Reference 
- 			"RFC7252#section12.3", 
- 			"https://tools.ietf.org/html/rfc7252#section-12.3"
+ 			"RFC7252#section5.9.2.10", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.9.2.10"
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a response
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity doesnot provide a content_format_options named json_content_format
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3229,14 +3229,14 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format_options_options indicating value content_formats_id,
-				json indicating value json;
+				content_format_options indicating value content_format_options_id,
+				json_content_format indicating value json_content_format_id;
 			    }
 			    
 			then {
 				the IUT entity sends the message containing 
 				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				code indicating value 4.15; /* Unsupported Content-Format */        
 				}
 		    } 
 	    }
@@ -3246,7 +3246,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"Content-Format Registry"  
+ 			"The IUT is responding to content_format_options with 4.02 response code"  
  		
  		Reference 
  			"RFC7252#section12.3", 
@@ -3254,11 +3254,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a response
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a content_format_options
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3269,11 +3269,10 @@ Package mts_tst_coap_server_tps {
 				token_length indicating value 0,
 				code indicating value 0.01,
 				msg_id corresponding to MSG_ID1,
-				content_format_options_options_options indicating value content_formats_id,
-				json indicating value json,
-				text_plain indicating value text_plain;
+				content_format_options indicating value content_format_options_id,
+				json_content_format indicating value json_content_format_id,
+				text_plain_content_format indicating value text_plain_content_format_id;
 			    }
-			    
 			then {
 				the IUT entity sends the message containing 
 				msg_type indicating value 2, /* ACknowledgement */ 
@@ -3287,7 +3286,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"Content-Format Registry"  
+ 			"The IUT is responding with Bad_Options to the message containing content_format_options "  
  		
  		Reference 
  			"RFC7252#section12.3", 
@@ -3295,11 +3294,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a response
-//        }
+        Initial conditions
+        with 
+        {
+           the IUT entity must provide a content_format_optionscontent
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3329,7 +3328,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"Content-Format Registry"  
+ 			"The IUT is processing to a content_format_options with a 4.02 code"  
  		
  		Reference 
  			"RFC7252#section12.3", 
@@ -3371,7 +3370,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"A client has to learn about the endpoint used by a server"  
+ 			"The IUT is able to provide all endpoints to the client"  
  		
  		Reference 
  			"RFC7252#section7.1", 
@@ -3417,11 +3416,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a option indicating value If-Match
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide an option named if_match
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3431,8 +3430,7 @@ Package mts_tst_coap_server_tps {
 				msg_type indicating value 0, /* CONfirmable */
 				token_length indicating value 0,
 				code indicating value 0.01,
-				msg_id corresponding to MSG_ID1,
-				if_match_options indicating value if_match;
+				if_match_options indicating value if_match_options_id;
 			    }
 			    
 			then {
@@ -3448,7 +3446,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"A Request with unrecognized options of class critical that occur in a Confirmable request must cause the return of 4.02"  
+ 			"The IUT responds with 4.02 code when a request is send with unrecognized options of class critical"  
  		
  		Reference 
  			"RFC7252#section5.4.1", 
@@ -3631,8 +3629,8 @@ Package mts_tst_coap_server_tps {
 				msg_id corresponding to MSG_ID1,
 				content_format_option indicating value content_formats_id,
 				link_format_option indicating value link_format,
-				content_format_option indicating value content_formats_id,
-				octet_stream indicating value octet_stream;
+				content_format_option indicating value content_formats_options_id,
+				octet_stream_content_format indicating value octet_stream_content_format_id;
 			    }
 			    
 			then {
@@ -3648,7 +3646,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"An option that is not repeatable MUST NOT be included more than once in a message"  
+ 			"The IUT responds with Bad_Option for messages containing options that are repeated more than once"  
  		
  		Reference 
  			"RFC7252#section5.4.5", 
@@ -3686,7 +3684,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"An option that is not repeatable MUST NOT be included more than once in a message"  
+ 			"A request with multiple IfNoNeMatchOptions responds with Bad_Options code"  
  		
  		Reference 
  			"RFC7252#section5.4.5", 
@@ -3722,7 +3720,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"An option that is not repeatable MUST NOT be included more than once in a message"  
+ 			"A request with multiple AcceptOptions responds with Bad_Options code"  
  		
  		Reference 
  			"RFC7252#section5.4.5", 
@@ -3742,8 +3740,8 @@ Package mts_tst_coap_server_tps {
 				the IUT entity receives a message containing 
 				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
-				accept_options indicating value content_formats_id,
-				accept_options indicating value content_formats_id;
+				accept_options indicating value accept_options_id,
+				accept_options indicating value accept_options_id;
 			    }
 			then {
 				the IUT entity sends the message containing 
@@ -3775,7 +3773,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the client entity sends the message containing
+				the IUT entity sends the message containing
 				header indicating value header,
 				msg_type indicating value 0, /* CONfirmable */
                 token_length indicating value 0,
@@ -3785,7 +3783,7 @@ Package mts_tst_coap_server_tps {
                 payload indicating value 0;
 			    }
 			then {
-				the client entity receives the message containing 
+				the IUT entity receives the message containing 
 				status indicating value "message format error";            
 			   }
 		    } 
@@ -3813,7 +3811,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the client entity sends a message containing 
+				the IUT entity sends a message containing 
 				msg_type indicating value 0, /* CONfirmable */
 				code indicating value 0.01,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
@@ -3822,7 +3820,7 @@ Package mts_tst_coap_server_tps {
 				option_length indicating value 15;             
 			    }
 			then {
-				the client entity receives the message containing 
+				the IUT entity receives the message containing 
 				status indicating value "message format error";            
 			   }
 		    } 
@@ -3850,7 +3848,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the client entity sends the message containing
+				the IUT entity sends the message containing
 				version indicating value 1,
                 msg_type indicating value 0, //Confirmable
                 token_length indicating value 0,
@@ -3858,7 +3856,7 @@ Package mts_tst_coap_server_tps {
                 msg_id corresponding to MSG_ID1;
 			    }
 			then {
-				the client entity receives the message containing 
+				the IUT entity receives the message containing 
 				status indicating value "message format error";            
 			   }
 		    }
@@ -3869,7 +3867,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			" Token Length 9-15 bytes are reserved MUST NOT be sent, and MUST be processed as a message format error."  
+ 			"A request with Token Length 9-15 bytes MUST be processed as a message format error."  
  		
  		Reference 
  			"RFC7252#section 3", 
@@ -3886,7 +3884,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the client entity sends the message containing
+				the IUT entity sends the message containing
 				version indicating value 1,
                 msg_type indicating value 0, //Confirmable
                 token_length indicating value 0,
@@ -3894,7 +3892,7 @@ Package mts_tst_coap_server_tps {
                 msg_id corresponding to MSG_ID1;
 			    }
 			then {
-				the client entity receives the message containing 
+				the IUT entity receives the message containing 
 				status indicating value "message format error";            
 			   }
 		    }
@@ -3922,7 +3920,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the client entity sends the message containing
+				the IUT entity receives the message containing
 				version indicating value 1,
                 msg_type indicating value 1, //Non-Confirmable
                 token_length indicating value 0,
@@ -3956,7 +3954,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the client entity sends the message containing
+				the IUT entity receives the message containing
 				version indicating value 1,
                 msg_type indicating value 2, //Acknowledgement
                 token_length indicating value 0,
@@ -3990,14 +3988,14 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the IUT entity receives a message containing 
+				the IUT entity sends a message containing 
 				msg_type indicating value 1, /* NON-CONfirmable */
 				token_length indicating value 0,
 				code indicating value 0.01,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
 			    }
 			then {
-				the IUT entity sends the message containing 
+				the IUT entity receives the message containing 
                  msg_type indicating value 0;         
 			   }
 		    }
@@ -4054,25 +4052,25 @@ Package mts_tst_coap_server_tps {
         Initial conditions
       with 
       {
-         the IUT entity must provide a resource named separate
+         the server entity must provide a resource named separate
       }
       
       Expected behaviour
       ensure that {
          when {
-            the IUT entity receives a message containing 
+            the IUT entity sends a message containing 
             msg_type indicating value 0, /* CONfirmable */
             code indicating value 0.01,
             uri_path corresponding to SEPARATE_RESOURCE;
-            and the IUT entity is not able to respond  
+            and the server entity is not able to respond  
          }
          then {
-            the IUT entity first sends an empty message and
-            the IUT entity sends the second message containing 
+            the IUT entity first receives an empty message and
+            the IUT entity receives the second message containing 
             msg_type indicating value 0.00, /* Confirmable */ 
             code indicating value 2.01;
             and 
-            the client entity sends an empty message containing 
+            the IUT entity sends an empty message containing 
             msg_type indicating value 2.00, /* Acknowledgement */ 
             code indicating value 0.00;
          }
@@ -4084,7 +4082,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"The Client MUST be able to retransmits after acknowledgement is not received"  
+ 			"The IUT MUST be able to retransmits after acknowledgement is not received"  
  		
  		Reference 
  			"RFC7252#section 4.8", 
@@ -4101,14 +4099,14 @@ Package mts_tst_coap_server_tps {
       Expected behaviour
       ensure that {
          when {
-            the IUT entity receives a message containing 
+            the IUT entity sends a message containing 
             msg_type indicating value 0, /* CONfirmable */
             code indicating value 0.01,
             payload indicating value 116 145 167 061 057 116 145 167 062;
             and after ACK_TIMEOUT 
          }
          then {
-            the client entity must retransmit the same message
+            the IUT entity must retransmit the same message
          }
       } 
 	    }
@@ -4118,7 +4116,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"The Client MUST be able to retransmits only upto MAX_RETRANSMIT if acknowledgement is not received"  
+ 			"The IUT sends a request only upto MAX_RETRANSMIT time if acknowledgement is not received"  
  		
  		Reference 
  			"RFC7252#section 4.2", 
@@ -4135,16 +4133,16 @@ Package mts_tst_coap_server_tps {
       Expected behaviour
       ensure that {
          when {
-            the IUT entity receives a message containing 
+            the IUT entity sends a message containing 
             msg_type indicating value 0, /* CONfirmable */
             code indicating value 0.01,
             payload indicating value 116 145 167 061 057 116 145 167 062;
             and after ACK_TIMEOUT 
-            and the client entity retransmit the same message until reaches MAX_RETRANSMIT 
+            and the IUT entity retransmit the same message until reaches MAX_RETRANSMIT 
             and doesnot receives the response_message
          }
          then {
-             the client entity process a failure
+             the IUT entity process a failure
          }
       } 
 	    }

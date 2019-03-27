@@ -18,6 +18,7 @@ Package mts_tst_coap_commons {
 		entities:
 		- IUT
 		- client
+		- server
 		;
 		events:
 		- receives
