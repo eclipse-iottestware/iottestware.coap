@@ -303,7 +303,7 @@ Package mts_tst_coap_server_tps {
    
    
    Test Purpose {
-      TP Id TP_CoAP_MessageFormat_Header_Type_ACK_001
+      TP Id TP_CoAP_MessageFormat_Header_Type_ACK_001receives
       
       Test objective
       "The IUT is rejecting an Acknowledgement message that is carrying an request."
@@ -4116,7 +4116,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"The IUT sends a request only upto MAX_RETRANSMIT time if acknowledgement is not received"  
+ 			"The IUT sends a request only upto MAX_RETRANSMIT if acknowledgement is not received"  
  		
  		Reference 
  			"RFC7252#section 4.2", 
@@ -4181,6 +4181,327 @@ Package mts_tst_coap_server_tps {
          }
       } 
 	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Options_ETagResponse_01 /* Sect. 5.10.6.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"An ETag response option can be included with any response for which there is a tagged representation."  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10.6.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.6.1"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide an options named ETag
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01, 
+				accept_options indicating value accept_options _id;    
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.04,
+				etag indicating value integer;    
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Options_ETagResponse_02 /* Sect. 5.10.6.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The ETag Option MUST NOT occur more than once in a response."  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10.6.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.6.1"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide an options named ETag
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01;   
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.04,
+				etag indicating value integer, 
+				etag indicating value integer;   
+			   }
+		    } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Server_Options_ETagRequest_01 /* Sect. 5.10.6.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT is responding with 2.03 valid response to the multiple ETag request"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10.6.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.6.1"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide an options named ETag
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01,
+				etag_options indicating value etag_options_id,
+				etag_options indicating value etag_options_id;  
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.03,location_path_options
+				etag indicating value integer; 
+			   }
+		    } 
+	    }
+	    
+	      Test Purpose {
+		TP Id TP_CoAP_Server_Options_ProxyUri /* Sect. 5.10.2 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"An endpoint receiving a request with a Proxy-Uri Option that is unable or unwilling to act as a forward-proxy for the request MUST cause the return of a 5.05 (Proxying Not Supported) response."  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10.2", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.2"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide an options named proxy_uri_options
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01,
+				proxy_uri_options indicating value proxy_uri_options_id; 
+				and the IUT entity fails to respond
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 5.05;
+			   }
+		    } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Server_Options_Location_Path_Location_Query /* Sect. 5.10.7 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT is responding with Bad Option for a location_path_option"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10.7", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.7"
+ 			
+ 		PICS Selection PIC_Server
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01,
+				location_path_options indicating value ".."; 				
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Options_Location_Path_Location_Query /* Sect. 5.10.7 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"If any reserved option numbers occurs in addition to Location-Path
+              and/or Location-Query and are not supported, then a 4.02 (Bad Option)
+                  error MUST be returned."  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10.7", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.7"
+ 			
+ 		PICS Selection PIC_Server
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01,
+				location_path_options indicating value location_path_options_id,
+				location_reserved_options indicating value location_reserved_options_id; 								
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Options_Conditional_Request /* Sect. 5.10.8 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"If the if-match condition given is not fulfilled, then the server MUST NOT perform the requested method.  Instead, the server MUST respond with the 4.12 (Precondition Failed) Response
+             Code."  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10.7", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.7"
+ 			
+ 		PICS Selection PIC_Server
+        
+         Initial conditions
+        with 
+        {
+        	the IUT entity specify certain conditions 
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01,
+				if_match_options indicating value if_match_options_id,
+				accept_options indicating value accept_options_id;
+				and the client entity fails to fulfill conditions
+											
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.12;
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Options_Conditional_Request /* Sect. 5.10.8 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"If the if-match condition given is fulfilled, then the server MUST perform the requested method."  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10.7", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.7"
+ 			
+ 		PICS Selection PIC_Server
+        
+         Initial conditions
+        with 
+        {
+        	the IUT entity specify certain conditions 
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01,
+				if_match_options indicating value if_match_options_id,
+				accept_options indicating value accept_options_id;
+				and the client entity fulfill conditions										
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.03;
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Options_Conditional_Request /* Sect. 5.10.8.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT responds with a 2.03 code when a If-Match condition on the ETag option is fulfilled. "  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10.8.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.8.1"
+ 			
+ 		PICS Selection PIC_Server
+        
+         Initial conditions
+        with 
+        {
+        	the IUT entity specify if_Match conditions 
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01,
+				if_match_options indicating value if_match_options_id, 
+				etag_options indicating value etag_options_id;
+				and the client entity fulfill if_match conditions										
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.03;
+			   }
+		    } 
+	    }
+	    
+	    
 	    
 /*TODO: mehrer If_Match / If_None_Match */
 		 
