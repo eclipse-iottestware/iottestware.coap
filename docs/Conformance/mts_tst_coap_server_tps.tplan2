@@ -2542,7 +2542,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_EmptyMessage /* Sect. 4.1 (CoAP-1135)*/
+		TP Id TP_CoAP_Server_EmptyMessage_01 /* Sect. 4.1 (CoAP-1135)*/
 		
 		/* Summary */
  		Test objective 
@@ -3001,7 +3001,7 @@ Package mts_tst_coap_server_tps {
 	    }	
 	    
 	     Test Purpose {
-		TP Id TP_CoAP_Server_ContentFormat_application/linkformat /* Sect. 12.3 */
+		TP Id TP_CoAP_Server_ContentFormat_application/linkformat_01 /* Sect. 12.3 */
 		
 		/* Summary */
  		Test objective 
@@ -3041,7 +3041,7 @@ Package mts_tst_coap_server_tps {
 	    }	
 	    
 	     Test Purpose {
-		TP Id TP_CoAP_Server_ContentFormat_application/xml /* Sect. 12.3 */
+		TP Id TP_CoAP_Server_ContentFormat_application/xml_01 /* Sect. 12.3 */
 		
 		/* Summary */
  		Test objective 
@@ -3162,7 +3162,7 @@ Package mts_tst_coap_server_tps {
 	    
 	    
 	      Test Purpose {
-		TP Id TP_CoAP_Server_ContentFormat_application/json /* Sect. 12.3 */
+		TP Id TP_CoAP_Server_ContentFormat_application/json_01 /* Sect. 12.3 */
 		
 		/* Summary */
  		Test objective 
@@ -3202,7 +3202,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	      Test Purpose {
-		TP Id TP_CoAP_Server_ContentFormat_application/json /* Sect. 5.9.2.10 */
+		TP Id TP_CoAP_Server_ContentFormat_application/json_02 /* Sect. 5.9.2.10 */
 		
 		/* Summary */
  		Test objective 
@@ -3242,7 +3242,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_ContentFormat_application/json_text/plain /* Sect. 12.3 */
+		TP Id TP_CoAP_Server_ContentFormat_application/json_text/plain_01 /* Sect. 12.3 */
 		
 		/* Summary */
  		Test objective 
@@ -3282,7 +3282,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_ContentFormat_application/json_application/xml /* Sect. 12.3 */
+		TP Id TP_CoAP_Server_ContentFormat_application/json_application/xml_01 /* Sect. 12.3 */
 		
 		/* Summary */
  		Test objective 
@@ -3324,7 +3324,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	      
 	        Test Purpose {
-		TP Id TP_CoAP_Server_ContentFormat_application/json_application/xml /* Sect. 12.3 */
+		TP Id TP_CoAP_Server_ContentFormat_application/json_application/xml_02 /* Sect. 12.3 */
 		
 		/* Summary */
  		Test objective 
@@ -3366,7 +3366,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_Service_Discovery /* Sect. 7.1 */
+		TP Id TP_CoAP_Server_Service_Discovery_01 /* Sect. 7.1 */
 		
 		/* Summary */
  		Test objective 
@@ -3429,8 +3429,8 @@ Package mts_tst_coap_server_tps {
 				version indicating value 1,
 				msg_type indicating value 0, /* CONfirmable */
 				token_length indicating value 0,
-				code indicating value 0.01,
-				if_match_options indicating value if_match_options_id;
+				code indicating value 0.01,                         /*    Unrecognized options         */
+				if_match_options indicating value if_match_options_id;  /*        if_match_options works with update request e.g. put     */
 			    }
 			    
 			then {
@@ -3443,45 +3443,6 @@ Package mts_tst_coap_server_tps {
 	    
 	    Test Purpose {
 		TP Id TP_CoAP_Server_Critical_Options_02 /* Sect. 5.4.1 */
-		
-		/* Summary */
- 		Test objective 
- 			"The IUT responds with 4.02 code when a request is send with unrecognized options of class critical"  
- 		
- 		Reference 
- 			"RFC7252#section5.4.1", 
- 			"https://tools.ietf.org/html/rfc7252#section-5.4.1"
- 			
- 		PICS Selection PIC_Server
-
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a option indicating value If-Match
-//        }
-        
- 		Expected behaviour
-		ensure that {
-			when {
-				the IUT entity receives a message containing 
-				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
-				token_length indicating value 0,
-				code indicating value 0.01,
-				msg_id corresponding to MSG_ID1,
-				if_none_match_option indicating value if_none_match;
-			    }
-			    
-			then {
-				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 4.02;        
-				}
-		    } 
-	    }
-	    
-	    Test Purpose {
-		TP Id TP_CoAP_Server_Critical_Options_03 /* Sect. 5.4.1 */
 		
 		/* Summary */
  		Test objective 
@@ -3520,7 +3481,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	     Test Purpose {
-		TP Id TP_CoAP_Server_Critical_Options_04 /* Sect. 5.4.1 */
+		TP Id TP_CoAP_Server_Critical_Options_03 /* Sect. 5.4.1 */
 		
 		/* Summary */
  		Test objective 
@@ -3560,7 +3521,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_Critical_Options_05 /* Sect. 5.4.1 */
+		TP Id TP_CoAP_Server_Critical_Options_04 /* Sect. 5.4.1 */
 		
 		/* Summary */
  		Test objective 
@@ -3600,7 +3561,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_Critical_Options_06 /* Sect. 5.4.5 */
+		TP Id TP_CoAP_Server_Critical_Options_05 /* Sect. 5.4.5 */
 		
 		/* Summary */
  		Test objective 
@@ -3642,7 +3603,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	       
 	      Test Purpose {
-		TP Id TP_CoAP_Server_Critical_Options_07 /* Sect. 5.4.5 */
+		TP Id TP_CoAP_Server_Critical_Options_06 /* Sect. 5.4.5 */
 		
 		/* Summary */
  		Test objective 
@@ -3680,7 +3641,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	     Test Purpose {
-		TP Id TP_CoAP_Server_Critical_Options_08 /* Sect. 5.4.5 */
+		TP Id TP_CoAP_Server_Critical_Options_07 /* Sect. 5.4.5 */
 		
 		/* Summary */
  		Test objective 
@@ -3716,7 +3677,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_Critical_Options_09 /* Sect. 5.4.5 */
+		TP Id TP_CoAP_Server_Critical_Options_08 /* Sect. 5.4.5 */
 		
 		/* Summary */
  		Test objective 
@@ -3752,7 +3713,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Client_Payload_Marker /* Sect. 3 */
+		TP Id TP_CoAP_Client_Payload_Marker_01 /* Sect. 3 */
 		
 		/* Summary */
  		Test objective 
@@ -3790,7 +3751,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Client_Option_Length /* Sect. 3 */
+		TP Id TP_CoAP_Client_Option_Length_01 /* Sect. 3 */
 		
 		/* Summary */
  		Test objective 
@@ -3827,7 +3788,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Client_Token_Length /* Sect. 3 */
+		TP Id TP_CoAP_Client_Token_Length_01 /* Sect. 3 */
 		
 		/* Summary */
  		Test objective 
@@ -3863,7 +3824,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Client_Token_Length /* Sect. 4.2 */
+		TP Id TP_CoAP_Client_Token_Length_02 /* Sect. 4.2 */
 		
 		/* Summary */
  		Test objective 
@@ -3899,11 +3860,11 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Non_Confirmable /* Sect. 4.3 */
+		TP Id TP_CoAP_Server_Non_Confirmable_01 /* Sect. 4.3 */
 		
 		/* Summary */
  		Test objective 
- 			"A Non-Confirmable Message Must not be Empty"  
+ 			"A Non-Confirmable Message send to the IUT Must not be Empty"  
  		
  		Reference 
  			"RFC7252#section 4.3", 
@@ -3933,7 +3894,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_Ack_Request /* Sect. 4.3 */
+		TP Id TP_CoAP_Server_Ack_Request_01 /* Sect. 4.3 */
 		
 		/* Summary */
  		Test objective 
@@ -3967,7 +3928,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Client_NON_CON /* Sect. 5.2.3 */
+		TP Id TP_CoAP_Client_NON_CON_01 /* Sect. 5.2.3 */
 		
 		/* Summary */
  		Test objective 
@@ -4002,8 +3963,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Client_NON_CON /* Sect. 5.2.3 */
-		
+		TP Id TP_CoAP_Client_NON_CON_02
 		/* Summary */
  		Test objective 
  			"The Client MUST be able to receive Non-Confirmable response in reply to a confirmable request"  
@@ -4037,11 +3997,11 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Client_Separate_Response /* Sect. 2.2 */
+		TP Id TP_CoAP_Client_Separate_Response_01 /* Sect. 2.2 */
 		
 		/* Summary */
  		Test objective 
- 			"The Client MUST be able to send an Acknowledgment in a Separate Response"  
+ 			"The IUT MUST be able to send an Acknowledgment in a Separate Response"  
  		
  		Reference 
  			"RFC7252#section 2.2", 
@@ -4078,7 +4038,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	     Test Purpose {
-		TP Id TP_CoAP_Client_Ack_Timeout /* Sect. 4.8 */
+		TP Id TP_CoAP_Client_Ack_Timeout_01 /* Sect. 4.8 */
 		
 		/* Summary */
  		Test objective 
@@ -4112,7 +4072,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Client_MAX_RETRANSMIT  /* Sect. 4.2 */
+		TP Id TP_CoAP_Client_MAX_RETRANSMIT_01  /* Sect. 4.2 */
 		
 		/* Summary */
  		Test objective 
@@ -4148,7 +4108,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_NoResponse  /* Sect. 2.1 */
+		TP Id TP_CoAP_Server_NoResponse_01  /* Sect. 2.1 */
 		
 		/* Summary */
  		Test objective 
@@ -4248,22 +4208,22 @@ Package mts_tst_coap_server_tps {
       			the IUT entity sends the message containing 
 				msg_type indicating value 2, /* ACknowledgement */ 
 				code indicating value 2.04,
-				etag indicating value integer, 
-				etag indicating value integer;   
+				etag1 indicating value integer;
+				and another etag2 must not be present  
 			   }
 		    } 
 	    }
 	    
 	     Test Purpose {
-		TP Id TP_CoAP_Server_Options_ETagRequest_01 /* Sect. 5.10.6.1 */
+		TP Id TP_CoAP_Server_Options_ETagRequest_01 /* Sect. 5.10.6.2 */
 		
 		/* Summary */
  		Test objective 
  			"The IUT is responding with 2.03 valid response to the multiple ETag request"  
  		
  		Reference 
- 			"RFC7252#section5.10.6.1", 
- 			"https://tools.ietf.org/html/rfc7252#section-5.10.6.1"
+ 			"RFC7252#section5.10.6.2", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.6.2"
  			
  		PICS Selection PIC_Server
 
@@ -4279,20 +4239,20 @@ Package mts_tst_coap_server_tps {
 				the IUT entity sends the message containing 
 				msg_type indicating value 0, /* CONfirmable */ 
 				code indicating value 0.01,
-				etag_options indicating value etag_options_id,
-				etag_options indicating value etag_options_id;  
+				etag_options_1 indicating value etag_options_id_1,
+				etag_options_2 indicating value etag_options_id_2;  
 			    }
 			then {
       			the IUT entity sends the message containing 
 				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.03,location_path_options
+				code indicating value 2.03,
 				etag indicating value integer; 
 			   }
 		    } 
 	    }
 	    
 	      Test Purpose {
-		TP Id TP_CoAP_Server_Options_ProxyUri /* Sect. 5.10.2 */
+		TP Id TP_CoAP_Server_Options_ProxyUri_01 /* Sect. 5.10.2 */
 		
 		/* Summary */
  		Test objective 
@@ -4307,7 +4267,7 @@ Package mts_tst_coap_server_tps {
         Initial conditions
         with 
         {
-        	the IUT entity must provide an options named proxy_uri_options
+        	the IUT entity must provide an options named proxy_uri_options and the IUT entity fails to respond
         }
         
  		Expected behaviour
@@ -4316,8 +4276,7 @@ Package mts_tst_coap_server_tps {
 				the IUT entity sends the message containing 
 				msg_type indicating value 0, /* CONfirmable */ 
 				code indicating value 0.01,
-				proxy_uri_options indicating value proxy_uri_options_id; 
-				and the IUT entity fails to respond
+				proxy_uri_options indicating value proxy_uri_options_id; 				
 			    }
 			then {
       			the IUT entity sends the message containing 
@@ -4328,7 +4287,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	     Test Purpose {
-		TP Id TP_CoAP_Server_Options_Location_Path_Location_Query /* Sect. 5.10.7 */
+		TP Id TP_CoAP_Server_Options_Location_Path_Location_Query_01 /* Sect. 5.10.7 */
 		
 		/* Summary */
  		Test objective 
@@ -4357,7 +4316,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_Options_Location_Path_Location_Query /* Sect. 5.10.7 */
+		TP Id TP_CoAP_Server_Options_Location_Path_Location_Query_02 /* Sect. 5.10.7 */
 		
 		/* Summary */
  		Test objective 
@@ -4378,7 +4337,7 @@ Package mts_tst_coap_server_tps {
 				msg_type indicating value 0, /* CONfirmable */ 
 				code indicating value 0.01,
 				location_path_options indicating value location_path_options_id,
-				location_reserved_options indicating value location_reserved_options_id; 								
+				location_reserved_options indicating value location_reserved_options_id; // 	 (128, 132, 136, 140) 							
 			    }
 			then {
       			the IUT entity sends the message containing 
@@ -4389,7 +4348,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_Options_Conditional_Request /* Sect. 5.10.8 */
+		TP Id TP_CoAP_Server_Options_Conditional_Request_01 /* Sect. 5.10.8 */
 		
 		/* Summary */
  		Test objective 
@@ -4405,7 +4364,7 @@ Package mts_tst_coap_server_tps {
          Initial conditions
         with 
         {
-        	the IUT entity specify certain conditions 
+        	the IUT entity specify if_Match conditions 
         }
         
  		Expected behaviour
@@ -4428,7 +4387,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_Options_Conditional_Request /* Sect. 5.10.8 */
+		TP Id TP_CoAP_Server_Options_Conditional_Request_02 /* Sect. 5.10.8 */
 		
 		/* Summary */
  		Test objective 
@@ -4443,7 +4402,7 @@ Package mts_tst_coap_server_tps {
          Initial conditions
         with 
         {
-        	the IUT entity specify certain conditions 
+        	the IUT entity specify if_Match conditions 
         }
         
  		Expected behaviour
@@ -4465,7 +4424,7 @@ Package mts_tst_coap_server_tps {
 	    }
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_Options_Conditional_Request /* Sect. 5.10.8.1 */
+		TP Id TP_CoAP_Server_Options_Conditional_Request_03 /* Sect. 5.10.8.1 */
 		
 		/* Summary */
  		Test objective 
@@ -4501,45 +4460,44 @@ Package mts_tst_coap_server_tps {
 		    } 
 	    }
 	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Options_Size1__01 /* Sect. 5.10.9 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The Size1 option provides size information about the resource
+   representation in a request."  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide an options named Size1
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01,
+				size1_options indicating value size1_options_id;       
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.13,
+				size_option indicating value size_max_value;  
+			   }
+		    } 
+	    }
 	    
-	    
-/*TODO: mehrer If_Match / If_None_Match */
-		 
-//		Test Purpose {
-//		TP Id TP_CoAP_Server_Options_Size1__001 /* Sect. 5.10.9 */
-//		
-//		/* Summary */
-// 		Test objective 
-// 			"The Size1 option provides size information about the resource
-//   representation in a request."  
-// 		
-// 		Reference 
-// 			"RFC7252#section5.10", 
-// 			"https://tools.ietf.org/html/rfc7252#section-5.10"
-// 			
-// 		PICS Selection PIC_Server
-//
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a response
-//        }
-//        
-// 		Expected behaviour
-//		ensure that {
-//			when {
-//				the IUT entity receives the message containing 
-//				msg_type indicating value 0, /* CONfirmable */ 
-//				code indicating value 0.02,
-//				size1 indicating value integer;       
-//			    }
-//			then {
-//      			the IUT entity sends the message containing 
-//				msg_type indicating value 2, /* ACknowledgement */ 
-//				code indicating value 2.03; /* valid */
-//			   }
-//		    } 
-//	    }
+/*TODO: mehrer If_Match / If_None_Match *
 	    
 //	    Test Purpose {
 //		TP Id TP_CoAP_Server_Options_Size1__002 /* Sect. 5.10.9 */

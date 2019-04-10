@@ -35,6 +35,7 @@ Package mts_tst_coap_commons {
 		- process
 		- informed
 		- conditions
+		- present
 		;
 		event templates :
 		- provideResource { the IUT entity provide a resource containing name indicating value DEFAULT_RESOURCE;}	
