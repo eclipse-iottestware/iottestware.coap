@@ -4421,7 +4421,7 @@ Package mts_tst_coap_server_tps {
 				code indicating value 2.03;
 			   }
 		    } 
-	    }
+	    } 
 	    
 	    Test Purpose {
 		TP Id TP_CoAP_Server_Options_Conditional_Request_03 /* Sect. 5.10.8.1 */
@@ -4469,8 +4469,8 @@ Package mts_tst_coap_server_tps {
    representation in a request."  
  		
  		Reference 
- 			"RFC7252#section5.10", 
- 			"https://tools.ietf.org/html/rfc7252#section-5.10"
+ 			"RFC7252#section5.10.9", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.9"
  			
  		PICS Selection PIC_Server
 
@@ -4494,6 +4494,459 @@ Package mts_tst_coap_server_tps {
 				code indicating value 4.13,
 				size_option indicating value size_max_value;  
 			   }
+		    } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Server_NON_NoResponse_01  /* Sect. 2.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT is responding with a Reset message (RST) when it is not able to process a Non-confirmable message"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 2.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section- 2.1"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+      with 
+      {
+         the IUT entity doesnot respond
+      }
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a message containing 
+            msg_type indicating value 1, //Non-confirmable
+            code indicating value 0.01,
+            payload indicating value 116 145 167 061 057 116 145 167 062;
+            and the IUT entity doesnot provide a suitable acknowledgment response
+         }
+         then {
+             the IUT entity sends the message containing 
+		     msg_type indicating value 3; /* Reset Message */
+         }
+      } 
+	    }
+	    
+	      Test Purpose {
+		TP Id TP_CoAP_Server_CON_Piggybacked_Response_01  /* Sect. 2.2 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT is responding with a Not Found (4.04) when it cannot provide a piggybacked response"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 2.2", 
+ 			"https://tools.ietf.org/html/rfc7252#section- 2.2"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+      with 
+      {
+         the IUT entity doesnot respond
+      }
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a message containing 
+            msg_type indicating value 0, //Confirmable
+            code indicating value 0.01,
+            payload indicating value 116 145 167 061 057 116 145 167 062;
+            and the IUT entity doesnot provide a suitable acknowledgment response
+         }
+         then {
+             the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.04; /* Not Found */
+         }
+      } 
+	    }
+	    
+	      Test Purpose {
+		TP Id TP_CoAP_Server_CON_Empty_Message_01  /* Sect. 4.1 */
+		
+		Test objective
+      "If any data is present after the message ID field in an empty message request, then it must be processed as a message format error"
+      
+      Reference 
+      "RFC7252#section-4.1", "https://tools.ietf.org/html/rfc7252#section-4.1"
+     
+      
+      PICS Selection PIC_Server
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a request message containing 
+               version indicating value 1,
+               msg_type indicating value 0, //Confirmable
+               token_length indicating value O,
+               code indicating value 0.00, //Empty Message
+               msg_id corresponding to MSG_ID1,
+               payload indicating value 116 145 167 061 057 116 145 167 062;
+         }
+         then {
+            the client entity times_out //2sec ACK_TIMEOUT due to message format error
+         }
+      }       
+   }
+   
+    Test Purpose {
+		TP Id TP_CoAP_Server_CON_Empty_Message_02  /* Sect. 4.2 */
+		
+		Test objective
+      "The empty message used only to elicit a reset message"
+      
+      Reference 
+      "RFC7252#section-4.2", "https://tools.ietf.org/html/rfc7252#section-4.2"
+     
+      PICS Selection PIC_Server
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a request message containing 
+               version indicating value 1,
+               msg_type indicating value 0, //Confirmable
+               token_length indicating value O,
+               code indicating value 0.00, //Empty Message
+               msg_id corresponding to MSG_ID1;
+         }
+         then {
+            the IUT entity sends the message containing 
+				msg_type indicating value 2; /* ACknowledgement */ 
+         }
+      }       
+   }
+   
+   Test Purpose {
+		TP Id TP_CoAP_Server_NON_Empty_Message_01  /* Sect. 4.2 */
+		
+		Test objective
+      "The use of an empty message in a Non-Confirmable request results in rejecting it"
+      
+      Reference 
+      "RFC7252#section-4.2", "https://tools.ietf.org/html/rfc7252#section-4.2"
+     
+      PICS Selection PIC_Server
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a request message containing 
+               version indicating value 1,
+               msg_type indicating value 1, //Non-Confirmable
+               token_length indicating value O,
+               code indicating value 1.00, //Empty Message
+               msg_id corresponding to MSG_ID1;
+         }
+         then {
+            the IUT entity rejects the message 
+         }
+      }       
+   }
+   
+   Test Purpose {
+		TP Id TP_CoAP_Server_CON_Accept  /* Sect. 5.4.3 */
+		
+		Test objective
+      "If the length of an option value in a request is outside the defined range, that option MUST be treated like an unrecognized option "
+      
+      Reference 
+      "RFC7252#section-5.4.3", "https://tools.ietf.org/html/rfc7252#section-5.4.3"
+     
+      PICS Selection PIC_Server
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a request message containing 
+               version indicating value 1,
+               msg_type indicating value 0, //Confirmable
+               token_length indicating value O,
+               code indicating value 0.01, //Get
+               accept_options indicating value accept_options_id; /* (Oustside the defined range) */
+         }
+         then {
+            the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02; /* Bad Option */
+         }
+      }       
+   }
+   
+  Test Purpose {
+		TP Id TP_CoAP_Server_Options_IfMatch_001 /* Sect. 5.4.5 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT is responding with 2.03 response when treating multiple IfMatch_options request"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.5", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.5"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a ifMatch_options /*TODO: Template */
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01, // Get
+				ifMatch_options indicating value ifMatch_options_id_1,
+				ifMatch_options indicating value ifMatch_options_id_2;    
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.03; /* valid */
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Options_NonRepeatable_001 /* Sect. 5.4.5 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"An option that is not repeatable MUST NOT be included more than once in a message"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.5", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.5"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a ifNoneMatch_options /*TODO: Template */
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01, // Get
+				ifNoneMatch_options indicating value ifNoneMatch_options_id1,
+				ifNoneMatch_options indicating value ifNoneMatch_options_id2;    
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.03; /* valid */
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_CON_Payload_01 /* Sect. 5.5 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"If a Method or Response Code is not defined to have a payload, then a sender MUST NOT include one, and a recipient MUST ignore it"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.5", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.5"
+ 			
+ 		PICS Selection PIC_Server
+        
+ 		Expected behaviour 
+		ensure that {
+			when {
+				the IUT entity receives the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01, // Get
+				ifNoneMatch_options indicating value ifNoneMatch_options_id1,
+				payload indicating value 116 145 167 061 057 116 145 167 062;  
+			    }
+			then {
+      			the IUT entity rejects the message 
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_CON_Options_01 /* Sect. 5.9.3.2 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT responds with 5.01 response code to an options request"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 5.9.3.2", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.9.3.2"
+ 			
+ 		PICS Selection PIC_Server
+        
+        Initial conditions
+        with 
+        {
+        	the IUT entity must not provide a accept_options /*TODO: Template */
+        }
+        
+ 		Expected behaviour 
+		ensure that {
+			when {
+				the IUT entity receives the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01, //Get
+                accept_options indicating value accept_options_id; 
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 5.01; /* Not Implemented */
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_CON_Options_02 /* Sect. 5.9.2.10 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"If an unsupported content-format is send as request, IUT corresponds with 4.15 error code"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 5.9.2.10", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.9.2.10"
+ 			
+ 		PICS Selection PIC_Server
+        
+        Initial conditions
+        with 
+        {
+        	the IUT entity must not provide a text_plain_content_format /*TODO: Template */
+        }
+        
+ 		Expected behaviour 
+		ensure that {
+			when {
+				the IUT entity receives the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01, //Get
+                content_format_options indicating value content_format_options_id,
+                text_plain_content_format indicating value text_plain_content_format_id; 
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.15; /* Unsupported Content-Format */
+			   }
+		    } 
+	    }
+   
+         Test Purpose {
+		TP Id TP_CoAP_Server_CON_Options_03 /* Sect. 5.9.2.9 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"If the maximum size of a request entity exceeds, then IUT responds with 4.13 (Request Entity Too Large) error code"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 5.9.2.9", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.9.2.9"
+ 			
+ 		PICS Selection PIC_Server
+        
+ 		Expected behaviour 
+		ensure that {
+			when {
+				the IUT entity receives the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01, //Get
+				size1_options indicating value size1_options_id;           
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.13,
+				size_option indicating value size_max_value; /*Request Entity Too Large */
+			   }
+		    } 
+	    }
+	    
+	      Test Purpose {
+		TP Id TP_CoAP_Server_CON_Options_Uri_Path_01 /* Sect. 5.10.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The value of a Uri-Path Option MUST NOT be . or .."  
+ 		
+ 		Reference 
+ 			"RFC7252#section 5.10.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10.1"
+ 			
+ 		PICS Selection PIC_Server
+        
+ 		Expected behaviour 
+			ensure that {
+			when {
+				the IUT entity sends the message containing 
+				msg_type indicating value 0, /* CONfirmable */ 
+				code indicating value 0.01,
+				location_path_options indicating value ".."; 				
+			    }
+			then {
+      			the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;
+			   }
+		    } 
+	    }
+        
+         Test Purpose {
+		TP Id TP_CoAP_Server_CON_Options_Uri_Path_02 /* Sect. 5.4.1 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"IUT responds with Bad Option to an unrecognized critical option"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 5.4.1", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.4.1"
+ 			
+ 		PICS Selection PIC_Server
+ 		
+         Initial conditions
+        with 
+        {
+        	the IUT entity must provide an option named uri_host_options
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.03, /*    Unrecognized options         */
+				host corresponding to DEFAULT_HOST, 
+				port corresponding to DEFAULT_PORT;  /*        Uri-Host options with 'put' will be considered unrecognized option     */
+			    }
+			    
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 4.02;        
+				}
 		    } 
 	    }
 	    
