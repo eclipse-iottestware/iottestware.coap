@@ -14,6 +14,7 @@ Package mts_tst_coap_commons {
 		pics:
 		- PIC_Server
 		- PIC_Client
+		- PIC_ETag_support
 		;
 		entities:
 		- IUT

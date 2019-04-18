@@ -4152,8 +4152,9 @@ Package mts_tst_coap_server_tps {
  		Reference 
  			"RFC7252#section5.10.6.1", 
  			"https://tools.ietf.org/html/rfc7252#section-5.10.6.1"
- 			
- 		PICS Selection PIC_Server
+ 		
+ 		
+ 		PICS Selection PIC_Server PIC_ETag_support	
 
         Initial conditions
         with 
