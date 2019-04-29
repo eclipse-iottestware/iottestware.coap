@@ -4734,7 +4734,7 @@ Package mts_tst_coap_server_tps {
         Initial conditions
         with 
         {
-        	the IUT entity must provide a ifNoneMatch_options /*TODO: Template */
+        	the IUT entity must provide a ifNoneMatch_options 
         }
         
  		Expected behaviour
@@ -4950,6 +4950,173 @@ Package mts_tst_coap_server_tps {
 				}
 		    } 
 	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Client_NON_Multicast_01 /* Sect. 8 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"IUT is able to send a Non-Confirmable GET request to a multicast address"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 8", 
+ 			"https://tools.ietf.org/html/rfc7252#section-8"
+ 			
+ 		PICS Selection PIC_Client
+ 		
+         Initial conditions
+        with 
+        {
+        	the IUT entity must provide the multicast
+        }
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the messages containing 
+				version indicating value 1,
+				msg_type indicating value 1, /* Non-CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.01;                          
+			    }
+		   then {
+				the IUT entity receives the messages containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Client_NON_Multicast_02 /* Sect. 8 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"IUT tries to send a Confirmable GET request to a multicast address"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 8", 
+ 			"https://tools.ietf.org/html/rfc7252#section-8"
+ 			
+ 		PICS Selection PIC_Client
+ 		
+         Initial conditions
+        with 
+        {
+        	the IUT entity must provide the multicast
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends a message containing 
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.01;                          
+			    }
+		   then {
+				the IUT entity times_out       
+				}
+		    } 
+	    }
+	    
+	Test Purpose {
+		TP Id TP_CoAP_Server_CON_ContentFormat /* Sect. 5.10.3. */
+		
+		/* Summary */
+ 		Test objective 
+ 			"IUT responds with code 2.03 for a message containing Option Content-Format"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a resource named coap_URI
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_type indicating value 0, /* CONfirmable */
+				code indicating value 0.02,
+				content_format_options indicating value content_formats_id,
+				payload indicating value 116 145 167 061 057 116 145 167 062;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.03;             
+			   }
+		    } 
+	    }    
+	    
+	     Test Purpose {
+      TP Id TP_CoAP_Server_CON_UriPath /* Sect. 5.8.2 */
+      
+      /* Summary */
+      Test objective 
+      "The IUT is responding with code 2.01 on a PUT request." 
+      
+      Reference 
+      "RFC7252#section-5.8.2", "https://tools.ietf.org/html/rfc7252#section-5.8.2"
+      
+      PICS Selection PIC_Server
+
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a message containing 
+            msg_type indicating value 0, /* CONfirmable */
+            code indicating value 0.02,
+            uri_path corresponding to DEFAULT_RESOURCE,
+            uri_path corresponding to NEW_RESOURCE;
+         }
+         then {
+            the IUT entity sends the message containing 
+            msg_type indicating value 2, /* ACknowledgement */ 
+            code indicating value 2.01;
+         }
+      } 
+   }
+   
+    Test Purpose {
+		TP Id TP_CoAP_Server_CON_HTTPUri /* Sect. 5.8.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The PUT method requests the proxy to create a resource on the origin server"  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.8.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.8.3"
+ 			
+ 		PICS Selection PIC_Server
+
+      
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.03,
+				msg_id corresponding to MSG_ID1,
+				proxy_uri corresponding to HTTP_URI;
+			    }
+			then {
+				the IUT entity sends the message containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.01;        
+				}
+		    } 
+	    }	
 	    
 /*TODO: mehrer If_Match / If_None_Match *
 	    
