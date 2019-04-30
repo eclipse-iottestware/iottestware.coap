@@ -1,0 +1,423 @@
+/******************************************************************************
+* Copyright (c) 2018  Fraunhofer FOKUS
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*     Avdoot Chalke
+*     Sascha Hackel
+*     Marion Jost
+******************************************************************************/
+
+Package mts_tst_coap_server_tps { 
+	
+	 import all from mts_tst_coap_commons;
+	
+	 Test Purpose {
+		TP Id TP_CoAP_Client_Payload_Marker_01 /* Sect. 3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The presence of a Payload marker followed by a zero-length payload MUST be processed as a message format error"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the Client entity must provide a payload indicating value zero-length 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the message containing
+				header indicating value header,
+				msg_type indicating value 0, /* CONfirmable */
+                token_length indicating value 0,
+                host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
+				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
+                option_delta indicating value 15,
+                payload indicating value 0;
+			    }
+			then {
+				the IUT entity receives the message containing 
+				status indicating value "message format error";            
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_Option_Length_01 /* Sect. 3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"If the Option Length field is set to 15, it MUST be processed as a message format error"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the Client entity must provide a payload indicating value zero-length 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends a message containing 
+				msg_type indicating value 0, /* CONfirmable */
+				code indicating value 0.01,
+				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
+				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
+				option_delta indicating value 3, /*URI-Host */
+				option_length indicating value 15;             
+			    }
+			then {
+				the IUT entity receives the message containing 
+				status indicating value "message format error";            
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_Token_Length_01 /* Sect. 3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			" Token Length 9-15 bytes are reserved MUST NOT be sent, and MUST be processed as a message format error."  
+ 		
+ 		Reference 
+ 			"RFC7252#section 3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a content-format indicating value 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the message containing
+				version indicating value 1,
+                msg_type indicating value 0, //Confirmable
+                token_length indicating value 0,
+                code indicating value 0.00, //Empty Message
+                msg_id corresponding to MSG_ID1;
+			    }
+			then {
+				the IUT entity receives the message containing 
+				status indicating value "message format error";            
+			   }
+		    }
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_Token_Length_02 /* Sect. 4.2 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"A request with Token Length 9-15 bytes MUST be processed as a message format error."  
+ 		
+ 		Reference 
+ 			"RFC7252#section 3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity must provide a content-format indicating value 
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the message containing
+				version indicating value 1,
+                msg_type indicating value 0, //Confirmable
+                token_length indicating value 0,
+                code indicating value 0.00, //Empty Message
+                msg_id corresponding to MSG_ID1;
+			    }
+			then {
+				the IUT entity receives the message containing 
+				status indicating value "message format error";            
+			   }
+		    }
+	    }
+	    
+	      Test Purpose {
+		TP Id TP_CoAP_Client_NON_CON_01 /* Sect. 5.2.3 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The Client MUST be able to receive Confirmable response in reply to a Non-confirmable request"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 5.2.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.2.3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity sends Confirmable_Response to Non-Confirmable_Request
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends a message containing 
+				msg_type indicating value 1, /* NON-CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.01,
+				payload indicating value 116 145 167 061 057 116 145 167 062;
+			    }
+			then {
+				the IUT entity receives the message containing 
+                 msg_type indicating value 0;         
+			   }
+		    }
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_NON_CON_02
+		/* Summary */
+ 		Test objective 
+ 			"The Client MUST be able to receive Non-Confirmable response in reply to a confirmable request"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 5.2.3", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.2.3"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//        with 
+//        {
+//        	the IUT entity sends Non-Confirmable_Response to Confirmable_Request
+//        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+				msg_type indicating value 0,
+				token_length indicating value 0,
+				code indicating value 0.01,
+				payload indicating value 116 145 167 061 057 116 145 167 062;
+			    }
+			then {
+				the IUT entity sends the message containing 
+                 msg_type indicating value 1;         
+			   }
+		    }
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_Separate_Response_01 /* Sect. 2.2 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT MUST be able to send an Acknowledgment in a Separate Response"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 2.2", 
+ 			"https://tools.ietf.org/html/rfc7252#section-2.2"
+ 			
+ 		PICS Selection PIC_Client
+
+        Initial conditions
+      with 
+      {
+         the server entity must provide a resource named separate
+      }
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity sends a message containing 
+            msg_type indicating value 0, /* CONfirmable */
+            code indicating value 0.01,
+            uri_path corresponding to SEPARATE_RESOURCE;
+            and the server entity is not able to respond  
+         }
+         then {
+            the IUT entity first receives an empty message and
+            the IUT entity receives the second message containing 
+            msg_type indicating value 0.00, /* Confirmable */ 
+            code indicating value 2.01;
+            and 
+            the IUT entity sends an empty message containing 
+            msg_type indicating value 2.00, /* Acknowledgement */ 
+            code indicating value 0.00;
+         }
+      } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Client_Ack_Timeout_01 /* Sect. 4.8 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT MUST be able to retransmits after acknowledgement is not received"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 4.8", 
+ 			"https://tools.ietf.org/html/rfc7252#section-4.8"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//      with 
+//      {
+//         the IUT entity must provide a resource named separate
+//      }
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity sends a message containing 
+            msg_type indicating value 0, /* CONfirmable */
+            code indicating value 0.01,
+            payload indicating value 116 145 167 061 057 116 145 167 062;
+            and after ACK_TIMEOUT 
+         }
+         then {
+            the IUT entity must retransmit the same message
+         }
+      } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Client_MAX_RETRANSMIT_01  /* Sect. 4.2 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT sends a request only upto MAX_RETRANSMIT if acknowledgement is not received"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 4.2", 
+ 			"https://tools.ietf.org/html/rfc7252#section-4.2"
+ 			
+ 		PICS Selection PIC_Client
+
+//        Initial conditions
+//      with 
+//      {
+//         the IUT entity must provide a resource named separate
+//      }
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity sends a message containing 
+            msg_type indicating value 0, /* CONfirmable */
+            code indicating value 0.01,
+            payload indicating value 116 145 167 061 057 116 145 167 062;
+            and after ACK_TIMEOUT 
+            and the IUT entity retransmit the same message until reaches MAX_RETRANSMIT 
+            and doesnot receives the response_message
+         }
+         then {
+             the IUT entity process a failure
+         }
+      } 
+	    }
+	
+	
+	 Test Purpose {
+		TP Id TP_CoAP_Client_NON_Multicast_01 /* Sect. 8 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"IUT is able to send a Non-Confirmable GET request to a multicast address"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 8", 
+ 			"https://tools.ietf.org/html/rfc7252#section-8"
+ 			
+ 		PICS Selection PIC_Client
+ 		
+         Initial conditions
+        with 
+        {
+        	the IUT entity must provide the multicast
+        }
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends the messages containing 
+				version indicating value 1,
+				msg_type indicating value 1, /* Non-CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.01;                          
+			    }
+		   then {
+				the IUT entity receives the messages containing 
+				msg_type indicating value 2, /* ACknowledgement */ 
+				code indicating value 2.05;        
+				}
+		    } 
+	    }
+	    
+	     Test Purpose {
+		TP Id TP_CoAP_Client_NON_Multicast_02 /* Sect. 8 */
+		
+		/* Summary */
+ 		Test objective 
+ 			"IUT tries to send a Confirmable GET request to a multicast address"  
+ 		
+ 		Reference 
+ 			"RFC7252#section 8", 
+ 			"https://tools.ietf.org/html/rfc7252#section-8"
+ 			
+ 		PICS Selection PIC_Client
+ 		
+         Initial conditions
+        with 
+        {
+        	the IUT entity must provide the multicast
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity sends a message containing 
+				version indicating value 1,
+				msg_type indicating value 0, /* CONfirmable */
+				token_length indicating value 0,
+				code indicating value 0.01;                          
+			    }
+		   then {
+				the IUT entity times_out       
+				}
+		    } 
+	    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
