@@ -3533,11 +3533,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a option indicating value Uri-Host
-//        }
+    	Initial conditions
+	       with 
+			        {
+			        	the IUT entity must provide a UriHost
+			        }
         
  		Expected behaviour
 		ensure that {
@@ -3573,11 +3573,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a content-format
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a contentformat
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3615,11 +3615,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a content-format
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a UriHost
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3653,11 +3653,11 @@ Package mts_tst_coap_server_tps {
  			
  		PICS Selection PIC_Server
 
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a content-format
-//        }
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a IfNoNeMatchOptions
+        }
         
  		Expected behaviour
 		ensure that {
@@ -3877,7 +3877,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the IUT entity sends the message containing 
+				the IUT entity receives the message containing 
 				msg_type indicating value 0, /* CONfirmable */ 
 				code indicating value 0.01;   
 			    }
@@ -3913,7 +3913,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the IUT entity sends the message containing 
+				the IUT entity receives the message containing 
 				msg_type indicating value 0, /* CONfirmable */ 
 				code indicating value 0.01,
 				etag_options_1 indicating value etag_options_id_1,
@@ -3950,7 +3950,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the IUT entity sends the message containing 
+				the IUT entity receives the message containing 
 				msg_type indicating value 0, /* CONfirmable */ 
 				code indicating value 0.01,
 				proxy_uri_options indicating value proxy_uri_options_id; 				
@@ -3979,7 +3979,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the IUT entity sends the message containing 
+				the IUT entity receives the message containing 
 				msg_type indicating value 0, /* CONfirmable */ 
 				code indicating value 0.01,
 				location_path_options indicating value ".."; 				
@@ -4010,7 +4010,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the IUT entity sends the message containing 
+				the IUT entity receives the message containing 
 				msg_type indicating value 0, /* CONfirmable */ 
 				code indicating value 0.01,
 				location_path_options indicating value location_path_options_id,
@@ -4047,7 +4047,7 @@ Package mts_tst_coap_server_tps {
  		Expected behaviour
 		ensure that {
 			when {
-				the IUT entity sends the message containing 
+				the IUT entity receives the message containing 
 				msg_type indicating value 0, /* CONfirmable */ 
 				code indicating value 0.01,
 				if_match_options indicating value if_match_options_id,
@@ -4425,7 +4425,7 @@ Package mts_tst_coap_server_tps {
 			then {
       			the IUT entity sends the message containing 
 				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.03; /* valid */
+				code indicating value 4.02; /* valid */
 			   }
 		    } 
 	    }
