@@ -11,7 +11,7 @@
 *     Marion Jost
 ******************************************************************************/
 
-Package mts_tst_coap_server_tps { 
+Package mts_tst_coap_client_tps { 
 	
 	 import all from mts_tst_coap_commons;
 	
