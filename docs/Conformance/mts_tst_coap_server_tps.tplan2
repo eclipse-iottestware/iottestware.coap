@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (c) 2018  Fraunhofer FOKUS
+* Copyright (c) 2019  Fraunhofer FOKUS
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -19,7 +19,7 @@ Package mts_tst_coap_server_tps {
       TP Id TP_CoAP_MessageFormat_Header_Version_001
       
       Test objective
-      "The IUT is responding on a correctly set version number."
+      "The IUT shall respond on a correctly set version number."
       
       Reference 
       "RFC7252#section-3", "https://tools.ietf.org/html/rfc7252#section-3",
@@ -33,17 +33,17 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable,
                token_length indicating value 0,
-               code indicating value 0.00, //Empty Message
+               code indicating value EMPTY_METHOD,
                msg_id corresponding to MSG_ID1;
          }
          then {
             the IUT entity sends a response message containing
                version indicating value 1,
-               msg_type indicating value 3, //Reset
+               msg_type indicating value ReSeT, 
                token_length indicating value 0,
-               code indicating value 0.00, //Empty Message
+               code indicating value EMPTY_METHOD, 
                msg_id corresponding to MSG_ID1;
             or the client entity times_out //from section 4.2 (b)
          }
@@ -54,7 +54,7 @@ Package mts_tst_coap_server_tps {
       TP Id TP_CoAP_MessageFormat_Header_Version_002
       
       Test objective
-      "The IUT silently ignores an incorrectly set version number."
+      "The IUT shall silently ignore an incorrectly set version number."
       
       Reference 
       "RFC7252#section-3", "https://tools.ietf.org/html/rfc7252#section-3",
@@ -68,9 +68,9 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 3, //reserved
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value 0,
-               code indicating value 0.00, //Empty Message
+               code indicating value EMPTY_METHOD, 
                msg_id corresponding to MSG_ID1;
          }
          then {
@@ -83,7 +83,7 @@ Package mts_tst_coap_server_tps {
       TP Id TP_CoAP_MessageFormat_Header_Type_CON_001
       
       Test objective
-      "The IUT is acknowledging on a Confirmable message correctly."
+      "The IUT shall acknowledge on a Confirmable message correctly."
       
       Reference 
       "RFC7252#section-3", "https://tools.ietf.org/html/rfc7252#section-3",
@@ -96,17 +96,17 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value 0,
-               code indicating value 0.01, //GET request
+               code indicating value GET_METHOD, 
                msg_id corresponding to MSG_ID1;
          }
          then {
             the IUT entity sends a response message containing
                version indicating value 1,
-               msg_type indicating value 2, //Acknowledge, from section 4.2 (a)
+               msg_type indicating value ACKnowledgement, //from section 4.2 (a)
                token_length indicating value 0,
-               code indicating value 2.05, //Success (Content)
+               code indicating value CONTENT, //Success (Content)
                msg_id corresponding to MSG_ID1; 
          }
       } 
@@ -116,7 +116,7 @@ Package mts_tst_coap_server_tps {
       TP Id TP_CoAP_MessageFormat_Header_Type_CON_002
       
       Test objective
-      "The IUT is rejecting a Confirmable message that is carrying a response."
+      "The IUT shall reject a Confirmable message that is carrying a response."
       
       Reference 
       "RFC7252#section-3", "https://tools.ietf.org/html/rfc7252#section-3",
@@ -129,7 +129,7 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value 0,
                code indicating value 2.03, //Valid, respnse code
                msg_id corresponding to MSG_ID1;
@@ -137,9 +137,9 @@ Package mts_tst_coap_server_tps {
          then {
             the IUT entity sends a response message containing
                version indicating value 1,
-               msg_type indicating value 3, //Reset
+               msg_type indicating value ReSeT, 
                token_length indicating value 0,
-               code indicating value 0.00, //Empty Message
+               code indicating value EMPTY_METHOD, 
                msg_id corresponding to MSG_ID1;
             or the client entity times_out
          }
@@ -164,7 +164,7 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value 0,
                code indicating value 1.00, //reserved
                msg_id corresponding to MSG_ID1;
@@ -172,9 +172,9 @@ Package mts_tst_coap_server_tps {
          then {
             the IUT entity sends a response message containing
                version indicating value 1,
-               msg_type indicating value 3, //Reset
+               msg_type indicating value ReSeT, 
                token_length indicating value 0,
-               code indicating value 0.00, //Empty Message
+               code indicating value EMPTY_METHOD, 
                msg_id corresponding to MSG_ID1;
             or the client entity times_out
          }
@@ -198,17 +198,17 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 1, //Non-confirmable
+               msg_type indicating value NONconfirmable, 
                token_length indicating value 0,
-               code indicating value 0.01, //GET request
+               code indicating value GET_METHOD, 
                msg_id corresponding to MSG_ID1;
          }
          then {
             the IUT entity sends a response message containing
                version indicating value 1,
-               msg_type indicating value 1, //Non-confirmable
+               msg_type indicating value NONconfirmable, 
                token_length indicating value 0,
-               code indicating value 2.05, //Success (Content)
+               code indicating value CONTENT, //Success (Content)
                msg_id corresponding to MSG_ID2;
          }
       } 
@@ -231,9 +231,9 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 1, //Non-confirmable
+               msg_type indicating value NONconfirmable, 
                token_length indicating value 0,
-               code indicating value 0.00, //Empty Message
+               code indicating value EMPTY_METHOD, 
                msg_id corresponding to MSG_ID1;
          }
          then {
@@ -259,7 +259,7 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 1, //Non-confirmable
+               msg_type indicating value NONconfirmable, 
                token_length indicating value 0,
                code indicating value 2.03, //Success (Valid)
                msg_id corresponding to MSG_ID1;
@@ -289,7 +289,7 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value 0,
                code indicating value 6.00, //reserved
                msg_id corresponding to MSG_ID1;
@@ -319,7 +319,7 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 2, //Acknowledgement
+               msg_type indicating value ACKnowledgement, 
                token_length indicating value 0,
                code indicating value 0.02, //POST request
                msg_id corresponding to MSG_ID1;
@@ -347,7 +347,7 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 2, //Acknowledgement
+               msg_type indicating value ACKnowledgement,
                token_length indicating value 0,
                code indicating value 7.00, //reserved
                msg_id corresponding to MSG_ID1;
@@ -375,7 +375,7 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 3, //Reset
+               msg_type indicating value ReSeT, 
                token_length indicating value 0,
                code indicating value 0.02, //PUT request
                msg_id corresponding to MSG_ID1;
@@ -403,18 +403,18 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value 0,
-               code indicating value 0.01, //GET request
+               code indicating value GET_METHOD, 
                msg_id corresponding to MSG_ID1,
                token corresponding to TOKEN;
          }
          then {
             the IUT entity sends a response message containing
                version indicating value 1,
-               msg_type indicating value 3, //Reset
+               msg_type indicating value ReSeT, 
                token_length indicating value LENGTH_TOKEN,
-               code indicating value 0.00, //Empty Message
+               code indicating value EMPTY_METHOD, 
                msg_id corresponding to MSG_ID1,
                token corresponding to TOKEN;
             or the client entity times_out
@@ -439,9 +439,9 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value LENGTH_TOKEN_INVALID,
-               code indicating value 0.01, //GET request
+               code indicating value GET_METHOD, 
                msg_id corresponding to MSG_ID1;
          }
          then {
@@ -467,9 +467,9 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value LENGTH_TOKEN_RESERVED,
-               code indicating value 0.01, //GET request
+               code indicating value GET_METHOD, 
                msg_id corresponding to MSG_ID1;
          }
          then {
@@ -502,17 +502,17 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a message containing
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
-               code indicating value 0.01, //GET request
+               msg_type indicating value CONfirmable, 
+               code indicating value GET_METHOD, 
                msg_id corresponding to MSG_ID1,
                uri_path corresponding to DEFAULT_RESOURCE;
          }
          then {
             the IUT entity sends the message containing 
                version indicating value 1,
-               msg_type indicating value 1, //Acknowledgement
+               msg_type indicating value ACKnowledgement,
                token_length indicating value 0,
-               code indicating value 2.05, //Success (Content)
+               code indicating value CONTENT, //Success (Content)
                msg_id corresponding to MSG_ID1,
                option corresponding to any or omitted,
                payload corresponding to DEFAULT_RESOURCE_CONTENT;   
@@ -549,7 +549,7 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a message containing
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                code indicating value METHOD_NOT_ALLOWED,
                msg_id corresponding to MSG_ID1,
                uri_path corresponding to METHOD_NOT_ALLOWED_RESOURCE;
@@ -557,7 +557,7 @@ Package mts_tst_coap_server_tps {
          then {
             the IUT entity sends the message containing 
                version indicating value 1,
-               msg_type indicating value 1, //Acknowledgement
+               msg_type indicating value ACKnowledgement,
                token_length indicating value 0,
                code indicating value 4.05, //Client Error (Method Not Allowed)
                msg_id corresponding to MSG_ID1,
@@ -594,15 +594,15 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a message containing
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
-               code indicating value 0.01, //GET request 
+               msg_type indicating value CONfirmable, 
+               code indicating value GET_METHOD,  
                msg_id corresponding to MSG_ID1,
                uri_path corresponding to ANY_RESOURCE;
          }
          then {
             the IUT entity sends the message containing 
                version indicating value 1,
-               msg_type indicating value 1, //Acknowledgement
+               msg_type indicating value ACKnowledgement,
                token_length indicating value 0,
                code indicating value 4.04, //Client Error (Not found)
                msg_id corresponding to MSG_ID1,
@@ -639,7 +639,7 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a message containing
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                code indicating value PUT_OR_POST, //request 
                msg_id corresponding to MSG_ID1,
                uri_path corresponding to STORAGE_RESOURCE,
@@ -648,7 +648,7 @@ Package mts_tst_coap_server_tps {
          then {
             the IUT entity sends the message containing 
                version indicating value 1,
-               msg_type indicating value 1, //Acknowledgement
+               msg_type indicating value ACKnowledgement,
                token_length indicating value 0,
                code indicating value 2.01, //Success (Created)
                msg_id corresponding to MSG_ID1,
@@ -685,7 +685,7 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a message containing
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                code indicating value PUT_OR_POST, //request 
                msg_id corresponding to MSG_ID1,
                uri_path corresponding to STORAGE_RESOURCE,
@@ -694,7 +694,7 @@ Package mts_tst_coap_server_tps {
          then {
             the IUT entity sends the message containing 
                version indicating value 1,
-               msg_type indicating value 1, //Acknowledgement
+               msg_type indicating value ACKnowledgement,
                token_length indicating value 0,
                code indicating value 2.04, //Success (Changed)
                msg_id corresponding to MSG_ID1,
@@ -731,7 +731,7 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a message containing
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                code indicating value 0.04, //request 
                msg_id corresponding to MSG_ID1,
                uri_path corresponding to DELETE_RESOURCE;
@@ -739,7 +739,7 @@ Package mts_tst_coap_server_tps {
          then {
             the IUT entity sends the message containing 
                version indicating value 1,
-               msg_type indicating value 1, //Acknowledgement
+               msg_type indicating value ACKnowledgement,
                token_length indicating value 0,
                code indicating value 2.02, //Success (Deleted)
                msg_id corresponding to MSG_ID1,
@@ -766,9 +766,9 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value 0,
-               code indicating value 0.01, //GET request
+               code indicating value GET_METHOD, 
                msg_id corresponding to MSG_ID1,
                payload_marker corresponding to PAYLOAD_MARKER,
                payload corresponding to EMPTY_PAYLOAD;
@@ -802,20 +802,20 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
-            code indicating value 0.01,
+            msg_type indicating value CONfirmable, 
+            code indicating value GET_METHOD,
             uri_path corresponding to SEPARATE_RESOURCE;
          }
          then {
             
             the IUT entity first sends an empty message and
             the IUT entity sends the second message containing 
-            msg_type indicating value 0.00, /* Confirmable */ 
+            msg_type indicating value CONfirmable,  
             code indicating value 2.01;
             and 
             the client entity sends an empty message containing 
-            msg_type indicating value 2.00, /* Acknowledgement */ 
-            code indicating value 0.00;
+            msg_type indicating value ACKnowledgement, 
+            code indicating value EMPTY_METHOD;
          }
       } 
    }
@@ -842,7 +842,7 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.02,
             uri_path corresponding to SEPARATE_RESOURCE,
             payload indicating value 116 145 167 061 057 116 145 167 062;
@@ -851,12 +851,12 @@ Package mts_tst_coap_server_tps {
             
             the IUT entity first sends an empty message and
             the IUT entity sends the second message containing 
-            msg_type indicating value 0.00, /* Confirmable */ 
+            msg_type indicating value CONfirmable,  
             code indicating value 2.01;
             and 
             the client entity sends an empty message containing 
-            msg_type indicating value 2.00, /* Acknowledgement */ 
-            code indicating value 0.00;
+            msg_type indicating value ACKnowledgement, 
+            code indicating value EMPTY_METHOD;
          }
       } 
    }
@@ -883,7 +883,7 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.02,
             uri_path corresponding to SEPARATE_RESOURCE,
             uri_path corresponding to SECOND_LVL_RESOURCE,
@@ -894,14 +894,14 @@ Package mts_tst_coap_server_tps {
             
             the IUT entity first sends an empty message and
             the IUT entity sends the second message containing 
-            msg_type indicating value 0.00, /* Confirmable */ 
+            msg_type indicating value CONfirmable,  
             code indicating value 2.04,
             Location_Path corresponding to SECOND_LVL_RESOURCE,
             Location_Path corresponding to THIRD_LVL_RESOURCE; /*Try to add two new resources named New1 and New2 which already exist.*/
             and 
             the client entity sends an empty message containing 
-            msg_type indicating value 2.00, /* Acknowledgement */ 
-            code indicating value 0.00;
+            msg_type indicating value ACKnowledgement, 
+            code indicating value EMPTY_METHOD;
          }
       } 
    }
@@ -928,7 +928,7 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.02,
             uri_path corresponding to SEPARATE_RESOURCE,
             uri_path corresponding to SECOND_LVL_RESOURCE,
@@ -939,14 +939,14 @@ Package mts_tst_coap_server_tps {
             
             the IUT entity first sends an empty message and
             the IUT entity sends the second message containing 
-            msg_type indicating value 0.00, /* Confirmable */ 
+            msg_type indicating value CONfirmable,  
             code indicating value 2.04,
             Location_Path corresponding to SECOND_LVL_RESOURCE,
             Location_Path corresponding to NEW_RESOURCE; /*Change resource separate/New1/New2 to separate/New1/New1a.*/
             and 
             the client entity sends an empty message containing 
-            msg_type indicating value 2.00, /* Acknowledgement */ 
-            code indicating value 0.00;
+            msg_type indicating value ACKnowledgement, 
+            code indicating value EMPTY_METHOD;
          }
       } 
    }
@@ -973,7 +973,7 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.02,
             uri_path corresponding to SEPARATE_RESOURCE;
          }
@@ -981,12 +981,12 @@ Package mts_tst_coap_server_tps {
             
             the IUT entity first sends an empty message and
             the IUT entity sends the second message containing 
-            msg_type indicating value 0.00, /* Confirmable */ 
+            msg_type indicating value CONfirmable,  
             code indicating value 4.05; 
             and 
             the client entity sends an empty message containing 
-            msg_type indicating value 2.00, /* Acknowledgement */ 
-            code indicating value 0.00;
+            msg_type indicating value ACKnowledgement, 
+            code indicating value EMPTY_METHOD;
          }
       } 
    }
@@ -1013,7 +1013,7 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.03,
             uri_path corresponding to SEPARATE_RESOURCE,
             payload indicating value 116 145 167 061 057;
@@ -1022,13 +1022,13 @@ Package mts_tst_coap_server_tps {
             
             the IUT entity first sends an empty message and
             the IUT entity sends the second message containing 
-            msg_type indicating value 0.00, /* Confirmable */ 
+            msg_type indicating value CONfirmable,  
             code indicating value 2.01,
             Location_Path corresponding to SECOND_LVL_RESOURCE; 
             and 
             the client entity sends an empty message containing 
-            msg_type indicating value 2.00, /* Acknowledgement */ 
-            code indicating value 0.00;
+            msg_type indicating value ACKnowledgement, 
+            code indicating value EMPTY_METHOD;
          }
       } 
    }
@@ -1055,7 +1055,7 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.03,
             uri_path corresponding to SEPARATE_RESOURCE,
             uri_path corresponding to SECOND_LVL_RESOURCE;
@@ -1064,12 +1064,12 @@ Package mts_tst_coap_server_tps {
             
             the IUT entity first sends an empty message and
             the IUT entity sends the second message containing 
-            msg_type indicating value 0.00, /* Confirmable */ 
+            msg_type indicating value CONfirmable,  
             code indicating value 2.04; /*Try to add resource New1 although it already exists */
             and 
             the client entity sends an empty message containing 
-            msg_type indicating value 2.00, /* Acknowledgement */ 
-            code indicating value 0.00;
+            msg_type indicating value ACKnowledgement, 
+            code indicating value EMPTY_METHOD;
          }
       } 
    }
@@ -1096,7 +1096,7 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.04,
             uri_path corresponding to SEPARATE_RESOURCE;
          }
@@ -1104,13 +1104,13 @@ Package mts_tst_coap_server_tps {
             
             the IUT entity first sends an empty message and
             the IUT entity sends the second message containing 
-            msg_type indicating value 0.00, /* Confirmable */ 
+            msg_type indicating value CONfirmable,  
             code indicating value 2.02,
             Location_Path corresponding to SECOND_LVL_RESOURCE; /*Delete resource Separate */
             and 
             the client entity sends an empty message containing 
-            msg_type indicating value 2.00, /* Acknowledgement */ 
-            code indicating value 0.00;
+            msg_type indicating value ACKnowledgement, 
+            code indicating value EMPTY_METHOD;
          }
       } 
    }
@@ -1137,7 +1137,7 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.04,
             uri_path corresponding to SEPARATE_RESOURCE;
          }
@@ -1145,13 +1145,13 @@ Package mts_tst_coap_server_tps {
             
             the IUT entity first sends an empty message and
             the IUT entity sends the second message containing 
-            msg_type indicating value 0.00, /* Confirmable */ 
+            msg_type indicating value CONfirmable,  
             code indicating value 2.02,
             Location_Path corresponding to SECOND_LVL_RESOURCE; /*Get Response code 2.02 although the requested resource does not exist*/
             and 
             the client entity sends an empty message containing 
-            msg_type indicating value 2.00, /* Acknowledgement */ 
-            code indicating value 0.00;
+            msg_type indicating value ACKnowledgement, 
+            code indicating value EMPTY_METHOD;
          } 
       }
    }  
@@ -1180,15 +1180,15 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT; /*default eg. 5683 */
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05,
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT,
 				content indicating value coap_URI;
                 }
 		    } 
@@ -1218,8 +1218,8 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
 				option_delta indicating value 3, /*URI-Host */
@@ -1228,8 +1228,8 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05,
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT,
 				content indicating value coap_URI;
                 }
 		    } 
@@ -1259,8 +1259,8 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
 				option_delta indicating value 3, /*URI-Host */
@@ -1272,8 +1272,8 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05,
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT,
 				content indicating value coap_URI;
                 }
 		    } 
@@ -1302,15 +1302,15 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
-            code indicating value 0.01,
+            msg_type indicating value CONfirmable, 
+            code indicating value GET_METHOD,
             uri_path corresponding to DEFAULT_RESOURCE,
             uri_path corresponding to NEW_RESOURCE;
          }
          then {
             the IUT entity sends the message containing 
-            msg_type indicating value 2, /* ACknowledgement */ 
-            code indicating value 2.05;
+            msg_type indicating value ACKnowledgement, 
+            code indicating value CONTENT;
          }
       } 
    }
@@ -1337,7 +1337,7 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.02,
             uri_path corresponding to STORAGE_RESOURCE,
             uri_path corresponding to SECOND_LVL_RESOURCE,
@@ -1346,7 +1346,7 @@ Package mts_tst_coap_server_tps {
          }
          then {
             the IUT entity sends the message containing 
-            msg_type indicating value 2, /* ACknowledgement */ 
+            msg_type indicating value ACKnowledgement, 
             code indicating value 2.04,
             LocationPath corresponding to SECOND_LVL_RESOURCE,
             LocationPath corresponding to NEW_RESOURCE;
@@ -1376,14 +1376,14 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.03,
             uri_path corresponding to STORAGE_RESOURCE,
             uri_path corresponding to SECOND_LVL_RESOURCE;
          }
          then {
             the IUT entity sends the message containing 
-            msg_type indicating value 2, /* ACknowledgement */ 
+            msg_type indicating value ACKnowledgement, 
             code indicating value 2.04,
             LocationPath corresponding to SECOND_LVL_RESOURCE; /*Try to add resource New1 although it already exists. */
          }
@@ -1414,8 +1414,8 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
 				option_delta indicating value 11, /*URI-Path */
@@ -1433,8 +1433,8 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05,
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT,
 				content indicating value coap_URI;
                 }
 		    } 
@@ -1463,14 +1463,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				proxy_uri corresponding to PROXY_URI;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT;        
 				}
 		    } 
 	    }
@@ -1499,14 +1499,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				proxy_uri corresponding to PROXY_URI,
 				uri_host corresponding to URI_HOST;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.05;             
 			   }
 		    } 
@@ -1536,14 +1536,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				content_format_options indicating value content_formats_id,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03;             
 			   }
 		    } 
@@ -1575,13 +1575,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.06;             
 			   }
 		    } 
@@ -1611,14 +1611,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				content_format_options indicating value content_formats_id,
 				accept_options indicating value content_formats_id;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03;             
 			   }
 		    } 
@@ -1651,14 +1651,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				content_format_options indicating value content_formats_id,
 				accept_options indicating value content_formats_id;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.06;             
 			   }
 		    } 
@@ -1687,15 +1687,15 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT; /*default eg. 5683 */
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05,
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT,
 				content indicating value coap_URI;
                 }
 		    } 
@@ -1725,8 +1725,8 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
 				option_delta indicating value 3, /*URI-Host */
@@ -1735,8 +1735,8 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05,
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT,
 				content indicating value coap_URI;
                 }
 		    } 
@@ -1766,8 +1766,8 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,content_format indicating value content_formats_id,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,content_format indicating value content_formats_id,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
 				option_delta indicating value 3, /*URI-Host */
@@ -1779,8 +1779,8 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05,
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT,
 				content indicating value coap_URI;
                 }
 		    } 
@@ -1809,15 +1809,15 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
-            code indicating value 0.01,
+            msg_type indicating value CONfirmable, 
+            code indicating value GET_METHOD,
             uri_path corresponding to DEFAULT_RESOURCE,
             uri_path corresponding to NEW_RESOURCE;
          }
          then {
             the IUT entity sends the message containing 
-            msg_type indicating value 2, /* ACknowledgement */ 
-            code indicating value 2.05;
+            msg_type indicating value ACKnowledgement, 
+            code indicating value CONTENT;
          }
       } 
    }
@@ -1844,7 +1844,7 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.02,
             uri_path corresponding to STORAGE_RESOURCE,
             uri_path corresponding to SECOND_LVL_RESOURCE,
@@ -1853,7 +1853,7 @@ Package mts_tst_coap_server_tps {
          }
          then {
             the IUT entity sends the message containing 
-            msg_type indicating value 2, /* ACknowledgement */ 
+            msg_type indicating value ACKnowledgement, 
             code indicating value 2.04,
             LocationPath corresponding to SECOND_LVL_RESOURCE,
             LocationPath corresponding to NEW_RESOURCE;
@@ -1883,14 +1883,14 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.03,
             uri_path corresponding to STORAGE_RESOURCE,
             uri_path corresponding to SECOND_LVL_RESOURCE;
          }
          then {
             the IUT entity sends the message containing 
-            msg_type indicating value 2, /* ACknowledgement */ 
+            msg_type indicating value ACKnowledgement, 
             code indicating value 2.04,
             LocationPath corresponding to SECOND_LVL_RESOURCE; /*Try to add resource New1 although it already exists. */
          }
@@ -1921,8 +1921,8 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
 				option_delta indicating value 11, /*URI-Path */
@@ -1940,8 +1940,8 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05,
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT,
 				content indicating value coap_URI;
                 }
 		    } 
@@ -1970,14 +1970,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				proxy_uri corresponding to PROXY_URI;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT;        
 				}
 		    } 
 	    }
@@ -2006,14 +2006,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				proxy_uri corresponding to PROXY_URI,
 				uri_host corresponding to URI_HOST;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.05;             
 			   }
 		    } 
@@ -2043,14 +2043,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				content_format_options indicating value content_formats_id,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03;             
 			   }
 		    } 
@@ -2082,13 +2082,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.06;             
 			   }
 		    } 
@@ -2118,14 +2118,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				content_format_options indicating value content_formats_id,
 				accept_options indicating value content_formats_id;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03;             
 			   }
 		    } 
@@ -2158,14 +2158,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				content_format_options indicating value content_formats_id,
 				accept_options indicating value content_formats_id;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.06;             
 			   }
 		    } 
@@ -2195,12 +2195,12 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01;       
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD;       
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.04;
 			   }
 		    } 
@@ -2232,12 +2232,12 @@ Package mts_tst_coap_server_tps {
 //		ensure that {
 //			when {
 //				the IUT entity receives the message containing 
-//				msg_type indicating value 0, /* CONfirmable */ 
-//				code indicating value 0.01;       
+//				msg_type indicating value CONfirmable,  
+//				code indicating value GET_METHOD;       
 //			    }
 //			then {
 //      			the IUT entity sends the message containing 
-//				msg_type indicating value 2, /* ACknowledgement */ 
+//				msg_type indicating value ACKnowledgement, 
 //				code indicating value 4.04;  
 //			   }
 //		    } 
@@ -2269,12 +2269,12 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01;       
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD;       
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.04,
 				etag indicating value integer;    
 			   }
@@ -2307,13 +2307,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD,
 				etag indicating value integer;       
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03; /* valid */
 			   }
 		    } 
@@ -2344,12 +2344,12 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
+				msg_type indicating value CONfirmable,  
 				code indicating value 0.02;       
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.01,
 				location_path indicating value string,
 				location_query indicating value string;
@@ -2382,13 +2382,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD,
 				options indicating value 128; /* TODO: weitere Option numbers: 132,136,140, Reserved-Value */      
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02; /* Bad Option */
 			   }
 		    } 
@@ -2419,13 +2419,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
+				msg_type indicating value CONfirmable,  
 				code indicating value 0.03,
 				ifMatch indicating value ETAG;    
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03; /* valid */
 			   }
 		    } 
@@ -2456,13 +2456,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
+				msg_type indicating value CONfirmable,  
 				code indicating value 0.03,
 				ifMatch indicating value integer representing etag; /* if-match must match with etag */       
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.04; 
 			   }
 		    } 
@@ -2493,13 +2493,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
+				msg_type indicating value CONfirmable,  
 				code indicating value 0.03,
 				ifNoneMatch indicating value integer; /* TODO: more than one? */ 
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03; /* valid */
 			   }
 		    } 
@@ -2529,13 +2529,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
+				msg_type indicating value CONfirmable,  
 				code indicating value 0.03,
 				ifNoneMatch indicating value integer; 
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.00;
 			   }
 		    } 
@@ -2559,9 +2559,9 @@ Package mts_tst_coap_server_tps {
 			when {
 			 the IUT entity receives the message containing
 			   version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value 0,
-               code indicating value 0.00, //Empty Message
+               code indicating value EMPTY_METHOD, 
                msg_id corresponding to MSG_ID1,
                payload indicating value 116 145 167 061 057 116 145 167 062;
                
@@ -2598,15 +2598,15 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				proxy_uri corresponding to HTTP_URI;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 5.05;        
 				}
 		    } 
@@ -2636,16 +2636,16 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				proxy_uri corresponding to HTTP_URI;
 				and the client entity times_out
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 5.04;        
 				}
 		    } 
@@ -2675,15 +2675,15 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				proxy_uri corresponding to HTTP_URI;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 5.02;        
 				}
 		    } 
@@ -2714,17 +2714,17 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_options indicating value content_formats_id,
 				proxy_uri_options corresponding to HTTP_URI;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT;        
 				}
 		    } 
 	    }
@@ -2753,9 +2753,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				accept_options indicating value content_formats_id,
 				etag_options indicating value content_formats_id,
@@ -2763,7 +2763,7 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03;        
 				}
 		    } 
@@ -2793,7 +2793,7 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
 				code indicating value 0.03,
 				msg_id corresponding to MSG_ID1,
@@ -2801,7 +2801,7 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.01;        
 				}
 		    } 
@@ -2831,7 +2831,7 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
 				code indicating value 0.03,
 				msg_id corresponding to MSG_ID1,
@@ -2839,7 +2839,7 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.04;        
 				}
 		    } 
@@ -2869,7 +2869,7 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
 				code indicating value 0.04,
 				msg_id corresponding to MSG_ID1,
@@ -2877,7 +2877,7 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.02;        
 				}
 		    } 
@@ -2907,7 +2907,7 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
 				code indicating value 0.02,
 				msg_id corresponding to MSG_ID1,
@@ -2915,7 +2915,7 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.01;        
 				}
 		    } 
@@ -2945,7 +2945,7 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
 				code indicating value 0.02,
 				msg_id corresponding to MSG_ID1,
@@ -2953,7 +2953,7 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.04;        
 				}
 		    } 
@@ -2984,9 +2984,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_options indicating value content_format_options_id,
 				text_plain_content_format indicating value text_plain_content_format_id;
@@ -2994,8 +2994,8 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT;        
 				}
 		    } 
 	    }	
@@ -3024,9 +3024,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_options indicating value content_format_options_id,
 				link_format_content_format indicating value link_format_content_format_id;
@@ -3034,8 +3034,8 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT;        
 				}
 		    } 
 	    }	
@@ -3064,9 +3064,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_options indicating value content_format_options_id,
 				xml_content_format indicating value xml_content_format_id;
@@ -3074,8 +3074,8 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT;        
 				}
 		    } 
 	    }
@@ -3104,9 +3104,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_options indicating value content_format_options_id,
 				octetstream_content_format indicating value octetstream_content_format_id;
@@ -3114,8 +3114,8 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT;        
 				}
 		    } 
 	    }
@@ -3144,9 +3144,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_options indicating value content_format_options_id,
 				exi_content_format indicating value exi_content_format_id;
@@ -3154,8 +3154,8 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT;        
 				}
 		    } 
 	    }
@@ -3185,9 +3185,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_options indicating value content_format_options_id,
 				json_content_format indicating value json_content_format_id;
@@ -3195,8 +3195,8 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT;        
 				}
 		    } 
 	    }
@@ -3225,9 +3225,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_options indicating value content_format_options_id,
 				json_content_format indicating value json_content_format_id;
@@ -3235,7 +3235,7 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.15; /* Unsupported Content-Format */        
 				}
 		    } 
@@ -3265,9 +3265,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_options indicating value content_format_options_id,
 				json_content_format indicating value json_content_format_id,
@@ -3275,7 +3275,7 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;        
 				}
 		    } 
@@ -3305,9 +3305,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_options indicating value content_formats_id,
 				json indicating value json,
@@ -3317,7 +3317,7 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;        
 				}
 		    } 
@@ -3347,9 +3347,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_options indicating value content_formats_id,
 				link_format_options indicating value link_format,
@@ -3359,7 +3359,7 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;        
 				}
 		    } 
@@ -3389,16 +3389,16 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1;
 			    }
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
-				code indicating value 2.05;        
+				msg_type indicating value ACKnowledgement, 
+				code indicating value CONTENT;        
 				}
 		    } 
 	    }
@@ -3427,15 +3427,15 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,                         /*    Unrecognized options         */
+				code indicating value GET_METHOD,                         /*    Unrecognized options         */
 				if_match_options indicating value if_match_options_id;  /*        if_match_options works with update request e.g. put     */
 			    }
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;        
 				}
 		    } 
@@ -3465,7 +3465,7 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
 				code indicating value 0.03,
 				msg_id corresponding to MSG_ID1,
@@ -3474,7 +3474,7 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;        
 				}
 		    } 
@@ -3504,7 +3504,7 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
 				code indicating value 0.04,
 				msg_id corresponding to MSG_ID1,
@@ -3514,7 +3514,7 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;        
 				}
 		    } 
@@ -3544,7 +3544,7 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
 				code indicating value 0.003,
 				msg_id corresponding to MSG_ID1,
@@ -3554,7 +3554,7 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;        
 				}
 		    } 
@@ -3584,9 +3584,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
-				code indicating value 0.01,
+				code indicating value GET_METHOD,
 				msg_id corresponding to MSG_ID1,
 				content_format_option indicating value content_formats_id,
 				link_format_option indicating value link_format,
@@ -3596,7 +3596,7 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;        
 				}
 		    } 
@@ -3625,8 +3625,8 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
 				port corresponding to DEFAULT_PORT, /*default eg. 5683 */
 				host corresponding to DEFAULT_HOST, /*default eg. [2001:db8::2:1] */
@@ -3634,7 +3634,7 @@ Package mts_tst_coap_server_tps {
 			    }			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;        
 				}
 		    } 
@@ -3663,14 +3663,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
+				msg_type indicating value CONfirmable,  
 				code indicating value 0.03,
 				ifNoneMatch_options indicating value integer,
 				ifNoneMatch_options indicating value integer;
 			    }			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;        
 				}
 		    } 
@@ -3699,14 +3699,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable, 
+				code indicating value GET_METHOD,
 				accept_options indicating value accept_options_id,
 				accept_options indicating value accept_options_id;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;             
 			   }
 		    } 
@@ -3737,9 +3737,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives the message containing
 				version indicating value 1,
-                msg_type indicating value 1, //Non-Confirmable
+                msg_type indicating value NONconfirmable, 
                 token_length indicating value 0,
-                code indicating value 0.00; //Empty Message
+                code indicating value EMPTY_METHOD; 
 			    }
 			then {
 				the IUT entity rejects the message            
@@ -3771,9 +3771,9 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives the message containing
 				version indicating value 1,
-                msg_type indicating value 2, //Acknowledgement
+                msg_type indicating value ACKnowledgement,
                 token_length indicating value 0,
-                code indicating value 1; //Empty Message
+                code indicating value 1; 
 			    }
 			then {
 				the IUT entity rejects the message            
@@ -3806,14 +3806,14 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
-            code indicating value 0.01,
+            msg_type indicating value CONfirmable, 
+            code indicating value GET_METHOD,
             payload indicating value 116 145 167 061 057 116 145 167 062;
             and the IUT entity doesnot provide a suitable acknowledgment response
          }
          then {
              the IUT entity sends the message containing 
-		     msg_type indicating value 3; /* Reset Message */
+		     msg_type indicating value ReSeT; 
          }
       } 
 	    }
@@ -3842,13 +3842,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01, 
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD, 
 				accept_options indicating value accept_options _id;    
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.04,
 				etag indicating value integer;    
 			   }
@@ -3878,12 +3878,12 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01;   
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD;   
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.04,
 				etag1 indicating value integer;
 				and another etag2 must not be present  
@@ -3914,14 +3914,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD,
 				etag_options_1 indicating value etag_options_id_1,
 				etag_options_2 indicating value etag_options_id_2;  
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03,
 				etag indicating value integer; 
 			   }
@@ -3951,13 +3951,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD,
 				proxy_uri_options indicating value proxy_uri_options_id; 				
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 5.05;
 			   }
 		    } 
@@ -3980,13 +3980,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD,
 				location_path_options indicating value ".."; 				
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;
 			   }
 		    } 
@@ -4011,14 +4011,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD,
 				location_path_options indicating value location_path_options_id,
 				location_reserved_options indicating value location_reserved_options_id; // 	 (128, 132, 136, 140) 							
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;
 			   }
 		    } 
@@ -4048,8 +4048,8 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD,
 				if_match_options indicating value if_match_options_id,
 				accept_options indicating value accept_options_id;
 				and the client entity fails to fulfill conditions
@@ -4057,7 +4057,7 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.12;
 			   }
 		    } 
@@ -4086,15 +4086,15 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity sends the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD,
 				if_match_options indicating value if_match_options_id,
 				accept_options indicating value accept_options_id;
 				and the client entity fulfill conditions										
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03;
 			   }
 		    } 
@@ -4123,15 +4123,15 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity sends the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD,
 				if_match_options indicating value if_match_options_id, 
 				etag_options indicating value etag_options_id;
 				and the client entity fulfill if_match conditions										
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03;
 			   }
 		    } 
@@ -4161,13 +4161,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD,
 				size1_options indicating value size1_options_id;       
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.13,
 				size_option indicating value size_max_value;  
 			   }
@@ -4197,14 +4197,14 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 1, //Non-confirmable
-            code indicating value 0.01,
+            msg_type indicating value 1, 
+            code indicating value GET_METHOD,
             payload indicating value 116 145 167 061 057 116 145 167 062;
             and the IUT entity doesnot provide a suitable acknowledgment response
          }
          then {
              the IUT entity sends the message containing 
-		     msg_type indicating value 3; /* Reset Message */
+		     msg_type indicating value ReSeT; 
          }
       } 
 	    }
@@ -4232,14 +4232,14 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, //Confirmable
-            code indicating value 0.01,
+            msg_type indicating value CONfirmable, 
+            code indicating value GET_METHOD,
             payload indicating value 116 145 167 061 057 116 145 167 062;
             and the IUT entity doesnot provide a suitable acknowledgment response
          }
          then {
              the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.04; /* Not Found */
          }
       } 
@@ -4262,9 +4262,9 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value O,
-               code indicating value 0.00, //Empty Message
+               code indicating value EMPTY_METHOD, 
                msg_id corresponding to MSG_ID1,
                payload indicating value 116 145 167 061 057 116 145 167 062;
          }
@@ -4290,14 +4290,14 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value O,
-               code indicating value 0.00, //Empty Message
+               code indicating value EMPTY_METHOD, 
                msg_id corresponding to MSG_ID1;
          }
          then {
             the IUT entity sends the message containing 
-				msg_type indicating value 2; /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement; 
          }
       }       
    }
@@ -4318,9 +4318,9 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 1, //Non-Confirmable
+               msg_type indicating value NONconfirmable, 
                token_length indicating value O,
-               code indicating value 1.00, //Empty Message
+               code indicating value 1.00, 
                msg_id corresponding to MSG_ID1;
          }
          then {
@@ -4345,14 +4345,14 @@ Package mts_tst_coap_server_tps {
          when {
             the IUT entity receives a request message containing 
                version indicating value 1,
-               msg_type indicating value 0, //Confirmable
+               msg_type indicating value CONfirmable, 
                token_length indicating value O,
-               code indicating value 0.01, //Get
+               code indicating value GET_METHOD, //Get
                accept_options indicating value accept_options_id; /* (Oustside the defined range) */
          }
          then {
             the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02; /* Bad Option */
          }
       }       
@@ -4381,14 +4381,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01, // Get
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD, // Get
 				ifMatch_options indicating value ifMatch_options_id_1,
 				ifMatch_options indicating value ifMatch_options_id_2;    
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03; /* valid */
 			   }
 		    } 
@@ -4417,14 +4417,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01, // Get
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD, // Get
 				ifNoneMatch_options indicating value ifNoneMatch_options_id1,
 				ifNoneMatch_options indicating value ifNoneMatch_options_id2;    
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02; /* valid */
 			   }
 		    } 
@@ -4447,8 +4447,8 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01, // Get
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD, // Get
 				ifNoneMatch_options indicating value ifNoneMatch_options_id1,
 				payload indicating value 116 145 167 061 057 116 145 167 062;  
 			    }
@@ -4481,13 +4481,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01, //Get
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD, //Get
                 accept_options indicating value accept_options_id; 
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 5.01; /* Not Implemented */
 			   }
 		    } 
@@ -4516,14 +4516,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01, //Get
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD, //Get
                 content_format_options indicating value content_format_options_id,
                 text_plain_content_format indicating value text_plain_content_format_id; 
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.15; /* Unsupported Content-Format */
 			   }
 		    } 
@@ -4546,13 +4546,13 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01, //Get
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD, //Get
 				size1_options indicating value size1_options_id;           
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.13,
 				size_option indicating value size_max_value; /*Request Entity Too Large */
 			   }
@@ -4576,13 +4576,13 @@ Package mts_tst_coap_server_tps {
 			ensure that {
 			when {
 				the IUT entity sends the message containing 
-				msg_type indicating value 0, /* CONfirmable */ 
-				code indicating value 0.01,
+				msg_type indicating value CONfirmable,  
+				code indicating value GET_METHOD,
 				location_path_options indicating value ".."; 				
 			    }
 			then {
       			the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;
 			   }
 		    } 
@@ -4612,7 +4612,7 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
 				code indicating value 0.03, /*    Unrecognized options         */
 				host corresponding to DEFAULT_HOST, 
@@ -4621,7 +4621,7 @@ Package mts_tst_coap_server_tps {
 			    
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 4.02;        
 				}
 		    } 
@@ -4652,14 +4652,14 @@ Package mts_tst_coap_server_tps {
 		ensure that {
 			when {
 				the IUT entity receives a message containing 
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				code indicating value 0.02,
 				content_format_options indicating value content_formats_id,
 				payload indicating value 116 145 167 061 057 116 145 167 062;
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.03;             
 			   }
 		    } 
@@ -4681,14 +4681,14 @@ Package mts_tst_coap_server_tps {
       ensure that {
          when {
             the IUT entity receives a message containing 
-            msg_type indicating value 0, /* CONfirmable */
+            msg_type indicating value CONfirmable, 
             code indicating value 0.02,
             uri_path corresponding to DEFAULT_RESOURCE,
             uri_path corresponding to NEW_RESOURCE;
          }
          then {
             the IUT entity sends the message containing 
-            msg_type indicating value 2, /* ACknowledgement */ 
+            msg_type indicating value ACKnowledgement, 
             code indicating value 2.01;
          }
       } 
@@ -4713,7 +4713,7 @@ Package mts_tst_coap_server_tps {
 			when {
 				the IUT entity receives a message containing 
 				version indicating value 1,
-				msg_type indicating value 0, /* CONfirmable */
+				msg_type indicating value CONfirmable, 
 				token_length indicating value 0,
 				code indicating value 0.03,
 				msg_id corresponding to MSG_ID1,
@@ -4721,83 +4721,9 @@ Package mts_tst_coap_server_tps {
 			    }
 			then {
 				the IUT entity sends the message containing 
-				msg_type indicating value 2, /* ACknowledgement */ 
+				msg_type indicating value ACKnowledgement, 
 				code indicating value 2.01;        
-				}
-		    } 
+			} 
 	    }	
-	    
-/*TODO: mehrer If_Match / If_None_Match *
-	    
-//	    Test Purpose {
-//		TP Id TP_CoAP_Server_Options_Size1__002 /* Sect. 5.10.9 */
-//		
-//		/* Summary */
-// 		Test objective 
-// 			"The Size1 option provides size information about the resource
-//   representation in a request."  
-// 		
-// 		Reference 
-// 			"RFC7252#section5.10", 
-// 			"https://tools.ietf.org/html/rfc7252#section-5.10"
-// 			
-// 		PICS Selection PIC_Server
-//
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a response
-//        }
-//        
-// 		Expected behaviour
-//		ensure that {
-//			when {
-//				the IUT entity receives the message containing 
-//				msg_type indicating value 0, /* CONfirmable */ 
-//				code indicating value 0.02,
-//				size1 indicating value integer;       
-//			    }
-//			then {
-//      			the IUT entity sends the message containing 
-//				msg_type indicating value 2, /* ACknowledgement */ 
-//				code indicating value 4.06; /* Not Accceptable */
-//			   }
-//		    } 
-//	    }
-	    
-//	    Test Purpose {
-//		TP Id TP_CoAP_Server_Options_Size2_001 /* Sect. 5.10.9 */
-//		
-//		/* Summary */
-// 		Test objective 
-// 			"The Size2 option provides size information about the resource
-//   representation in a request."  
-// 		
-// 		Reference 
-// 			"RFC7252#section5.10", 
-// 			"https://tools.ietf.org/html/rfc7252#section-5.10"
-// 			
-// 		PICS Selection PIC_Server
-//
-//        Initial conditions
-//        with 
-//        {
-//        	the IUT entity must provide a message
-//        }
-//        
-// 		Expected behaviour
-//		ensure that {
-//			when {
-//				the IUT entity receives a message containing 
-//				msg_type indicating value 0, /* CONfirmable */
-//				code indicating value 0.02,
-//				size2 indicating value integer;
-//			    }
-//			then {
-//				the IUT entity sends the message containing 
-//				msg_type indicating value 2, /* ACknowledgement */ 
-//				code indicating value 2.03; /* Valid */      
-//			   }
-//		    } 
-//	    }
+	 }
 }

@@ -39,12 +39,20 @@ Package mts_tst_coap_commons {
 		- present
 		;
 		event templates :
-		- provideResource { the IUT entity provide a resource containing name indicating value DEFAULT_RESOURCE;}	
+		- provideResource { the IUT entity provide a resource containing name indicating value DEFAULT_RESOURCE; }
+		- receiveCoapHeader { the IUT entity receives a request message containing 
+                                 version indicating value 1,
+                                 msg_type indicating value CONfirmable,
+                                 token_length indicating value 0,
+                                 code indicating value EMPTY_METHOD,
+                                 msg_id corresponding to MSG_ID1;
+                            }
 		;
 	}
 	Data {
 		type STRING;
 		type CODE; //CoAP code with pattern c.dd
+		type MSG; //CoAP message type
 		type PAYLOAD; //CoAP payload
 		type UINT4; //4-bit integer
 		type UINT16; //16-bit unsigned integer
@@ -69,9 +77,16 @@ Package mts_tst_coap_commons {
 		STRING PROXY_URI;
 		STRING URI_HOST;
 		STRING HTTP_URI;
-		
 		STRING DEFAULT_RESOURCE_CONTENT; //content of the default resource
 		
+		MSG CONfirmable; //1
+		MSG NONconfirmable; //2
+		MSG ACKnowledgement; //3
+		MSG ReSeT; //4
+		
+		CODE EMPTY_METHOD; //0.00
+		CODE GET_METHOD; //0.01
+		CODE CONTENT; //2.05
 		CODE METHOD_NOT_ALLOWED; //method that is not allowed by METHOD_NOT_ALLOWED_RESOURCE
 		CODE PUT_OR_POST; //depending on implemented METHOD of STORAGE_RESOURCE, either PUT or POST
 		
