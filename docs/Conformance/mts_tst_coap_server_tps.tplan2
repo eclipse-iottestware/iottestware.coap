@@ -83,7 +83,7 @@ Package mts_tst_coap_server_tps {
       TP Id TP_CoAP_MessageFormat_Header_Type_CON_001
       
       Test objective
-      "The IUT shall acknowledge on a Confirmable message correctly."
+      "The IUT acknowledges on a Confirmable message correctly."
       
       Reference 
       "RFC7252#section-3", "https://tools.ietf.org/html/rfc7252#section-3",
@@ -116,7 +116,7 @@ Package mts_tst_coap_server_tps {
       TP Id TP_CoAP_MessageFormat_Header_Type_CON_002
       
       Test objective
-      "The IUT shall reject a Confirmable message that is carrying a response."
+      "The IUT rejects a Confirmable message that is carrying a response."
       
       Reference 
       "RFC7252#section-3", "https://tools.ietf.org/html/rfc7252#section-3",
@@ -150,7 +150,7 @@ Package mts_tst_coap_server_tps {
       TP Id TP_CoAP_MessageFormat_Header_Type_CON_003
       
       Test objective
-      "The IUT is rejecting a Confirmable message that lacks context to process the message properly.
+      "The IUT rejects a Confirmable message that lacks context to process the message properly.
        The message carries a reserved class."
       
       Reference 
@@ -620,7 +620,7 @@ Package mts_tst_coap_server_tps {
       "The IUT is responding with code 2.01 correctly." 
       
       Reference
-      "RFC7252#section-3", "https://tools.ietf.org/html/rfc7252#section-3", 
+      "RFC7252#section-3", "https://tools.ietf.org/html/rfc7252#section-3",
       "RFC7252#section-12.1.2", "https://tools.ietf.org/html/rfc7252#section-12.1.2"
       
       PICS Selection PIC_Server
@@ -750,11 +750,10 @@ Package mts_tst_coap_server_tps {
    }
    
      Test Purpose {
-      TP Id TP_CoAP_MessageFormat_Payload_Marker_ZeroLengt_001
+      TP Id TP_CoAP_MessageFormat_Payload_ZeroLengthPayloadWithMarker_001
       
-      /* Summary */
       Test objective 
-      "A zero-length payload that follows the payload marker (0xFF) must be processed as message format error." 
+      "The IUT is processing a message format error whe a zero-length payload follows the payload marker (0xFF)." 
       
       Reference
       "RFC7252#section-3", "https://tools.ietf.org/html/rfc7252#section-3"
@@ -770,6 +769,7 @@ Package mts_tst_coap_server_tps {
                token_length indicating value 0,
                code indicating value GET_METHOD, 
                msg_id corresponding to MSG_ID1,
+               option corresponding to ANY_OPTION,
                payload_marker corresponding to PAYLOAD_MARKER,
                payload corresponding to EMPTY_PAYLOAD;
          }
@@ -779,6 +779,48 @@ Package mts_tst_coap_server_tps {
          }
       } 
    }
+   
+   Test Purpose {
+      TP Id TP_CoAP_Server_SeparateResponse_EmptyAckMessage_001
+      
+      /* Summary */
+      Test objective 
+      "The IUT is responding with a separate empty ACK message on Confirmable request." 
+      
+      Reference 
+      "RFC7252#section-5.2.2", "https://tools.ietf.org/html/rfc7252#section-5.2.2"
+      
+      PICS Selection PIC_Server
+
+      Initial conditions
+      with 
+      {
+         the IUT entity must provide a resource named SEPARATE_RESOURCE
+      }
+      
+      Expected behaviour
+      ensure that {
+         when {
+            the IUT entity receives a message containing
+	            version indicating value 1,
+	            msg_type indicating value CONfirmable,
+	            token_length indicating value 0,
+	            code indicating value GET_METHOD,
+	            msg_id indicating value MSG_ID1,
+	            uri_path corresponding to SEPARATE_RESOURCE;
+         }
+         then {
+            the IUT entity sends a response message containing
+           		version indicating value 1,
+               	msg_type indicating value ACKnowledgement, 
+               	token_length indicating value 0,
+               	code indicating value EMPTY_METHOD, 
+               	msg_id corresponding to MSG_ID1;
+         }
+      } 
+   }
+   
+   
    
    Test Purpose {
       TP Id TP_CoAP_Server_Separate_Response_GET_001 /* Sect. 5.8.3*/
@@ -1156,6 +1198,77 @@ Package mts_tst_coap_server_tps {
       }
    }  
    
+      Test Purpose {
+		TP Id TP_CoAP_Server_Options_OptionLength_001 /* Sect. 5.10.1. */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT processes a message format error when option length is set to 15."  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.10", 
+ 			"https://tools.ietf.org/html/rfc7252#section-5.10"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a resource named coap_URI
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+					version indicating value 1,
+					msg_type indicating value CONfirmable,
+	               	token_length indicating value 0,
+	               	code indicating value EMPTY_METHOD,
+	               	msg_id indicating value MSG_ID1,
+	               	option_length indicating value 15;
+			    }
+			then {
+				the client entity times_out //2sec ACK_TIMEOUT
+                }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Options_OptionDelta_001 /* Sect. 5.10.1. */
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT processes a message format error when option delta is set to 15 and the entire byte is not the payload marker."  
+ 		
+ 		Reference 
+ 			"RFC7252#section3.1", "https://tools.ietf.org/html/rfc7252#section-3.1"
+ 			
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide a resource named DEFAULT_RESOURCE
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing 
+					version indicating value 1,
+					msg_type indicating value CONfirmable,
+	               	token_length indicating value 0,
+	               	code indicating value GET_METHOD,
+	               	msg_id indicating value MSG_ID1,
+	               	option_delta indicating value 15;
+			    }
+			then {
+				the client entity times_out //2sec ACK_TIMEOUT
+                }
+		    } 
+	    }
+      
       Test Purpose {
 		TP Id TP_CoAP_Server_Options_UriHost_001 /* Sect. 5.10.1. */
 		
@@ -2546,7 +2659,7 @@ Package mts_tst_coap_server_tps {
 		
 		/* Summary */
  		Test objective 
- 			"Any bytes of data present after Message ID field in an Empty message, it must be processed as a message format error"  
+ 			"The IUT processes a message format error when data are present after Message ID field in an Empty message"  
  		
  		Reference 
  			"RFC7252#section 4.1", 
@@ -2563,12 +2676,11 @@ Package mts_tst_coap_server_tps {
                token_length indicating value 0,
                code indicating value EMPTY_METHOD, 
                msg_id corresponding to MSG_ID1,
-               payload indicating value 116 145 167 061 057 116 145 167 062;
+               payload indicating value ANY_PAYLOAD;
                
 			    }
 			then {
-      			the IUT entity sends the message containing 
-      			code indicating value "message format error";
+      			the client entity times_out //2sec ACK_TIMEOUT
 			   }
 		    } 
 	    }
@@ -2624,12 +2736,8 @@ Package mts_tst_coap_server_tps {
  			"https://tools.ietf.org/html/rfc7252#section-10.1"
  			
  		PICS Selection PIC_Server
-
-        Initial conditions
-        with 
-        {
-        	the IUT entity must provide a response
-        }
+ 		
+ 		/* Set Initial Condition ACK_Timeout=0 */
         
  		Expected behaviour
 		ensure that {
@@ -2651,7 +2759,7 @@ Package mts_tst_coap_server_tps {
 		    } 
 	    }
 	    
-	     Test Purpose {
+	    Test Purpose {
 		TP Id TP_CoAP_Server_HTTPUri_003 /* Sect. 10.1 */
 		
 		/* Summary */
@@ -3784,7 +3892,7 @@ Package mts_tst_coap_server_tps {
 	  
 	    
 	    Test Purpose {
-		TP Id TP_CoAP_Server_NoResponse_01  /* Sect. 2.1 */
+		TP Id TP_CoAP_Server_NoResponse_001  /* Sect. 2.1 */
 		
 		/* Summary */
  		Test objective 
@@ -3816,6 +3924,68 @@ Package mts_tst_coap_server_tps {
 		     msg_type indicating value ReSeT; 
          }
       } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Options_Elective_01
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT silently ignores a request with an unrecognized, elective option."  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.1", "https://tools.ietf.org/html/rfc7252#section-5.4.1"
+ 		
+ 		
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide an options named ETag
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing
+					option corresponding to UNRECOGNIZED_ELECTIVE_OPTION;
+			    }
+			then {
+      			the client entity times_out   
+			   }
+		    } 
+	    }
+	    
+	    Test Purpose {
+		TP Id TP_CoAP_Server_Options_Critical_01
+		
+		/* Summary */
+ 		Test objective 
+ 			"The IUT silently ignores a request with an unrecognized, elective option."  
+ 		
+ 		Reference 
+ 			"RFC7252#section5.4.1", "https://tools.ietf.org/html/rfc7252#section-5.4.1"
+ 		
+ 		
+ 		PICS Selection PIC_Server
+
+        Initial conditions
+        with 
+        {
+        	the IUT entity must provide an options named ETag
+        }
+        
+ 		Expected behaviour
+		ensure that {
+			when {
+				the IUT entity receives a message containing
+					option corresponding to UNRECOGNIZED_ELECTIVE_OPTION;
+			    }
+			then {
+      			the client entity times_out   
+			   }
+		    } 
 	    }
 	    
 	    Test Purpose {
@@ -4274,6 +4444,7 @@ Package mts_tst_coap_server_tps {
       }       
    }
    
+   
     Test Purpose {
 		TP Id TP_CoAP_Server_CON_Empty_Message_02  /* Sect. 4.2 */
 		
@@ -4303,13 +4474,13 @@ Package mts_tst_coap_server_tps {
    }
    
    Test Purpose {
-		TP Id TP_CoAP_Server_NON_Empty_Message_01  /* Sect. 4.2 */
+		TP Id TP_CoAP_Server_NON_EmptyMessage_01
 		
 		Test objective
-      "The use of an empty message in a Non-Confirmable request results in rejecting it"
+		"The IUT rejects an empty Non-Confirmable request."
       
       Reference 
-      "RFC7252#section-4.2", "https://tools.ietf.org/html/rfc7252#section-4.2"
+      "RFC7252#section-4.3", "https://tools.ietf.org/html/rfc7252#section-4.3"
      
       PICS Selection PIC_Server
       
@@ -4320,7 +4491,7 @@ Package mts_tst_coap_server_tps {
                version indicating value 1,
                msg_type indicating value NONconfirmable, 
                token_length indicating value O,
-               code indicating value 1.00, 
+               code indicating value EMPTY_METHOD, 
                msg_id corresponding to MSG_ID1;
          }
          then {

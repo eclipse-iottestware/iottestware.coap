@@ -31,7 +31,7 @@ Package mts_tst_coap_commons {
 		- rejects
 		- respond 
 		- retransmit
-		- ACK_TIMEOUT
+		- set
 		- wait
 		- process
 		- informed
@@ -54,6 +54,8 @@ Package mts_tst_coap_commons {
 		type CODE; //CoAP code with pattern c.dd
 		type MSG; //CoAP message type
 		type PAYLOAD; //CoAP payload
+		type PARAMETER; //CoAP Protocol Parameter (sec. 4.8)
+		type OPTION; //CoAP option
 		type UINT4; //4-bit integer
 		type UINT16; //16-bit unsigned integer
 		type OCT0_8; //8 byte octetstring
@@ -120,6 +122,14 @@ Package mts_tst_coap_commons {
 		
 		HEX PAYLOAD_MARKER; //payload marker is 0xFF
 		
+		OPTION ANY_OPTION; //not specified option needed for the sake of completeness
+		OPTION UNRECOGNIZED_ELECTIVE_OPTION; //an unrecognized elective option
+		
 		PAYLOAD EMPTY_PAYLOAD; //zero-length payload
+		PAYLOAD ANY_PAYLOAD; //not specified payload needed for the sake of completeness
+		
+		PARAMETER ACK_TIMEOUT; //Timeout in sec during an ACK message is expected; default = 2 sec
+		PARAMETER ACK_RANDOM_FACTOR; //factor used to calculate some timing values; default = 1.5 sec
+		PARAMETER MAX_RETRANSMIT; //max number of retransmission; default = 4
 	}	 
 }
