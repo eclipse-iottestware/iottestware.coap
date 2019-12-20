@@ -4,7 +4,11 @@ A conformance test suite for the IoT protocol CoAP written in TTCN-3. You may fi
 
 ## Getting Started
 
-Refer to the [general installation script](https://github.com/eclipse/iottestware/blob/master/INSTALL.md) in the main repository.
+If it is your first time or you would like to get some help, please read the **[Quickstart Guide](https://iottestware.readthedocs.io/en/latest/quickstart_guide.html)** to get everything set up and to have an easy start with the IoT-Testware.
+
+## Versioning
+
+We use [Github](https://github.com/) for versioning. For the versions available, see the [tags on this repository](https://github.com/eclipse/iottestware.coap/tags).
 
 ## Authors
 
