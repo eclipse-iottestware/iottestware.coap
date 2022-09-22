@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TITAN_Project_File_Information version="1.0">
-<!--
+  <!--
  Copyright (c) 2000-2017 Ericsson Telecom AB
  All rights reserved. This program and the accompanying materials
  are made available under the terms of the Eclipse Public License v1.0
@@ -9,13 +9,23 @@
 -->
   <ProjectName>iottestware.coap</ProjectName>
   <ReferencedProjects>
-    <ReferencedProject name="CoAP_CNL113829" projectLocationURI="../../ProtocolModules/CoAP/CoAP_CNL113829.tpd"/>
-    <ReferencedProject name="IPL4asp_CNL113531" projectLocationURI="../../TestPorts/IPL4asp/IPL4asp_CNL113531.tpd"/>
+    <ReferencedProject name="CoAP_CNL113829" projectLocationURI="../../ProtocolModules/CoAP/CoAP_CNL113829.tpd" />
+    <ReferencedProject name="IPL4asp_CNL113531" projectLocationURI="../../TestPorts/IPL4asp/IPL4asp_CNL113531.tpd" />
   </ReferencedProjects>
   <Folders>
-    <FolderResource projectRelativePath="cfg" relativeURI="cfg"/>
-    <FolderResource projectRelativePath="src" relativeURI="src"/>
+    <FolderResource projectRelativePath="cfg" relativeURI="cfg" />
+    <FolderResource projectRelativePath="src" relativeURI="src" />
   </Folders>
+  <Files>
+    <FileResource projectRelativePath="src/CoAP_Const.ttcn" relativeURI="src/CoAP_Const.ttcn" />
+    <FileResource projectRelativePath="src/CoAP_CustomTypes.ttcn" relativeURI="src/CoAP_CustomTypes.ttcn" />
+    <FileResource projectRelativePath="src/CoAP_Functions.ttcn" relativeURI="src/CoAP_Functions.ttcn" />
+    <FileResource projectRelativePath="src/CoAP_Pixits.ttcn" relativeURI="src/CoAP_Pixits.ttcn" />
+    <FileResource projectRelativePath="src/CoAP_Templates.ttcn" relativeURI="src/CoAP_Templates.ttcn" />
+    <FileResource projectRelativePath="src/CoAP_TestSystem.ttcn" relativeURI="src/CoAP_TestSystem.ttcn" />
+    <FileResource projectRelativePath="src/CoAP_Testcase_Functions.ttcn" relativeURI="src/CoAP_Testcase_Functions.ttcn" />
+    <FileResource projectRelativePath="src/CoAP_Testcases.ttcn" relativeURI="src/CoAP_Testcases.ttcn" />
+  </Files>
   <ActiveConfiguration>Default</ActiveConfiguration>
   <Configurations>
     <Configuration name="Default">
@@ -27,12 +37,12 @@
         <LocalBuildSettings>
           <workingDirectory>bin</workingDirectory>
         </LocalBuildSettings>
-		<ConfigurationRequirements>
+        <ConfigurationRequirements>
           <configurationRequirement>
             <projectName>CoAP_CNL113829</projectName>
             <requiredConfiguration>negative_testing</requiredConfiguration>
-         </configurationRequirement>
-       </ConfigurationRequirements>
+          </configurationRequirement>
+        </ConfigurationRequirements>
       </ProjectProperties>
       <FolderProperties>
         <FolderResource>
